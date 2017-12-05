@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTradingSystem.Client",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTradingSystem.Core", "StockTradingSystem.Core\StockTradingSystem.Core.csproj", "{101A204C-9747-4892-97B1-FDF18567E444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTradingSystem.UI", "StockTradingSystem.UI\StockTradingSystem.UI.csproj", "{07296FEE-1F8D-4013-B5D2-2EACAD226C9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{101A204C-9747-4892-97B1-FDF18567E444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{101A204C-9747-4892-97B1-FDF18567E444}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{101A204C-9747-4892-97B1-FDF18567E444}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07296FEE-1F8D-4013-B5D2-2EACAD226C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07296FEE-1F8D-4013-B5D2-2EACAD226C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07296FEE-1F8D-4013-B5D2-2EACAD226C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07296FEE-1F8D-4013-B5D2-2EACAD226C9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -59,5 +59,14 @@ namespace StockTradingSystem.Client.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 不存在该页面: {0}！ 的本地化字符串。
+        /// </summary>
+        internal static string NoSuchPageException {
+            get {
+                return ResourceManager.GetString("NoSuchPageException", resourceCulture);
+            }
+        }
     }
 }

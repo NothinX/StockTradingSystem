@@ -38,6 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -51,7 +57,10 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -72,12 +81,59 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Design\DesignDataService.cs" />
-    <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\DataService.cs" />
-    <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Model\Access\GpEntitiesUserAccess.cs" />
+    <Compile Include="Model\Business\GpEntitiesBusiness.cs" />
+    <Compile Include="Model\GPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\orders.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\stocks.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\stock_depth_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\transactions.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\users.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_order_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_positions.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_stock_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Navigation\DisableNavigation.cs" />
+    <Compile Include="UI\Navigation\FrameNavigationService.cs" />
+    <Compile Include="UI\Navigation\IFrameNavigationService.cs" />
+    <Compile Include="UI\UIHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,6 +149,18 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Skins\PathGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +181,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\GPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\GPModel.edmx.diagram">
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -122,6 +197,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Design\" />
+    <Folder Include="UI\Dialog\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\GPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\GPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
+      <Project>{101A204C-9747-4892-97B1-FDF18567E444}</Project>
+      <Name>StockTradingSystem.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 
-namespace StockTradingSystem
+namespace StockTradingSystem.Client
 {
     /// <summary>
     /// Interaction logic for App.xaml

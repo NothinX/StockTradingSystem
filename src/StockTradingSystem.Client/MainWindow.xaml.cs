@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using StockTradingSystem.ViewModel;
-
-namespace StockTradingSystem
+using GalaSoft.MvvmLight.Ioc;
+using StockTradingSystem.Client.UI.Navigation;
+using StockTradingSystem.Client.ViewModel;namespace StockTradingSystem.Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -14,7 +14,13 @@ namespace StockTradingSystem
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
             Closing += (s, e) => ViewModelLocator.Cleanup();
+        }
+
+        private static void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            SimpleIoc.Default.GetInstance<IFrameNavigationService>()?.NavigateTo("MainView");
         }
     }
 }

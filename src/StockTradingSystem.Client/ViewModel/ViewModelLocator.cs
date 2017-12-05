@@ -9,12 +9,13 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using StockTradingSystem.Model;
+using StockTradingSystem.Client.UI.Navigation;
 
-namespace StockTradingSystem.ViewModel
+namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -31,12 +32,8 @@ namespace StockTradingSystem.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
             }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
+            InitNavigation();
 
             SimpleIoc.Default.Register<MainViewModel>();
         }
@@ -47,12 +44,23 @@ namespace StockTradingSystem.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
+        /// <summary>
+        /// Gets the IFrameNavigationService property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public IFrameNavigationService FrameNavigationService => ServiceLocator.Current.GetInstance<IFrameNavigationService>();
+
+        private static void InitNavigation()
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
+            var navigationService = new FrameNavigationService();
+            navigationService.Configure("MainView", new Uri("../View/MainView.xaml", UriKind.Relative));
+            navigationService.Configure("LoginView", new Uri("../View/LoginView.xaml", UriKind.Relative));
+
+            SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
 
         /// <summary>

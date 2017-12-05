@@ -1,32 +1,46 @@
-﻿<Window x:Class="StockTradingSystem.MainWindow"
+﻿<Window x:Class="StockTradingSystem.Client.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:navigation="clr-namespace:StockTradingSystem.Client.UI.Navigation"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="300"
-        Title="MVVM Light Application"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+        Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
+        DataContext="{Binding Main,Source={StaticResource Locator}}">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
+                <ResourceDictionary Source="Skins/PathGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="LayoutRoot">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" GlassFrameThickness="1" CornerRadius="0" ResizeBorderThickness="7"/>
+    </WindowChrome.WindowChrome>
 
-        <TextBlock FontSize="36"
-                   FontWeight="Bold"
-                   Foreground="Purple"
-                   Text="{Binding WelcomeTitle}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   TextWrapping="Wrap" />
-
-    </Grid>
+    <Border Name="WindowBorder" Margin="{Binding WindowBorderMargin}" Background="{x:Null}">
+        <DockPanel>
+            <Border DockPanel.Dock="Top" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 0">
+                <DockPanel Background="{Binding ThemeBrush}" Height="30">
+                    <Button Name="BackBtn" Command="{Binding GoBackCommand}" DockPanel.Dock="Left" Style="{StaticResource WindowTitleBtn}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
+                        <Viewbox Height="12.5" Width="12.5" Child="{StaticResource LeftArrowPath}" />
+                    </Button>
+                    <TextBlock Text="{Binding WindowTitle}" FontSize="17" DockPanel.Dock="Left" Margin="10 5 5 5" Foreground="White"/>
+                    <Button Name="CloseBtn" Command="{Binding Close}" Style="{StaticResource WindowCloseBtn}"/>
+                    <Button Name="MaxBtn" Command="{Binding Maximize}" Style="{StaticResource WindowMaxBtn}"/>
+                    <Button Name="MinBtn" Command="{Binding Minimize}" Style="{StaticResource WindowMinBtn}"/>
+                    <Grid/>
+                </DockPanel>
+            </Border>
+            <Border BorderBrush="{Binding ThemeBrush}" BorderThickness="1 0 1 1">
+                <Grid>
+                    <Frame Name="MainFrame" Content="{Binding WindowContent}" navigation:DisableNavigation.Disable="True" Focusable="False"/>
+                </Grid>
+            </Border>
+        </DockPanel>
+    </Border>
 </Window>

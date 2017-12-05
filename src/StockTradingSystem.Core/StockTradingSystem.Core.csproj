@@ -42,7 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Access\IUserAccess.cs" />
+    <Compile Include="Business\IBusiness.cs" />
+    <Compile Include="Business\IOrderBusiness.cs" />
+    <Compile Include="Business\IStockBusiness.cs" />
+    <Compile Include="Business\IUserBusiness.cs" />
+    <Compile Include="Model\StockAgent.cs" />
+    <Compile Include="Model\StockDepthResult.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserCnyResult.cs" />
+    <Compile Include="Model\UserOrderResult.cs" />
+    <Compile Include="Model\UserStockResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
