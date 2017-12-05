@@ -1,0 +1,1 @@
+INSERT INTO stocks VALUES('河大股份', 10)
