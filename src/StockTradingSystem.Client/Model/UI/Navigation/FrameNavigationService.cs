@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using StockTradingSystem.Client.Properties;
 using StockTradingSystem.Client.ViewModel;
 
-namespace StockTradingSystem.Client.UI.Navigation
+namespace StockTradingSystem.Client.Model.UI.Navigation
 {
     /// <summary>
     /// The navigation message.
@@ -15,6 +15,10 @@ namespace StockTradingSystem.Client.UI.Navigation
     {
         private readonly Dictionary<string, Uri> _pagesByKey;
         private readonly Stack<string> _historic;
+
+        private Frame _mainFrame;
+        private Frame MainFrame => _mainFrame ?? (_mainFrame =
+                                        Application.Current.MainWindow.GetDescendantFromName("MainFrame") as Frame);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameNavigationService"/> class.
@@ -54,7 +58,7 @@ namespace StockTradingSystem.Client.UI.Navigation
         {
             if (_historic.Count <= 1) return;
             _historic.Pop();
-            Messenger.Default.Send(new GenericMessage<bool>(CanBack()),MainViewModel.Canback);
+            Messenger.Default.Send(new GenericMessage<bool>(CanBack()), MainViewModel.Canback);
             NavigateTo(_historic.Pop(), null);
         }
 
@@ -99,14 +103,11 @@ namespace StockTradingSystem.Client.UI.Navigation
                         string.Format(Resources.NoSuchPageException, pageKey), nameof(pageKey));
                 }
 
-                // Set the frame source, which initiates navigation
-                if (Application.Current.MainWindow.GetDescendantFromName("MainFrame") is Frame frame)
-                {
-                    frame.Source = _pagesByKey[pageKey];
-                }
+                MainFrame.Source = _pagesByKey[pageKey];
+
                 Parameter = parameter;
                 _historic.Push(pageKey);
-                Messenger.Default.Send(new GenericMessage<bool>(CanBack()),MainViewModel.Canback);
+                Messenger.Default.Send(new GenericMessage<bool>(CanBack()), MainViewModel.Canback);
                 CurrentPageKey = pageKey;
             }
         }

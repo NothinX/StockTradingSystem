@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="StockTradingSystem.Client.View.Control.MessageGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StockTradingSystem.Client.View.Control"
+             xmlns:control="clr-namespace:StockTradingSystem.Client.ViewModel.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <d:UserControl.DataContext>
+        <control:MessageGridViewModel />
+    </d:UserControl.DataContext>
+
+    <Border Name="DialogBorder" BorderBrush="{Binding BorderBrush}" BorderThickness="1" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border.Effect>
+            <DropShadowEffect Opacity="0.5" BlurRadius="10" Direction="-45" ShadowDepth="5"/>
+        </Border.Effect>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="200" MinWidth="300" Background="White" KeyDown="MessageGrid_KeyDown">
+            <DockPanel Margin="30">
+                <TextBlock Name="TitleText" Text="{Binding TitleText}" FontSize="20" DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Grid DockPanel.Dock="Bottom" Width="240" HorizontalAlignment="Right">
+                    <Button Name="CancelBtn" Command="{Binding CancelCommand}" Content="{Binding CancelBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Left" Style="{StaticResource ThemeBrushButton}" ToolTip="{Binding CancelBtnText}" Visibility="{Binding CancelBtnVisibility}" IsCancel="True"/>
+                    <Button Name="OkBtn" Command="{Binding OkCommand}" Content="{Binding OkBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Right" Style="{StaticResource ThemeBrushButton}" ToolTip="{Binding OkBtnText}" IsDefault="True"/>
+                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 10 0 10">
+                    <TextBlock Name="MessageText" Text="{Binding MessageText}" Padding="0" LineHeight="25" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                </ScrollViewer>
+            </DockPanel>
+        </Grid>
+    </Border>
+</UserControl>

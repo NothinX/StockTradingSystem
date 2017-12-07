@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace StockTradingSystem.Client.UI
+namespace StockTradingSystem.Client.Model.UI
 {
     public static class UIHelper
     {

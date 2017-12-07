@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace StockTradingSystem.Client.UI.Navigation
+namespace StockTradingSystem.Client.Model.UI.Navigation
 {
     /// <summary>
     /// 禁止Frame的导航

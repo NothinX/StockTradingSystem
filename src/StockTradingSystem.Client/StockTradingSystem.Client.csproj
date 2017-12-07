@@ -122,10 +122,15 @@
     <Compile Include="Model\user_stock_Result.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UI\Navigation\DisableNavigation.cs" />
-    <Compile Include="UI\Navigation\FrameNavigationService.cs" />
-    <Compile Include="UI\Navigation\IFrameNavigationService.cs" />
-    <Compile Include="UI\UIHelper.cs" />
+    <Compile Include="ViewModel\Control\MessageGridViewModel.cs" />
+    <Compile Include="View\Control\MessageGrid.xaml.cs">
+      <DependentUpon>MessageGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UI\Dialog\DialogService.cs" />
+    <Compile Include="Model\UI\Navigation\DisableNavigation.cs" />
+    <Compile Include="Model\UI\Navigation\FrameNavigationService.cs" />
+    <Compile Include="Model\UI\Navigation\IFrameNavigationService.cs" />
+    <Compile Include="Model\UI\UIHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\LoginView.xaml.cs">
@@ -151,6 +156,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Skins\PathGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Control\MessageGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Design\" />
-    <Folder Include="UI\Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model\GPModel.Context.tt">

@@ -10,6 +10,6 @@
 
     <Grid Margin="50">
         <TextBlock Text="LoginView" FontSize="50"/>
-        <Button Margin="100" VerticalAlignment="Top" HorizontalAlignment="Left" Name="LoginBtn" Content="Login" Command="{Binding Main.GoBackCommand,Source={StaticResource Locator}}"/>
+        <Button Margin="100" VerticalAlignment="Top" HorizontalAlignment="Left" Name="LoginBtn" Content="Login" Click="LoginBtn_OnClick"/>
     </Grid>
 </Page>
