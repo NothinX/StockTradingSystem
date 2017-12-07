@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
-using StockTradingSystem.Client.UI.Navigation;
-using StockTradingSystem.Client.ViewModel;namespace StockTradingSystem.Client
+using StockTradingSystem.Client.Model.UI.Navigation;
+using StockTradingSystem.Client.ViewModel;
+
+namespace StockTradingSystem.Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

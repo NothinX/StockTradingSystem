@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
-        xmlns:navigation="clr-namespace:StockTradingSystem.Client.UI.Navigation"
+        xmlns:navigation="clr-namespace:StockTradingSystem.Client.Model.UI.Navigation"
         mc:Ignorable="d ignore"
         Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
@@ -26,19 +26,22 @@
         <DockPanel>
             <Border DockPanel.Dock="Top" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 0">
                 <DockPanel Background="{Binding ThemeBrush}" Height="30">
-                    <Button Name="BackBtn" Command="{Binding GoBackCommand}" DockPanel.Dock="Left" Style="{StaticResource WindowTitleBtn}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
+                    <Button Name="BackBtn" Command="{Binding GoBackCommand}" DockPanel.Dock="Left" Style="{StaticResource WindowTitleBtn}" IsEnabled="{Binding BackBtnIsEnabled}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
                         <Viewbox Height="12.5" Width="12.5" Child="{StaticResource LeftArrowPath}" />
                     </Button>
                     <TextBlock Text="{Binding WindowTitle}" FontSize="17" DockPanel.Dock="Left" Margin="10 5 5 5" Foreground="White"/>
-                    <Button Name="CloseBtn" Command="{Binding Close}" Style="{StaticResource WindowCloseBtn}"/>
-                    <Button Name="MaxBtn" Command="{Binding Maximize}" Style="{StaticResource WindowMaxBtn}"/>
-                    <Button Name="MinBtn" Command="{Binding Minimize}" Style="{StaticResource WindowMinBtn}"/>
+                    <Button Name="CloseBtn" Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseBtn}"/>
+                    <Button Name="MaxBtn" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowMaxBtn}"/>
+                    <Button Name="MinBtn" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowMinBtn}"/>
                     <Grid/>
                 </DockPanel>
             </Border>
             <Border BorderBrush="{Binding ThemeBrush}" BorderThickness="1 0 1 1">
                 <Grid>
-                    <Frame Name="MainFrame" Content="{Binding WindowContent}" navigation:DisableNavigation.Disable="True" Focusable="False"/>
+                    <Frame Name="MainFrame" Content="{Binding WindowContent}" IsEnabled="{Binding MainFrameIsEnabled}" navigation:DisableNavigation.Disable="True" Focusable="False" Effect="{Binding MainFrameEffect}"/>
+                    <Grid Name="DialogsGrid" MaxHeight="{Binding Height,ElementName=MainFrame}" MaxWidth="{Binding Width,ElementName=MainFrame}">
+
+                    </Grid>
                 </Grid>
             </Border>
         </DockPanel>

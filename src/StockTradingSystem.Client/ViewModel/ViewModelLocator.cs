@@ -7,15 +7,7 @@
   
   In the View:
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-*/
-
-using System;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
-using StockTradingSystem.Client.UI.Navigation;
-
-namespace StockTradingSystem.Client.ViewModel
+*/using System;using GalaSoft.MvvmLight;using GalaSoft.MvvmLight.Ioc;using GalaSoft.MvvmLight.Views;using Microsoft.Practices.ServiceLocation;using StockTradingSystem.Client.Model.UI.Dialog;using StockTradingSystem.Client.Model.UI.Navigation;namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -33,13 +25,17 @@ namespace StockTradingSystem.Client.ViewModel
             if (ViewModelBase.IsInDesignModeStatic)
             {
             }
+            else
+            {
+                SimpleIoc.Default.Register<IDialogService, DialogService>(true);
+            }
             InitNavigation();
 
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
         /// <summary>
-        /// Gets the Main property.
+        /// Gets the <see cref="Main"/> property.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
@@ -47,12 +43,20 @@ namespace StockTradingSystem.Client.ViewModel
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         /// <summary>
-        /// Gets the IFrameNavigationService property.
+        /// Gets the <see cref="FrameNavigationService"/> property.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public IFrameNavigationService FrameNavigationService => ServiceLocator.Current.GetInstance<IFrameNavigationService>();
+
+        /// <summary>
+        /// Gets the <see cref="DialogService"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
 
         private static void InitNavigation()
         {
@@ -68,6 +72,9 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            SimpleIoc.Default.Unregister<IDialogService>();
+            SimpleIoc.Default.Unregister<MainViewModel>();
+            SimpleIoc.Default.Unregister<IFrameNavigationService>();
         }
     }
 }
