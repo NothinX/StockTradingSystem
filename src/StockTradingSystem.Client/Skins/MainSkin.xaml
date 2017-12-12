@@ -3,23 +3,25 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
-    <Style x:Key="WindowTitleBtn" TargetType="Button">
+    <Style x:Key="WindowTitleBtn" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}">
-                        <Rectangle Height="30" Width="40" Stroke="{x:Null}" StrokeThickness="0" Fill="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" x:Name="background" SnapsToDevicePixels="True"/>
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"/>
+                    <Grid Background="{Binding Main.ThemeBrush, Source={StaticResource Locator}}">
+                        <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="Transparent" x:Name="background" SnapsToDevicePixels="True"/>
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#41FFFFFF"/>
+                            <Setter Property="Fill" TargetName="background" Value="#41FFFFFF"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#33000000"/>
+                            <Setter Property="Fill" TargetName="background" Value="#33000000"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -27,7 +29,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WindowMinBtn" TargetType="Button">
+    <Style x:Key="WindowMinBtn" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Foreground" Value="White"/>
@@ -35,19 +39,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}">
-                        <Rectangle Height="30" Width="40" Stroke="{x:Null}" StrokeThickness="0" Fill="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" x:Name="background" SnapsToDevicePixels="True"/>
+                    <Grid Background="{Binding Main.ThemeBrush, Source={StaticResource Locator}}">
+                        <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="Transparent" x:Name="background" SnapsToDevicePixels="True"/>
                         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Line X2="10" Stroke="White" StrokeThickness="2" SnapsToDevicePixels="True"/>
                         </Grid>
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}"/>
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#41FFFFFF"/>
+                            <Setter Property="Fill" TargetName="background" Value="#41FFFFFF"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#33000000"/>
+                            <Setter Property="Fill" TargetName="background" Value="#33000000"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -55,20 +59,22 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WindowMaxBtn" TargetType="Button">
+    <Style x:Key="WindowMaxBtn" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}">
-                        <Rectangle Height="30" Width="40" Stroke="{x:Null}" StrokeThickness="0" Fill="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" x:Name="background" SnapsToDevicePixels="True"/>
+                    <Grid Background="{Binding Main.ThemeBrush, Source={StaticResource Locator}}">
+                        <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="Transparent" x:Name="background" SnapsToDevicePixels="True"/>
                         <Grid>
-                            <Grid Name="NormalGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid x:Name="NormalGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle Height="10" Width="10" Stroke="White" Fill="{x:Null}" StrokeThickness="2" SnapsToDevicePixels="True"/>
                             </Grid>
-                            <Grid Name="MaxGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid x:Name="MaxGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle Height="10" Width="10" Margin="-5 0 0 -5" Stroke="White" Fill="{x:Null}" StrokeThickness="2" SnapsToDevicePixels="True"/>
                                 <Line Stroke="White" X1="3" X2="13" Y1="1" Y2="1" StrokeThickness="2" SnapsToDevicePixels="True"/>
                                 <Line Stroke="White" X1="12" X2="12" Y1="0" Y2="10" StrokeThickness="2" SnapsToDevicePixels="True"/>
@@ -80,17 +86,17 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#41FFFFFF"/>
+                            <Setter Property="Fill" TargetName="background" Value="#41FFFFFF"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#33000000"/>
+                            <Setter Property="Fill" TargetName="background" Value="#33000000"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Main.WindowState,Source={StaticResource Locator}}" Value="Maximized">
+                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Maximized">
                             <Setter Property="ToolTip" Value="向下还原"/>
                             <Setter Property="Visibility" TargetName="NormalGrid" Value="Visible"/>
                             <Setter Property="Visibility" TargetName="MaxGrid" Value="Collapsed"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Main.WindowState,Source={StaticResource Locator}}" Value="Normal">
+                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Normal">
                             <Setter Property="ToolTip" Value="最大化"/>
                             <Setter Property="Visibility" TargetName="NormalGrid" Value="Collapsed"/>
                             <Setter Property="Visibility" TargetName="MaxGrid" Value="Visible"/>
@@ -101,7 +107,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WindowCloseBtn" TargetType="Button">
+    <Style x:Key="WindowCloseBtn" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Foreground" Value="White"/>
@@ -109,8 +117,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid>
-                        <Rectangle Height="30" Width="40" Stroke="{x:Null}" StrokeThickness="0" Fill="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" x:Name="background" SnapsToDevicePixels="True"/>
+                    <Grid Background="{Binding Main.ThemeBrush, Source={StaticResource Locator}}">
+                        <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="Transparent" x:Name="background" SnapsToDevicePixels="True"/>
                         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Line Stroke="White" StrokeThickness="2" X2="10" Y2="10" SnapsToDevicePixels="True"/>
                             <Line Stroke="White" StrokeThickness="2" X2="10" Y1="10" SnapsToDevicePixels="True"/>
@@ -119,33 +127,73 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="Red"/>
+                            <Setter Property="Fill" TargetName="background" Value="Red"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#FFFF6464"/>
+                            <Setter Property="Fill" TargetName="background" Value="#FFFF6464"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="ThemeBrushButton" TargetType="Button">
+
+    <Style x:Key="ThemeBrushButton" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="10 2.5 10 2.5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}">
+                    <Grid Background="{Binding Main.ThemeBrush, Source={StaticResource Locator}}">
                         <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="{DynamicResource themeBrush}" x:Name="background" SnapsToDevicePixels="True"/>
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#41FFFFFF"/>
+                            <Setter Property="Fill" TargetName="background" Value="#41FFFFFF"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Rectangle.Fill" TargetName="background" Value="#33000000"/>
+                            <Setter Property="Fill" TargetName="background" Value="#33000000"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="NavigateButton" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="DarkGray"/>
+        <Setter Property="FontSize" Value="27"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Padding" Value="20 0 20 4"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <Grid>
+                            <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="#01FFFFFF" SnapsToDevicePixels="True"/>
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="contentPresenter">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

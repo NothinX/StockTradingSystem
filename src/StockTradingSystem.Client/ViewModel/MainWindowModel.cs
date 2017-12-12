@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using GalaSoft.MvvmLight;
@@ -7,35 +8,56 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model.UI;
 using StockTradingSystem.Client.Model.UI.Navigation;
+using StockTradingSystem.Client.ViewModel.Control;
 
 namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
-    /// This class contains properties that the main View can data bind to.
+    /// This class contains properties that the <see cref="MainWindow"/> can data bind to.
     /// <para>
     /// See http://www.mvvmlight.net
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainWindowModel : ViewModelBase
     {
-        public static readonly string Canback = "FrameNavigationServiceCanBack";
         public static readonly string ShowDialog = "DialogServiceShowDialog";
+        public static readonly string FirstView = "NavigateToFirstView";
 
         private readonly IFrameNavigationService _navigationService;
 
-        public MainViewModel(IFrameNavigationService navigationService)
+        private UIElementCollection _navBar;
+
+        public MainWindowModel(IFrameNavigationService navigationService)
         {
             _navigationService = navigationService;
-            Messenger.Default.Register<GenericMessage<bool>>(this, Canback, b => BackBtnVisibility = b.Content ? Visibility.Visible : Visibility.Collapsed);
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
             {
-                BackBtnIsEnabled = !b.Content;
+                CaptionIsEnabled = !b.Content;
                 MainFrameIsEnabled = !b.Content;
                 MainFrameEffect = b.Content
                     ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Performance }
                     : null;
             });
+            Messenger.Default.Register<GenericMessage<string>>(this, FirstView, v =>
+            {
+                _navBar = (Application.Current.MainWindow.GetDescendantFromName("NavBar") as StackPanel)?.Children;
+                _navigationService.NavigateTo(v.Content);
+                SyncNavBarState();
+            });
+        }
+
+        private void SyncNavBarState()
+        {
+            var v = SimpleIoc.Default.GetInstance<IFrameNavigationService>().CurrentPageKey;
+            foreach (var child in _navBar)
+            {
+                if (child is RadioButton c)
+                {
+                    c.IsChecked = c.CommandParameter as string == v;
+                }
+            }
         }
 
         #region Property
@@ -160,21 +182,21 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="BackBtnIsEnabled" /> property's name.
+        /// The <see cref="CaptionIsEnabled" /> property's name.
         /// </summary>
-        public const string BackBtnEnabledPropertyName = nameof(BackBtnIsEnabled);
+        public const string BackBtnEnabledPropertyName = nameof(CaptionIsEnabled);
 
-        private bool _backBtnIsEnabled = true;
+        private bool _captionIsEnabled = true;
 
         /// <summary>
-        /// Sets and gets the <see cref="BackBtnIsEnabled"/> property.
+        /// Sets and gets the <see cref="CaptionIsEnabled"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool BackBtnIsEnabled
+        public bool CaptionIsEnabled
         {
-            get => _backBtnIsEnabled;
-            set => Set(BackBtnEnabledPropertyName, ref _backBtnIsEnabled, value, true);
+            get => _captionIsEnabled;
+            set => Set(BackBtnEnabledPropertyName, ref _captionIsEnabled, value, true);
         }
 
         /// <summary>
@@ -239,9 +261,9 @@ namespace StockTradingSystem.Client.ViewModel
         private static async void ExecuteClose()
         {
             await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("确定要退出吗？", "提示", "确定", "取消", b =>
-              {
-                  if (b) Application.Current.Shutdown();
-              });
+            {
+                if (b) Application.Current.Shutdown();
+            });
         }
 
         private RelayCommand _maximizeCommand;
@@ -266,7 +288,9 @@ namespace StockTradingSystem.Client.ViewModel
 
         private void ExecuteNavigateCommand(string pageKey)
         {
-            SimpleIoc.Default.GetInstance<IFrameNavigationService>()?.NavigateTo(pageKey);
+            _navigationService.NavigateTo(pageKey);
+            BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
+            SyncNavBarState();
         }
 
         private RelayCommand _goBackCommand;
@@ -280,6 +304,8 @@ namespace StockTradingSystem.Client.ViewModel
         private void ExecuteGoBackCommand()
         {
             _navigationService.GoBack();
+            BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
+            SyncNavBarState();
         }
 
         #endregion

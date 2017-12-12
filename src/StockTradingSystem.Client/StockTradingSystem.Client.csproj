@@ -81,6 +81,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="View\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\AccountButton.xaml.cs">
+      <DependentUpon>AccountButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Access\GpEntitiesUserAccess.cs" />
     <Compile Include="Model\Business\GpEntitiesBusiness.cs" />
     <Compile Include="Model\GPModel.Context.cs">
@@ -131,7 +138,7 @@
     <Compile Include="Model\UI\Navigation\FrameNavigationService.cs" />
     <Compile Include="Model\UI\Navigation\IFrameNavigationService.cs" />
     <Compile Include="Model\UI\UIHelper.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -139,6 +146,20 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TradeView.xaml.cs">
+      <DependentUpon>TradeView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\RegisterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\AccountButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -168,6 +189,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,7 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
-      <Project>{101A204C-9747-4892-97B1-FDF18567E444}</Project>
+      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
       <Name>StockTradingSystem.Core</Name>
     </ProjectReference>
   </ItemGroup>

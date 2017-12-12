@@ -1,6 +1,5 @@
 ﻿using System.Windows;
-using GalaSoft.MvvmLight.Ioc;
-using StockTradingSystem.Client.Model.UI.Navigation;
+using GalaSoft.MvvmLight.Messaging;
 using StockTradingSystem.Client.ViewModel;
 
 namespace StockTradingSystem.Client
@@ -22,7 +21,7 @@ namespace StockTradingSystem.Client
 
         private static void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            SimpleIoc.Default.GetInstance<IFrameNavigationService>()?.NavigateTo("MainView");
+            Messenger.Default.Send(new GenericMessage<string>("MainView"), MainWindowModel.FirstView);
         }
     }
 }

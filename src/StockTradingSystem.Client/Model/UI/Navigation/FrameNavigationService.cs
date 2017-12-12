@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using GalaSoft.MvvmLight.Messaging;
 using StockTradingSystem.Client.Properties;
-using StockTradingSystem.Client.ViewModel;
 
 namespace StockTradingSystem.Client.Model.UI.Navigation
 {
@@ -14,7 +13,7 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
     public class FrameNavigationService : IFrameNavigationService
     {
         private readonly Dictionary<string, Uri> _pagesByKey;
-        private readonly Stack<string> _historic;
+        private readonly List<string> _historic;
 
         private Frame _mainFrame;
         private Frame MainFrame => _mainFrame ?? (_mainFrame =
@@ -26,7 +25,7 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
         public FrameNavigationService()
         {
             _pagesByKey = new Dictionary<string, Uri>();
-            _historic = new Stack<string>();
+            _historic = new List<string>();
         }
 
         /// <inheritdoc />
@@ -57,16 +56,15 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
         public void GoBack()
         {
             if (_historic.Count <= 1) return;
-            _historic.Pop();
-            Messenger.Default.Send(new GenericMessage<bool>(CanBack()), MainViewModel.Canback);
-            NavigateTo(_historic.Pop(), null);
+            _historic.Remove(_historic.Last());
+            NavigateTo(_historic.Last(), null);
         }
 
         /// <summary>
         /// The can back.
         /// </summary>
         /// <returns>can back or not</returns>
-        private bool CanBack()
+        public bool CanBack()
         {
             return _historic.Count > 1;
         }
@@ -106,8 +104,17 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
                 MainFrame.Source = _pagesByKey[pageKey];
 
                 Parameter = parameter;
-                _historic.Push(pageKey);
-                Messenger.Default.Send(new GenericMessage<bool>(CanBack()), MainViewModel.Canback);
+                if (CurrentPageKey != pageKey)
+                {
+                    for (var i = 0; i < _historic.Count; i++)
+                    {
+                        if (_historic[i] == pageKey)
+                        {
+                            _historic.RemoveAt(i);
+                        }
+                    }
+                    _historic.Add(pageKey);
+                }
                 CurrentPageKey = pageKey;
             }
         }

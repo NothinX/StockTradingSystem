@@ -20,7 +20,7 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
 
         private (Guid, UIElement) ShowDialog(Func<Guid, UIElement> getGrid)
         {
-            Messenger.Default.Send(new GenericMessage<bool>(true), MainViewModel.ShowDialog);
+            Messenger.Default.Send(new GenericMessage<bool>(true), MainWindowModel.ShowDialog);
             var guid = Guid.NewGuid();
             var grid = getGrid(guid);
             lock (_dialogResult)
@@ -46,7 +46,7 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
             {
                 _dialogResult.Remove(guid);
             }
-            if (gridCount <= 0) Messenger.Default.Send(new GenericMessage<bool>(false), MainViewModel.ShowDialog);
+            if (gridCount <= 0) Messenger.Default.Send(new GenericMessage<bool>(false), MainWindowModel.ShowDialog);
         }
 
         private void ChangeDialogResult(Guid guid, bool result)

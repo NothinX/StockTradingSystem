@@ -9,7 +9,6 @@
       Title="MainView" Background="White">
 
     <Grid Margin="50">
-        <TextBlock Text="MainView" FontSize="50"/>
-        <Button Margin="100" VerticalAlignment="Top" HorizontalAlignment="Left" Name="LoginBtn" Content="Login" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="LoginView"/>
+        <TextBlock Text="欢迎" FontSize="50"/>
     </Grid>
 </Page>

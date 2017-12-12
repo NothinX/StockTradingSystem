@@ -7,7 +7,18 @@
   
   In the View:
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-*/using System;using GalaSoft.MvvmLight;using GalaSoft.MvvmLight.Ioc;using GalaSoft.MvvmLight.Views;using Microsoft.Practices.ServiceLocation;using StockTradingSystem.Client.Model.UI.Dialog;using StockTradingSystem.Client.Model.UI.Navigation;namespace StockTradingSystem.Client.ViewModel
+*/
+
+using System;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
+using Microsoft.Practices.ServiceLocation;
+using StockTradingSystem.Client.Model.UI.Dialog;
+using StockTradingSystem.Client.Model.UI.Navigation;
+using StockTradingSystem.Client.ViewModel.Control;
+
+namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -31,7 +42,8 @@
             }
             InitNavigation();
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<MainWindowModel>();
+            SimpleIoc.Default.Register<AccountButtonViewModel>();
         }
 
         /// <summary>
@@ -40,7 +52,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public MainWindowModel Main => ServiceLocator.Current.GetInstance<MainWindowModel>();
 
         /// <summary>
         /// Gets the <see cref="FrameNavigationService"/> property.
@@ -58,11 +70,22 @@
             Justification = "This non-static member is needed for data binding purposes.")]
         public IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
 
+        /// <summary>
+        /// Gets the <see cref="AccountBtn"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public AccountButtonViewModel AccountBtn => ServiceLocator.Current.GetInstance<AccountButtonViewModel>();
+
         private static void InitNavigation()
         {
             var navigationService = new FrameNavigationService();
             navigationService.Configure("MainView", new Uri("../View/MainView.xaml", UriKind.Relative));
             navigationService.Configure("LoginView", new Uri("../View/LoginView.xaml", UriKind.Relative));
+            navigationService.Configure("RegisterView", new Uri("../View/RegisterView.xaml", UriKind.Relative));
+            navigationService.Configure("TradeView", new Uri("../View/TradeView.xaml", UriKind.Relative));
+            navigationService.Configure("AccountView", new Uri("../View/AccountView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
@@ -73,7 +96,8 @@
         public static void Cleanup()
         {
             SimpleIoc.Default.Unregister<IDialogService>();
-            SimpleIoc.Default.Unregister<MainViewModel>();
+            SimpleIoc.Default.Unregister<AccountButtonViewModel>();
+            SimpleIoc.Default.Unregister<MainWindowModel>();
             SimpleIoc.Default.Unregister<IFrameNavigationService>();
         }
     }
