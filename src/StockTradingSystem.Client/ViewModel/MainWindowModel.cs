@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,6 +25,8 @@ namespace StockTradingSystem.Client.ViewModel
         public static readonly string ShowDialog = "DialogServiceShowDialog";
         public static readonly string FirstView = "NavigateToFirstView";
 
+        private const string TitleBtnViews = "StockView#TradeView#AccountView";
+
         private readonly IFrameNavigationService _navigationService;
 
         private UIElementCollection _navBar;
@@ -48,7 +51,7 @@ namespace StockTradingSystem.Client.ViewModel
 
         private void SyncNavBarState()
         {
-            TitleBtnIsChecked = TitleBtnIsEnabled = _navigationService.CurrentPageKey == "TradeView" || _navigationService.CurrentPageKey == "AccountView";
+            TitleBtnIsChecked = TitleBtnIsEnabled = TitleBtnViews.Split('#').ToList().Contains(_navigationService.CurrentPageKey);
             var v = _navigationService.CurrentPageKey;
             foreach (var child in _navBar)
             {

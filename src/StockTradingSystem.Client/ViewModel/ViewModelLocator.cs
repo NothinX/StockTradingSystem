@@ -102,6 +102,7 @@ namespace StockTradingSystem.Client.ViewModel
             navigationService.Configure("MainView", new Uri("../View/MainView.xaml", UriKind.Relative));
             navigationService.Configure("LoginView", new Uri("../View/LoginView.xaml", UriKind.Relative));
             navigationService.Configure("RegisterView", new Uri("../View/RegisterView.xaml", UriKind.Relative));
+            navigationService.Configure("StockView", new Uri("../View/StockView.xaml", UriKind.Relative));
             navigationService.Configure("TradeView", new Uri("../View/TradeView.xaml", UriKind.Relative));
             navigationService.Configure("AccountView", new Uri("../View/AccountView.xaml", UriKind.Relative));
 
