@@ -34,8 +34,7 @@ namespace StockTradingSystem.Client.ViewModel
             _navigationService = navigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
             {
-                CaptionIsEnabled = !b.Content;
-                MainFrameIsEnabled = !b.Content;
+                IsEnabledWithDialog = !b.Content;
                 MainFrameEffect = b.Content
                     ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Performance }
                     : null;
@@ -182,39 +181,21 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="CaptionIsEnabled" /> property's name.
+        /// The <see cref="IsEnabledWithDialog" /> property's name.
         /// </summary>
-        public const string BackBtnEnabledPropertyName = nameof(CaptionIsEnabled);
+        public const string BackBtnEnabledPropertyName = nameof(IsEnabledWithDialog);
 
-        private bool _captionIsEnabled = true;
+        private bool _isEnabledWithDialog = true;
 
         /// <summary>
-        /// Sets and gets the <see cref="CaptionIsEnabled"/> property.
+        /// Sets and gets the <see cref="IsEnabledWithDialog"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool CaptionIsEnabled
+        public bool IsEnabledWithDialog
         {
-            get => _captionIsEnabled;
-            set => Set(BackBtnEnabledPropertyName, ref _captionIsEnabled, value, true);
-        }
-
-        /// <summary>
-        /// The <see cref="MainFrameIsEnabled" /> property's name.
-        /// </summary>
-        public const string MainFrameEnabledPropertyName = nameof(MainFrameIsEnabled);
-
-        private bool _mainFrameIsEnabled = true;
-
-        /// <summary>
-        /// Sets and gets the <see cref="MainFrameIsEnabled"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public bool MainFrameIsEnabled
-        {
-            get => _mainFrameIsEnabled;
-            set => Set(MainFrameEnabledPropertyName, ref _mainFrameIsEnabled, value, true);
+            get => _isEnabledWithDialog;
+            set => Set(BackBtnEnabledPropertyName, ref _isEnabledWithDialog, value, true);
         }
 
         /// <summary>
