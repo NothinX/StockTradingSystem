@@ -8,7 +8,31 @@
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="TradeView" Background="White">
 
-    <Grid Margin="50">
-        <TextBlock Text="TradeView" FontSize="50"/>
-    </Grid>
+    <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+        <Grid Background="AliceBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding ActualHeight,ElementName=TradeScroll}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
+                    <TextBlock FontSize="50" Text="市场行情" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
+                    <TextBlock FontSize="50" Text="市场图表" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="2" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
+                    <TextBlock FontSize="50" Text="最近成交" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Margin="10 0 10 10" Background="White">
+                <TextBlock FontSize="50" Text="委托列表" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>
