@@ -10,7 +10,6 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.UI;
 using StockTradingSystem.Client.Model.UI.Navigation;
-using StockTradingSystem.Client.ViewModel.Control;
 
 namespace StockTradingSystem.Client.ViewModel
 {
@@ -35,8 +34,8 @@ namespace StockTradingSystem.Client.ViewModel
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
             {
                 IsEnabledWithDialog = !b.Content;
-                MainFrameEffect = b.Content
-                    ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Performance }
+                MainGridEffect = b.Content
+                    ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Quality, KernelType = KernelType.Gaussian }
                     : null;
             });
             Messenger.Default.Register<GenericMessage<string>>(this, FirstView, v =>
@@ -49,7 +48,8 @@ namespace StockTradingSystem.Client.ViewModel
 
         private void SyncNavBarState()
         {
-            var v = SimpleIoc.Default.GetInstance<IFrameNavigationService>().CurrentPageKey;
+            TitleBtnIsChecked = TitleBtnIsEnabled = _navigationService.CurrentPageKey == "TradeView" || _navigationService.CurrentPageKey == "AccountView";
+            var v = _navigationService.CurrentPageKey;
             foreach (var child in _navBar)
             {
                 if (child is RadioButton c)
@@ -164,23 +164,6 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="WindowContent" /> property's name.
-        /// </summary>
-        public const string ContentPropertyName = nameof(WindowContent);
-
-        private object _windowContent;
-
-        /// <summary>
-        /// Sets and gets the <see cref="WindowContent"/> property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public object WindowContent
-        {
-            get => _windowContent;
-            set => Set(ContentPropertyName, ref _windowContent, value);
-        }
-
-        /// <summary>
         /// The <see cref="IsEnabledWithDialog" /> property's name.
         /// </summary>
         public const string BackBtnEnabledPropertyName = nameof(IsEnabledWithDialog);
@@ -199,21 +182,57 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="MainFrameEffect" /> property's name.
+        /// The <see cref="MainGridEffect" /> property's name.
         /// </summary>
-        public const string MainFrameEffectPropertyName = nameof(MainFrameEffect);
+        public const string MainFrameEffectPropertyName = nameof(MainGridEffect);
 
-        private Effect _mainFrameEffect;
+        private Effect _mainGridEffect;
 
         /// <summary>
-        /// Sets and gets the <see cref="MainFrameEffect"/> property.
+        /// Sets and gets the <see cref="MainGridEffect"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public Effect MainFrameEffect
+        public Effect MainGridEffect
         {
-            get => _mainFrameEffect;
-            set => Set(MainFrameEffectPropertyName, ref _mainFrameEffect, value, true);
+            get => _mainGridEffect;
+            set => Set(MainFrameEffectPropertyName, ref _mainGridEffect, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="TitleBtnIsEnabled" /> property's name.
+        /// </summary>
+        public const string TitleBtnIsEnabledPropertyName = nameof(TitleBtnIsEnabled);
+
+        private bool _titleBtnIsEnabled;
+
+        /// <summary>
+        /// Sets and gets the <see cref="TitleBtnIsEnabled"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public bool TitleBtnIsEnabled
+        {
+            get => _titleBtnIsEnabled;
+            set => Set(TitleBtnIsEnabledPropertyName, ref _titleBtnIsEnabled, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="TitleBtnIsChecked" /> property's name.
+        /// </summary>
+        public const string TitleBtnIsCheckedPropertyName = nameof(TitleBtnIsChecked);
+
+        private bool _titleBtnIsChecked;
+
+        /// <summary>
+        /// Sets and gets the <see cref="TitleBtnIsChecked"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public bool TitleBtnIsChecked
+        {
+            get => _titleBtnIsChecked;
+            set => Set(TitleBtnIsCheckedPropertyName, ref _titleBtnIsChecked, value, true);
         }
 
         #endregion

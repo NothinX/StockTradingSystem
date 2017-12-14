@@ -24,34 +24,52 @@
     </WindowChrome.WindowChrome>
 
     <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
-        <DockPanel>
-            <Grid DockPanel.Dock="Top" IsHitTestVisible="True" Background="{Binding ThemeBrush}" IsEnabled="{Binding IsEnabledWithDialog}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid Name="MainGrid" IsEnabled="{Binding IsEnabledWithDialog}" Effect="{Binding MainGridEffect}">
+                    <Grid.Resources>
+                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
+                        <TextBlock FontSize="50" Text="买入卖出" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <Frame Name="MainFrame" navigation:DisableNavigation.Disable="True" Focusable="False"/>
+                    </Border>
+                </Grid>
+                <Grid Name="DialogsGrid" MaxHeight="{Binding Height, ElementName=MainGrid}" MaxWidth="{Binding Width, ElementName=MainGrid}"/>
+            </Grid>
+            <Grid Grid.Row="0" IsHitTestVisible="True" Background="{Binding ThemeBrush}" IsEnabled="{Binding IsEnabledWithDialog}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <DockPanel Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding IsEnabledWithDialog}">
-                    <TextBlock Text="{Binding WindowTitle}" FontSize="32" Margin="32 5 5 5" Foreground="White" DockPanel.Dock="Left"/>
-                    <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="32 0 0 0">
+                    <ToggleButton Name="TitleBtn" Content="{Binding WindowTitle}" Padding="32 5 32 5" IsEnabled="{Binding TitleBtnIsEnabled}" IsChecked="{Binding TitleBtnIsChecked}" Style="{DynamicResource TitleBtn}"/>
+                    <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <RadioButton Content="交易" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView"/>
                         <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView"/>
                     </StackPanel>
                 </DockPanel>
                 <DockPanel Grid.Row="0" HorizontalAlignment="Right" IsEnabled="{Binding IsEnabledWithDialog}">
-                    <Button x:Name="CloseBtn" Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseBtn}"/>
-                    <Button x:Name="MaxBtn" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowMaxBtn}"/>
-                    <Button x:Name="MinBtn" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowMinBtn}"/>
-                    <Button x:Name="BackBtn" Command="{Binding GoBackCommand}" Style="{StaticResource WindowTitleBtn}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
+                    <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseBtn}"/>
+                    <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowMaxBtn}"/>
+                    <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowMinBtn}"/>
+                    <Button Command="{Binding GoBackCommand}" Style="{StaticResource WindowTitleBtn}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
                         <Viewbox Height="12.5" Width="12.5" Child="{StaticResource LeftArrowPath}" />
                     </Button>
                     <Grid/>
                 </DockPanel>
                 <control:AccountButton HorizontalAlignment="Right" Grid.Row="1"/>
             </Grid>
-            <Grid>
-                <Frame x:Name="MainFrame" Content="{Binding WindowContent}" IsEnabled="{Binding IsEnabledWithDialog}" navigation:DisableNavigation.Disable="True" Focusable="False" Effect="{Binding MainFrameEffect}"/>
-                <Grid x:Name="DialogsGrid" MaxHeight="{Binding Height, ElementName=MainFrame}" MaxWidth="{Binding Width, ElementName=MainFrame}"/>
-            </Grid>
-        </DockPanel>
+        </Grid>
     </Border>
 </Window>
