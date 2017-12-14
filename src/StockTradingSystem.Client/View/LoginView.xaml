@@ -6,11 +6,28 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="LoginView" Background="White">
+      Title="LoginView" Background="White" DataContext="{Binding Login,Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+                <ResourceDictionary Source="../Skins/LoginSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Margin="50">
-        <TextBlock Text="LoginView" FontSize="50"/>
-        <TextBox Margin="75" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100"/>
-        <Button Margin="100" VerticalAlignment="Top" HorizontalAlignment="Left" Name="LoginBtn" Content="Login" Click="LoginBtn_OnClick"/>
+        <Grid Margin="100" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="1" FontSize="24" Width="300" Text="{Binding UserNameText}" Style="{StaticResource LoginTb}"/>
+            <PasswordBox Grid.Row="2" FontSize="24" Width="300" Style="{StaticResource LoginPb}"/>
+            <Button Grid.Row="3" FontSize="24" Width="300" Margin="0 25 0 0" Content="登录" Command="{Binding LoginCommand}" Style="{StaticResource ThemeBrushBtn}"/>
+        </Grid>
     </Grid>
 </Page>

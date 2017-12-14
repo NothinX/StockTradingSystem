@@ -28,8 +28,8 @@
             <DockPanel Margin="30">
                 <TextBlock Name="TitleText" Text="{Binding TitleText}" FontSize="20" DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Grid DockPanel.Dock="Bottom" Width="240" HorizontalAlignment="Right">
-                    <Button Name="CancelBtn" Command="{Binding CancelCommand}" Content="{Binding CancelBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Left" Style="{StaticResource ThemeBrushButton}" ToolTip="{Binding CancelBtnText}" Visibility="{Binding CancelBtnVisibility}" IsCancel="True"/>
-                    <Button Name="OkBtn" Command="{Binding OkCommand}" Content="{Binding OkBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Right" Style="{StaticResource ThemeBrushButton}" ToolTip="{Binding OkBtnText}" IsDefault="True"/>
+                    <Button Name="CancelBtn" Command="{Binding CancelCommand}" Content="{Binding CancelBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Left" Style="{StaticResource ThemeBrushBtn}" ToolTip="{Binding CancelBtnText}" Visibility="{Binding CancelBtnVisibility}" IsCancel="True"/>
+                    <Button Name="OkBtn" Command="{Binding OkCommand}" Content="{Binding OkBtnText}" FontSize="17" Padding="40 5" HorizontalAlignment="Right" Style="{StaticResource ThemeBrushBtn}" ToolTip="{Binding OkBtnText}" IsDefault="True"/>
                 </Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 10 0 10">
                     <TextBlock Name="MessageText" Text="{Binding MessageText}" Padding="0" LineHeight="25" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>

@@ -44,6 +44,7 @@ namespace StockTradingSystem.Client.ViewModel
 
             SimpleIoc.Default.Register<MainWindowModel>();
             SimpleIoc.Default.Register<AccountButtonViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
         }
 
         /// <summary>
@@ -77,6 +78,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public AccountButtonViewModel AccountBtn => ServiceLocator.Current.GetInstance<AccountButtonViewModel>();
+
+        /// <summary>
+        /// Gets the <see cref="Login"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
         private static void InitNavigation()
         {
