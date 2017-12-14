@@ -25,7 +25,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="1" FontSize="24" Width="300" Text="{Binding UserNameText}" Style="{StaticResource LoginTb}"/>
+            <TextBox Grid.Row="1" FontSize="24" Width="300" Text="{Binding LoginNameText}" Style="{StaticResource LoginTb}"/>
             <PasswordBox Grid.Row="2" FontSize="24" Width="300" Style="{StaticResource LoginPb}"/>
             <Button Grid.Row="3" FontSize="24" Width="300" Margin="0 25 0 0" Content="登录" Command="{Binding LoginCommand}" Style="{StaticResource ThemeBrushBtn}"/>
         </Grid>

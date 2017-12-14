@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace StockTradingSystem.Client.ViewModel
 {
-    public class LoginViewModel : ViewModelBase
+    public class RegisterViewModel : ViewModelBase
     {
         #region Property
 
@@ -50,25 +50,25 @@ namespace StockTradingSystem.Client.ViewModel
 
         #region Command
 
-        private RelayCommand _loginCommand;
+        private RelayCommand _registerCommand;
 
         /// <summary>
-        /// Gets the <see cref="LoginCommand"/>.
+        /// Gets the <see cref="RegisterCommand"/>.
         /// </summary>
-        public RelayCommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(
-                                                ExecuteLoginCommand));
+        public RelayCommand RegisterCommand => _registerCommand ?? (_registerCommand = new RelayCommand(
+                                                ExecuteRegisterCommand));
 
-        private async void ExecuteLoginCommand()
+        private async void ExecuteRegisterCommand()
         {
             var r = new Random();
             var i = r.Next(2);
             if (i == 0)
             {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录失败", "错误");
+                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("注册失败", "错误");
             }
             else
             {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录成功", "提示");
+                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("注册成功", "提示");
             }
         }
 
