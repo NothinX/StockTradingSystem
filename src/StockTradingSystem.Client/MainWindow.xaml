@@ -58,6 +58,7 @@
                         <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView"/>
                         <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView"/>
                         <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView"/>
+                        <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"/>
                     </StackPanel>
                 </DockPanel>
                 <DockPanel Grid.Row="0" HorizontalAlignment="Right" IsEnabled="{Binding IsEnabledWithDialog}">

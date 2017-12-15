@@ -105,6 +105,7 @@ namespace StockTradingSystem.Client.ViewModel
             navigationService.Configure("StockView", new Uri("../View/StockView.xaml", UriKind.Relative));
             navigationService.Configure("TradeView", new Uri("../View/TradeView.xaml", UriKind.Relative));
             navigationService.Configure("AccountView", new Uri("../View/AccountView.xaml", UriKind.Relative));
+            navigationService.Configure("SettingsView", new Uri("../View/SettingsView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
