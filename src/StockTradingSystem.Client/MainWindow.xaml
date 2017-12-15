@@ -55,10 +55,13 @@
                 <DockPanel Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding IsEnabledWithDialog}">
                     <ToggleButton Name="TitleBtn" Content="{Binding WindowTitle}" Padding="32 5 32 5" Command="{Binding TitleBtnCommand}" IsEnabled="{Binding TitleBtnIsEnabled}" IsChecked="{Binding TitleBtnIsChecked}" Style="{DynamicResource TitleBtn}"/>
                     <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
-                        <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView"/>
-                        <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView"/>
-                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView"/>
-                        <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"/>
+                        <StackPanel.Resources>
+                            <navigation:NavBarItemIsCheckedConverter x:Key="NavBarItemIsCheckedConverter"/>
+                        </StackPanel.Resources>
+                        <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=StockView}"/>
+                        <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=TradeView}"/>
+                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"/>
+                        <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"  IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SettingsView}"/>
                     </StackPanel>
                 </DockPanel>
                 <DockPanel Grid.Row="0" HorizontalAlignment="Right" IsEnabled="{Binding IsEnabledWithDialog}">

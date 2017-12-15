@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using GalaSoft.MvvmLight;
 using StockTradingSystem.Client.Properties;
 
 namespace StockTradingSystem.Client.Model.UI.Navigation
@@ -10,7 +11,7 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
     /// <summary>
     /// The navigation message.
     /// </summary>
-    public class FrameNavigationService : IFrameNavigationService
+    public class FrameNavigationService : ObservableObject, IFrameNavigationService
     {
         private readonly Dictionary<string, Uri> _pagesByKey;
         private readonly List<string> _historic;
@@ -28,17 +29,27 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
             _historic = new List<string>();
         }
 
+        /// <summary>
+        /// The <see cref="CurrentPageKey" /> property's name.
+        /// </summary>
+        public const string CurrentPageKeyPropertyName = nameof(CurrentPageKey);
+
+        private string _currentPageKey;
+
         /// <inheritdoc />
         /// <summary>
         /// Gets the key corresponding to the currently displayed page.
+        /// Sets and gets the <see cref="CurrentPageKey" /> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
         /// <value>
         /// The current page key.
         /// </value>
         public string CurrentPageKey
         {
-            get;
-            private set;
+            get => _currentPageKey;
+            private set => Set(CurrentPageKeyPropertyName, ref _currentPageKey, value);
         }
 
         /// <summary>

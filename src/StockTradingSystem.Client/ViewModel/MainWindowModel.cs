@@ -29,7 +29,6 @@ namespace StockTradingSystem.Client.ViewModel
 
         private readonly IFrameNavigationService _navigationService;
 
-        private UIElementCollection _navBar;
         private bool _titleBtnState = true;
 
         public MainWindowModel(IFrameNavigationService navigationService)
@@ -44,24 +43,15 @@ namespace StockTradingSystem.Client.ViewModel
             });
             Messenger.Default.Register<GenericMessage<string>>(this, FirstView, v =>
             {
-                _navBar = (Application.Current.MainWindow.GetDescendantFromName("NavBar") as StackPanel)?.Children;
                 _navigationService.NavigateTo(v.Content);
-                SyncNavBarState();
+                SyncTitleBarState();
             });
         }
 
-        private void SyncNavBarState()
+        private void SyncTitleBarState()
         {
             TitleBtnIsEnabled = TitleBtnViews.Split('#').ToList().Contains(_navigationService.CurrentPageKey);
             TitleBtnIsChecked = TitleBtnIsEnabled && _titleBtnState;
-            var v = _navigationService.CurrentPageKey;
-            foreach (var child in _navBar)
-            {
-                if (child is RadioButton c)
-                {
-                    c.IsChecked = c.CommandParameter as string == v;
-                }
-            }
         }
 
         #region Property
@@ -295,7 +285,7 @@ namespace StockTradingSystem.Client.ViewModel
         {
             _navigationService.NavigateTo(pageKey);
             BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
-            SyncNavBarState();
+            SyncTitleBarState();
         }
 
         private RelayCommand _goBackCommand;
@@ -310,7 +300,7 @@ namespace StockTradingSystem.Client.ViewModel
         {
             _navigationService.GoBack();
             BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
-            SyncNavBarState();
+            SyncTitleBarState();
         }
 
         private RelayCommand _titleBtnCommand;
