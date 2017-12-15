@@ -30,6 +30,7 @@ namespace StockTradingSystem.Client.ViewModel
         private readonly IFrameNavigationService _navigationService;
 
         private UIElementCollection _navBar;
+        private bool _titleBtnState = true;
 
         public MainWindowModel(IFrameNavigationService navigationService)
         {
@@ -51,7 +52,8 @@ namespace StockTradingSystem.Client.ViewModel
 
         private void SyncNavBarState()
         {
-            TitleBtnIsChecked = TitleBtnIsEnabled = TitleBtnViews.Split('#').ToList().Contains(_navigationService.CurrentPageKey);
+            TitleBtnIsEnabled = TitleBtnViews.Split('#').ToList().Contains(_navigationService.CurrentPageKey);
+            TitleBtnIsChecked = TitleBtnIsEnabled && _titleBtnState;
             var v = _navigationService.CurrentPageKey;
             foreach (var child in _navBar)
             {
@@ -309,6 +311,19 @@ namespace StockTradingSystem.Client.ViewModel
             _navigationService.GoBack();
             BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
             SyncNavBarState();
+        }
+
+        private RelayCommand _titleBtnCommand;
+
+        /// <summary>
+        /// Gets the <see cref="TitleBtnCommand"/>.
+        /// </summary>
+        public RelayCommand TitleBtnCommand => _titleBtnCommand
+                                               ?? (_titleBtnCommand = new RelayCommand(ExecuteTitleBtnCommand));
+
+        private void ExecuteTitleBtnCommand()
+        {
+            _titleBtnState = !_titleBtnState;
         }
 
         #endregion

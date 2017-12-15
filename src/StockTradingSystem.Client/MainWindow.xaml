@@ -53,7 +53,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <DockPanel Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding IsEnabledWithDialog}">
-                    <ToggleButton Name="TitleBtn" Content="{Binding WindowTitle}" Padding="32 5 32 5" IsEnabled="{Binding TitleBtnIsEnabled}" IsChecked="{Binding TitleBtnIsChecked}" Style="{DynamicResource TitleBtn}"/>
+                    <ToggleButton Name="TitleBtn" Content="{Binding WindowTitle}" Padding="32 5 32 5" Command="{Binding TitleBtnCommand}" IsEnabled="{Binding TitleBtnIsEnabled}" IsChecked="{Binding TitleBtnIsChecked}" Style="{DynamicResource TitleBtn}"/>
                     <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView"/>
                         <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView"/>
