@@ -6,9 +6,40 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="AccountView" Background="White">
+      Title="AccountView" Background="AliceBlue">
 
-    <Grid Margin="50">
-        <TextBlock Text="AccountView" FontSize="50"/>
-    </Grid>
+    <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+        <Grid Margin="10 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding ActualHeight,ElementName=TradeScroll}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
+                        <TextBlock FontSize="50" Text="账户总览" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
+                        <TextBlock FontSize="50" Text="持有股票" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
+                        <TextBlock FontSize="50" Text="委托记录" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
+                <TextBlock FontSize="50" Text="资产变动" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>
