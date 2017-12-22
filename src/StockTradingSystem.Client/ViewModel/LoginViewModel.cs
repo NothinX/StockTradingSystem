@@ -29,21 +29,21 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="PasswordText" /> property's name.
+        /// The <see cref="LoginPasswordText" /> property's name.
         /// </summary>
-        public const string PasswordTextPropertyName = nameof(PasswordText);
+        public const string PasswordTextPropertyName = nameof(LoginPasswordText);
 
-        private string _passwordText = string.Empty;
+        private string _loginPasswordText = string.Empty;
 
         /// <summary>
-        /// Sets and gets the <see cref="PasswordText"/> property.
+        /// Sets and gets the <see cref="LoginPasswordText"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public string PasswordText
+        public string LoginPasswordText
         {
-            get => _passwordText;
-            set => Set(PasswordTextPropertyName, ref _passwordText, value, true);
+            get => _loginPasswordText;
+            set => Set(PasswordTextPropertyName, ref _loginPasswordText, value, true);
         }
 
         #endregion

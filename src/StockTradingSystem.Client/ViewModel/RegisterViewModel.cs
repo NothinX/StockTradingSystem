@@ -13,7 +13,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// The <see cref="LoginNameText" /> property's name.
         /// </summary>
-        public const string UserNameTextPropertyName = nameof(LoginNameText);
+        public const string LoginNameTextPropertyName = nameof(LoginNameText);
 
         private string _loginNameText = string.Empty;
 
@@ -25,25 +25,61 @@ namespace StockTradingSystem.Client.ViewModel
         public string LoginNameText
         {
             get => _loginNameText;
-            set => Set(UserNameTextPropertyName, ref _loginNameText, value, true);
+            set => Set(LoginNameTextPropertyName, ref _loginNameText, value, true);
         }
 
         /// <summary>
-        /// The <see cref="PasswordText" /> property's name.
+        /// The <see cref="UserNameText" /> property's name.
         /// </summary>
-        public const string PasswordTextPropertyName = nameof(PasswordText);
+        public const string UserNameTextPropertyName = nameof(UserNameText);
 
-        private string _passwordText = string.Empty;
+        private string _userNameText = string.Empty;
 
         /// <summary>
-        /// Sets and gets the <see cref="PasswordText"/> property.
+        /// Sets and gets the <see cref="UserNameText"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public string PasswordText
+        public string UserNameText
         {
-            get => _passwordText;
-            set => Set(PasswordTextPropertyName, ref _passwordText, value, true);
+            get => _userNameText;
+            set => Set(UserNameTextPropertyName, ref _userNameText, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="LoginPasswordText" /> property's name.
+        /// </summary>
+        public const string PasswordTextPropertyName = nameof(LoginPasswordText);
+
+        private string _loginPasswordText = string.Empty;
+
+        /// <summary>
+        /// Sets and gets the <see cref="LoginPasswordText"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public string LoginPasswordText
+        {
+            get => _loginPasswordText;
+            set => Set(PasswordTextPropertyName, ref _loginPasswordText, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="SurePasswordText" /> property's name.
+        /// </summary>
+        public const string SurePasswordTextPropertyName = nameof(SurePasswordText);
+
+        private string _surePasswordText = string.Empty;
+
+        /// <summary>
+        /// Sets and gets the <see cref="SurePasswordText"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public string SurePasswordText
+        {
+            get => _surePasswordText;
+            set => Set(SurePasswordTextPropertyName, ref _surePasswordText, value, true);
         }
 
         #endregion

@@ -184,6 +184,19 @@ namespace StockTradingSystem.Client.ViewModel.Control
             _dialogCallback(_dialogGuid, false);
         }
 
+        private RelayCommand _copyCommand;
+
+        /// <summary>
+        /// Gets the CopyCommand.
+        /// </summary>
+        public RelayCommand CopyCommand => _copyCommand
+                                           ?? (_copyCommand = new RelayCommand(ExecuteCopyCommand));
+
+        private void ExecuteCopyCommand()
+        {
+            Clipboard.SetDataObject(MessageText);
+        }
+
         #endregion
     }
 }

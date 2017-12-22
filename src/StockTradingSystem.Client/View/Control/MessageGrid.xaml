@@ -24,7 +24,10 @@
         <Border.Effect>
             <DropShadowEffect Opacity="0.5" BlurRadius="10" Direction="-45" ShadowDepth="5"/>
         </Border.Effect>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="200" MinWidth="300" Background="White" KeyDown="MessageGrid_KeyDown">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="200" MinWidth="300" Background="White">
+            <Grid.InputBindings>
+                <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}"/>
+            </Grid.InputBindings>
             <DockPanel Margin="30">
                 <TextBlock Name="TitleText" Text="{Binding TitleText}" FontSize="20" DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Grid DockPanel.Dock="Bottom" Width="240" HorizontalAlignment="Right">

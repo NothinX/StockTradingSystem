@@ -45,7 +45,7 @@
                         <Frame Name="MainFrame" navigation:DisableNavigation.Disable="True" Focusable="False"/>
                     </Border>
                 </Grid>
-                <Grid Name="DialogsGrid" MaxHeight="{Binding Height, ElementName=MainGrid}" MaxWidth="{Binding Width, ElementName=MainGrid}"/>
+                <Grid Name="DialogsGrid" MaxHeight="{Binding ActualHeight, ElementName=MainGrid}" MaxWidth="{Binding ActualWidth, ElementName=MainGrid}"/>
             </Grid>
             <Grid Grid.Row="0" IsHitTestVisible="True" Background="{Binding ThemeBrush}" IsEnabled="{Binding IsEnabledWithDialog}">
                 <Grid.RowDefinitions>

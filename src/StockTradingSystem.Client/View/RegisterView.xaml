@@ -4,18 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
+      xmlns:c="clr-namespace:StockTradingSystem.Client.Control"
+      xmlns:viewModel="clr-namespace:StockTradingSystem.Client.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="RegisterView" Background="White" DataContext="{Binding Register,Source={StaticResource Locator}}">
+      Title="RegisterView" Background="White">
 
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Skins/MainSkin.xaml" />
-                <ResourceDictionary Source="../Skins/LoginSkin.xaml" />
+                <ResourceDictionary Source="../Skins/MainSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
+
+    <Page.DataContext>
+        <viewModel:RegisterViewModel/>
+    </Page.DataContext>
 
     <Grid Margin="50">
         <Grid Margin="100" HorizontalAlignment="Right" VerticalAlignment="Top">
@@ -23,11 +28,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="1" FontSize="24" Width="300" Text="{Binding LoginNameText}" Style="{StaticResource LoginTb}"/>
-            <PasswordBox Grid.Row="2" FontSize="24" Width="300" Style="{StaticResource LoginPb}"/>
-            <Button Grid.Row="3" FontSize="24" Width="300" Margin="0 25 0 0" Content="注册" Command="{Binding RegisterCommand}" Style="{StaticResource ThemeBrushBtn}"/>
+            <c:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <c:HintTextBox Grid.Row="2" Height="50" FontSize="24" Width="300" HintText="姓名" Text="{Binding UserNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <c:HintPasswordBox Grid.Row="3" Height="50" FontSize="24" Width="300" HintText="密码" Password="{Binding LoginPasswordText,UpdateSourceTrigger=PropertyChanged}"/>
+            <c:HintPasswordBox Grid.Row="4" Height="50" FontSize="24" Width="300" HintText="确认密码" Password="{Binding SurePasswordText,UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Row="5" FontSize="24" Width="300" Margin="0 25 0 0" Content="注册" Command="{Binding RegisterCommand}" Style="{StaticResource ThemeBrushBtn}"/>
         </Grid>
     </Grid>
 </Page>
+
