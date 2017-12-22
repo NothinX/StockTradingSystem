@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
+      xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="LoginView" Background="White" DataContext="{Binding Login,Source={StaticResource Locator}}">
@@ -26,8 +27,8 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
-            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" ui:UieHelper.IsFocusAttached="True" ui:UieHelper.IsFocused="{Binding LoginNameFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" ui:UieHelper.IsFocusAttached="True" ui:UieHelper.IsFocused="{Binding LoginPasswordFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <PasswordBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding LoginCommand}"/>
                 </PasswordBox.InputBindings>

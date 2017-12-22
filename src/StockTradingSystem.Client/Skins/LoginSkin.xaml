@@ -5,7 +5,7 @@
                     xmlns:c="clr-namespace:StockTradingSystem.Client.Model.UI.Control">
 
     <Style x:Key="LoginPb" TargetType="{x:Type PasswordBox}">
-        <Setter Property="c:PasswordBoxHelper.Attach" Value="True"/>
+        <Setter Property="c:PasswordBoxHelper.IsAttached" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator }}"/>

@@ -82,42 +82,42 @@ namespace StockTradingSystem.Client.Model.UI.Control
             new FrameworkPropertyMetadata(string.Empty, OnPasswordPropertyChanged));
 
         /// <summary>
-        /// The Attach attached property's name.
+        /// The IsAttached attached property's name.
         /// </summary>
-        public const string AttachPropertyName = "Attach";
+        public const string IsAttachedPropertyName = "IsAttached";
 
         /// <summary>
-        /// Gets the value of the Attach attached property 
+        /// Gets the value of the IsAttached attached property 
         /// for a given dependency object.
         /// </summary>
         /// <param name="obj">The object for which the property value
         /// is read.</param>
-        /// <returns>The value of the Attach property of the specified object.</returns>
-        public static bool GetAttach(DependencyObject obj)
+        /// <returns>The value of the IsAttached property of the specified object.</returns>
+        public static bool GetIsAttached(DependencyObject obj)
         {
-            return (bool)obj.GetValue(AttachProperty);
+            return (bool)obj.GetValue(IsAttachedProperty);
         }
 
         /// <summary>
-        /// Sets the value of the Attach attached property
+        /// Sets the value of the IsAttached attached property
         /// for a given dependency object. 
         /// </summary>
         /// <param name="obj">The object to which the property value
         /// is written.</param>
-        /// <param name="value">Sets the Attach value of the specified object.</param>
-        public static void SetAttach(DependencyObject obj, bool value)
+        /// <param name="value">Sets the IsAttached value of the specified object.</param>
+        public static void SetIsAttached(DependencyObject obj, bool value)
         {
-            obj.SetValue(AttachProperty, value);
+            obj.SetValue(IsAttachedProperty, value);
         }
 
         /// <summary>
-        /// Identifies the Attach attached property.
+        /// Identifies the IsAttached attached property.
         /// </summary>
-        public static readonly DependencyProperty AttachProperty = DependencyProperty.RegisterAttached(
-            AttachPropertyName,
+        public static readonly DependencyProperty IsAttachedProperty = DependencyProperty.RegisterAttached(
+            IsAttachedPropertyName,
             typeof(bool),
             typeof(PasswordBoxHelper),
-            new PropertyMetadata(false, Attach));
+            new PropertyMetadata(false, IsAttachedChanged));
 
         /// <summary>
         /// The IsUpdating attached property's name.
@@ -156,41 +156,40 @@ namespace StockTradingSystem.Client.Model.UI.Control
             typeof(bool),
             typeof(PasswordBoxHelper));
 
-        private static void OnPasswordPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void OnPasswordPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is PasswordBox passwordBox)) return;
-            passwordBox.PasswordChanged -= PasswordChanged;
+            if (!(obj is PasswordBox pb)) return;
+            pb.PasswordChanged -= PasswordChanged;
 
-            if (!GetIsUpdating(passwordBox))
+            if (!GetIsUpdating(pb))
             {
-                passwordBox.Password = (string)e.NewValue;
+                pb.Password = (string)e.NewValue;
             }
 
-            passwordBox.PasswordChanged += PasswordChanged;
+            pb.PasswordChanged += PasswordChanged;
         }
 
-        private static void Attach(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void IsAttachedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is PasswordBox passwordBox))
-                return;
+            if (!(obj is PasswordBox pb)) return;
 
             if ((bool)e.OldValue)
             {
-                passwordBox.PasswordChanged -= PasswordChanged;
+                pb.PasswordChanged -= PasswordChanged;
             }
 
             if ((bool)e.NewValue)
             {
-                passwordBox.PasswordChanged += PasswordChanged;
+                pb.PasswordChanged += PasswordChanged;
             }
         }
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (!(sender is PasswordBox passwordBox)) return;
-            SetIsUpdating(passwordBox, true);
-            SetPassword(passwordBox, passwordBox.Password);
-            SetIsUpdating(passwordBox, false);
+            if (!(sender is PasswordBox pb)) return;
+            SetIsUpdating(pb, true);
+            SetPassword(pb, pb.Password);
+            SetIsUpdating(pb, false);
         }
     }
 }

@@ -57,6 +57,42 @@ namespace StockTradingSystem.Client.ViewModel
             set => Set(LoginPasswordTextPropertyName, ref _loginPasswordText, value, true);
         }
 
+        /// <summary>
+        /// The <see cref="LoginNameFocus" /> property's name.
+        /// </summary>
+        public const string LoginNameFocusPropertyName = nameof(LoginNameFocus);
+
+        private bool _loginNameFocus;
+
+        /// <summary>
+        /// Sets and gets the <see cref="LoginNameFocus"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public bool LoginNameFocus
+        {
+            get => _loginNameFocus;
+            set => Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="LoginPasswordFocus" /> property's name.
+        /// </summary>
+        public const string LoginPasswordFocusPropertyName = nameof(LoginPasswordFocus);
+
+        private bool _loginPasswordFocus;
+
+        /// <summary>
+        /// Sets and gets the <see cref="LoginPasswordFocus"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public bool LoginPasswordFocus
+        {
+            get => _loginPasswordFocus;
+            set => Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true);
+        }
+
         #endregion
 
         #region Command
@@ -73,11 +109,12 @@ namespace StockTradingSystem.Client.ViewModel
         {
             if (LoginNameText == "")
             {
-                await _iDialogService.ShowMessage("请输入用户名", "错误");
+                await _iDialogService.ShowMessage("请输入用户名", "错误", "确定", () => LoginNameFocus = true);
+
             }
             else if (LoginPasswordText == "")
             {
-                await _iDialogService.ShowMessage("请输入密码", "错误");
+                await _iDialogService.ShowMessage("请输入密码", "错误", "确定", () => LoginPasswordFocus = true);
             }
             else
             {
@@ -86,18 +123,24 @@ namespace StockTradingSystem.Client.ViewModel
                 {
                     if (_gpStockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
                     {
-                        await _iDialogService.ShowMessage("登录成功", "提示");
-                        _gpStockAgent.User.IsLogin = true;
+                        await _iDialogService.ShowMessage("登录成功", "提示", "确定", () =>
+                        {
+                            LoginNameText = "";
+                            LoginPasswordText = "";
+                            LoginNameFocus = true;
+                            _gpStockAgent.User.IsLogin = true;
+                        });
                     }
                     else
                     {
+                        LoginNameText = "";
                         LoginPasswordText = "";
                         throw new Exception("账号或密码错误");
                     }
                 }
                 catch (Exception e)
                 {
-                    await _iDialogService.ShowError(e, "错误", "确定", null);
+                    await _iDialogService.ShowError(e, "错误", "确定", () => LoginNameFocus = true);
                 }
             }
         }

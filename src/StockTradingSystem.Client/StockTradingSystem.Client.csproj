@@ -149,7 +149,7 @@
     <Compile Include="Model\UI\Navigation\DisableNavigation.cs" />
     <Compile Include="Model\UI\Navigation\FrameNavigationService.cs" />
     <Compile Include="Model\UI\Navigation\IFrameNavigationService.cs" />
-    <Compile Include="Model\UI\UIHelper.cs" />
+    <Compile Include="Model\UI\UieHelper.cs" />
     <Compile Include="ViewModel\MainWindowModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\LoginView.xaml.cs">
