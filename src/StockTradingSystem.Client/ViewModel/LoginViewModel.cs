@@ -3,11 +3,22 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model;
+using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
+        private readonly GpStockAgent _gpStockAgent;
+        private readonly IDialogService _iDialogService;
+
+        public LoginViewModel(GpStockAgent gpStockAgent, IDialogService iDialogService)
+        {
+            _gpStockAgent = gpStockAgent;
+            _iDialogService = iDialogService;
+        }
+
         #region Property
 
         /// <summary>
@@ -31,7 +42,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// The <see cref="LoginPasswordText" /> property's name.
         /// </summary>
-        public const string PasswordTextPropertyName = nameof(LoginPasswordText);
+        public const string LoginPasswordTextPropertyName = nameof(LoginPasswordText);
 
         private string _loginPasswordText = string.Empty;
 
@@ -43,7 +54,25 @@ namespace StockTradingSystem.Client.ViewModel
         public string LoginPasswordText
         {
             get => _loginPasswordText;
-            set => Set(PasswordTextPropertyName, ref _loginPasswordText, value, true);
+            set => Set(LoginPasswordTextPropertyName, ref _loginPasswordText, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="LoginPasswordCharText" /> property's name.
+        /// </summary>
+        public const string LoginPasswordCharTextPropertyName = nameof(LoginPasswordCharText);
+
+        private string _loginPasswordCharText = string.Empty;
+
+        /// <summary>
+        /// Sets and gets the <see cref="LoginPasswordCharText"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public string LoginPasswordCharText
+        {
+            get => _loginPasswordCharText;
+            set => Set(LoginPasswordCharTextPropertyName, ref _loginPasswordCharText, value, true);
         }
 
         #endregion
@@ -60,18 +89,45 @@ namespace StockTradingSystem.Client.ViewModel
 
         private async void ExecuteLoginCommand()
         {
-            var r = new Random();
-            var i = r.Next(2);
-            if (i == 0)
+            if (LoginNameText == "")
             {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录失败", "错误");
+                await _iDialogService.ShowMessage("请输入用户名", "错误");
+            }
+            else if (LoginPasswordText == "")
+            {
+                await _iDialogService.ShowMessage("请输入密码", "错误");
             }
             else
             {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录成功", "提示");
+                if (_gpStockAgent.User == null || _gpStockAgent.User.LoginName != LoginNameText) _gpStockAgent.User = new User(LoginNameText);
+                try
+                {
+                    if (_gpStockAgent.User_login(LoginPasswordText))
+                    {
+                        await _iDialogService.ShowMessage("登录成功", "提示");
+                        _gpStockAgent.User.IsLogin = true;
+                    }
+                    else
+                    {
+                        LoginPasswordCharText = "";
+                        LoginPasswordText = "";
+                        throw new Exception("账号或密码错误");
+                    }
+                }
+                catch (Exception e)
+                {
+                    await _iDialogService.ShowError(e, "错误", "确定", null);
+                }
             }
         }
 
         #endregion
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            LoginNameText = "";
+            LoginPasswordCharText = "";
+        }
     }
 }

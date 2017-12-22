@@ -8,13 +8,16 @@ GO
 ALTER PROCEDURE [dbo].[user_repasswd]
   @user_id AS bigint ,
   @old_passwd AS varchar(255) ,
-  @new_passwd AS varchar(255) 
+  @new_passwd AS varchar(255)
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
 	IF EXISTS(SELECT * FROM users WHERE user_id = @user_id AND passwd = @old_passwd)
+	BEGIN
 		UPDATE users SET passwd = @new_passwd WHERE user_id = @user_id
+		SELECT 0
+	END
 	ELSE
-		RETURN -1
+		SELECT -1
 END

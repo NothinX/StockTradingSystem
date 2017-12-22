@@ -10,13 +10,16 @@ ALTER PROCEDURE [dbo].[user_login]
   @passwd AS varchar(255) ,
   @user_id AS bigint OUTPUT ,
   @name AS nvarchar(255) OUTPUT ,
-  @type AS int OUTPUT 
+  @type AS int OUTPUT
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name AND passwd = @passwd)
+    BEGIN
         SELECT @user_id = user_id, @name = name, @type = type FROM users WHERE login_name = @login_name AND passwd = @passwd
+        SELECT 0
+    END
     ELSE
         RETURN -1
 END

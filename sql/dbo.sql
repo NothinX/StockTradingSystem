@@ -12,7 +12,7 @@
  Target Server Version : 13004001
  File Encoding         : 65001
 
- Date: 03/11/2017 17:34:22
+ Date: 22/12/2017 20:26:51
 */
 
 
@@ -366,7 +366,7 @@ BEGIN
             ELSE
             BEGIN
                 COMMIT TRAN
-                RETURN -1
+                SELECT -1
             END
         END
         ELSE
@@ -378,17 +378,17 @@ BEGIN
             ELSE
             BEGIN
                 COMMIT TRAN
-                RETURN -2
+                SELECT -2
             END
         END
         INSERT INTO orders VALUES(GETDATE(), @user_id, @stock_id, @type, @price, @amount, 0, 0)
         COMMIT
-	    RETURN 0
+	    SELECT 0
     END TRY
     BEGIN CATCH
         PRINT ERROR_MESSAGE()
         ROLLBACK TRAN
-        RETURN -3
+        SELECT -3
     END CATCH
 END
 GO
@@ -403,7 +403,7 @@ GO
 
 CREATE PROCEDURE [dbo].[cancel_order]
   @user_id AS bigint ,
-  @order_id AS bigint 
+  @order_id AS bigint
 AS
 BEGIN
 	-- routine body goes here, e.g.
@@ -422,12 +422,12 @@ BEGIN
             UPDATE user_positions SET num_free = num_free + @undealed, num_freezed = num_freezed - @undealed WHERE user_id = @user_id AND stock_id = @stock_id
         END
         COMMIT
-	    RETURN 0
+	    SELECT 0
     END TRY
     BEGIN CATCH
         PRINT ERROR_MESSAGE()
         ROLLBACK TRAN
-        RETURN -1
+        SELECT -1
     END CATCH
 END
 GO
@@ -462,19 +462,19 @@ CREATE PROCEDURE [dbo].[user_cny]
   @user_id AS bigint ,
   @cny_free AS money OUTPUT ,
   @cny_freezed AS money OUTPUT ,
-  @gp_money AS money OUTPUT 
+  @gp_money AS money OUTPUT
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
 	SELECT @cny_free = cny_free FROM users WHERE @user_id = user_id
 	SELECT @cny_freezed = cny_freezed FROM users WHERE @user_id = user_id
-	
+
 	DECLARE @stock_id INT, @num_free INT, @num_freezed INT, @price money
 	DECLARE	@t TABLE(stock_id INT, num_free INT, num_freezed INT)
 	set @price = 0
     set @gp_money = 0
-	
+
 	INSERT INTO @t EXEC user_stock @user_id
 	DECLARE tt CURSOR FOR SELECT * FROM @t
 	OPEN tt
@@ -487,6 +487,7 @@ BEGIN
 	END
 	CLOSE tt
 	DEALLOCATE tt
+	SELECT 0
 END
 GO
 
@@ -540,13 +541,16 @@ CREATE PROCEDURE [dbo].[user_login]
   @passwd AS varchar(255) ,
   @user_id AS bigint OUTPUT ,
   @name AS nvarchar(255) OUTPUT ,
-  @type AS int OUTPUT 
+  @type AS int OUTPUT
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name AND passwd = @passwd)
+    BEGIN
         SELECT @user_id = user_id, @name = name, @type = type FROM users WHERE login_name = @login_name AND passwd = @passwd
+        SELECT 0
+    END
     ELSE
         RETURN -1
 END
@@ -571,9 +575,12 @@ BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name)
-        RETURN -1
+        SELECT -1
     ELSE
+    BEGIN
         INSERT INTO users VALUES(@name, @login_name, @passwd, @type, @cny_free, 0)
+        SELECT 0
+    END
 END
 GO
 
@@ -588,15 +595,18 @@ GO
 CREATE PROCEDURE [dbo].[user_repasswd]
   @user_id AS bigint ,
   @old_passwd AS varchar(255) ,
-  @new_passwd AS varchar(255) 
+  @new_passwd AS varchar(255)
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
 	IF EXISTS(SELECT * FROM users WHERE user_id = @user_id AND passwd = @old_passwd)
+	BEGIN
 		UPDATE users SET passwd = @new_passwd WHERE user_id = @user_id
+		SELECT 0
+	END
 	ELSE
-		RETURN -1
+		SELECT -1
 END
 GO
 

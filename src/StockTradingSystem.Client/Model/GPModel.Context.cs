@@ -33,7 +33,7 @@ namespace StockTradingSystem.Client.Model
         public virtual DbSet<user_positions> user_positions { get; set; }
         public virtual DbSet<users> users { get; set; }
     
-        public virtual int cancel_order(Nullable<long> user_id, Nullable<long> order_id)
+        public virtual ObjectResult<Nullable<int>> cancel_order(Nullable<long> user_id, Nullable<long> order_id)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
@@ -43,10 +43,10 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("order_id", order_id) :
                 new ObjectParameter("order_id", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("cancel_order", user_idParameter, order_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("cancel_order", user_idParameter, order_idParameter);
         }
     
-        public virtual int exec_order(Nullable<long> user_id, Nullable<int> stock_id, Nullable<int> type, Nullable<decimal> price, Nullable<int> amount)
+        public virtual ObjectResult<Nullable<int>> exec_order(Nullable<long> user_id, Nullable<int> stock_id, Nullable<int> type, Nullable<decimal> price, Nullable<int> amount)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
@@ -68,7 +68,7 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("amount", amount) :
                 new ObjectParameter("amount", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("exec_order", user_idParameter, stock_idParameter, typeParameter, priceParameter, amountParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("exec_order", user_idParameter, stock_idParameter, typeParameter, priceParameter, amountParameter);
         }
     
         public virtual ObjectResult<stock_depth_Result> stock_depth(Nullable<int> stock_id, Nullable<int> type)
@@ -84,16 +84,16 @@ namespace StockTradingSystem.Client.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stock_depth_Result>("stock_depth", stock_idParameter, typeParameter);
         }
     
-        public virtual int user_cny(Nullable<long> user_id, ObjectParameter cny_free, ObjectParameter cny_freezed, ObjectParameter gp_money)
+        public virtual ObjectResult<Nullable<int>> user_cny(Nullable<long> user_id, ObjectParameter cny_free, ObjectParameter cny_freezed, ObjectParameter gp_money)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_cny", user_idParameter, cny_free, cny_freezed, gp_money);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_cny", user_idParameter, cny_free, cny_freezed, gp_money);
         }
     
-        public virtual int user_create(string login_name, string passwd, string name, Nullable<int> type, Nullable<decimal> cny_free)
+        public virtual ObjectResult<Nullable<int>> user_create(string login_name, string passwd, string name, Nullable<int> type, Nullable<decimal> cny_free)
         {
             var login_nameParameter = login_name != null ?
                 new ObjectParameter("login_name", login_name) :
@@ -115,10 +115,10 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("cny_free", cny_free) :
                 new ObjectParameter("cny_free", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_create", login_nameParameter, passwdParameter, nameParameter, typeParameter, cny_freeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_create", login_nameParameter, passwdParameter, nameParameter, typeParameter, cny_freeParameter);
         }
     
-        public virtual int user_login(string login_name, string passwd, ObjectParameter user_id, ObjectParameter name, ObjectParameter type)
+        public virtual ObjectResult<Nullable<int>> user_login(string login_name, string passwd, ObjectParameter user_id, ObjectParameter name, ObjectParameter type)
         {
             var login_nameParameter = login_name != null ?
                 new ObjectParameter("login_name", login_name) :
@@ -128,7 +128,7 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("passwd", passwd) :
                 new ObjectParameter("passwd", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_login", login_nameParameter, passwdParameter, user_id, name, type);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_login", login_nameParameter, passwdParameter, user_id, name, type);
         }
     
         public virtual ObjectResult<user_order_Result> user_order(Nullable<long> user_id)
@@ -140,7 +140,7 @@ namespace StockTradingSystem.Client.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<user_order_Result>("user_order", user_idParameter);
         }
     
-        public virtual int user_repasswd(Nullable<long> user_id, string old_passwd, string new_passwd)
+        public virtual ObjectResult<Nullable<int>> user_repasswd(Nullable<long> user_id, string old_passwd, string new_passwd)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
@@ -154,7 +154,7 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("new_passwd", new_passwd) :
                 new ObjectParameter("new_passwd", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_repasswd", user_idParameter, old_passwdParameter, new_passwdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_repasswd", user_idParameter, old_passwdParameter, new_passwdParameter);
         }
     
         public virtual ObjectResult<user_stock_Result> user_stock(Nullable<long> user_id)

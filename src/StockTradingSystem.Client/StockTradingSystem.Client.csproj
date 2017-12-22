@@ -83,7 +83,47 @@
     </ApplicationDefinition>
     <Compile Include="Control\HintPasswordBox.cs" />
     <Compile Include="Control\HintTextBox.cs" />
+    <Compile Include="Model\GPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GpStockAgent.cs" />
+    <Compile Include="Model\orders.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\stocks.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\stock_depth_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\transactions.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
+    <Compile Include="Model\users.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_order_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_positions.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_stock_Result.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -101,45 +141,6 @@
     </Compile>
     <Compile Include="Model\Access\GpEntitiesUserAccess.cs" />
     <Compile Include="Model\Business\GpEntitiesBusiness.cs" />
-    <Compile Include="Model\GPModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GPModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GPModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GPModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\orders.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\stocks.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\stock_depth_Result.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\transactions.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\users.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\user_order_Result.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\user_positions.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\user_stock_Result.cs">
-      <DependentUpon>GPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Control\MessageGridViewModel.cs" />
     <Compile Include="View\Control\MessageGrid.xaml.cs">
       <DependentUpon>MessageGrid.xaml</DependentUpon>
@@ -263,18 +264,6 @@
     <Folder Include="Design\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\GPModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
-      <DependentUpon>GPModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model\GPModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GPModel.edmx</DependentUpon>
-      <LastGenOutput>GPModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +271,18 @@
       <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
       <Name>StockTradingSystem.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\GPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\GPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

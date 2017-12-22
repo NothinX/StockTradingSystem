@@ -14,9 +14,15 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
+using StockTradingSystem.Client.Model;
+using StockTradingSystem.Client.Model.Access;
+using StockTradingSystem.Client.Model.Business;
 using StockTradingSystem.Client.Model.UI.Dialog;
 using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Client.ViewModel.Control;
+using StockTradingSystem.Core.Access;
+using StockTradingSystem.Core.Business;
+using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel
 {
@@ -39,11 +45,16 @@ namespace StockTradingSystem.Client.ViewModel
             else
             {
                 SimpleIoc.Default.Register<IDialogService, DialogService>(true);
+                SimpleIoc.Default.Register<IUserAccess, GpEntitiesUserAccess>(true);
+                SimpleIoc.Default.Register<IBusiness, GpEntitiesBusiness>(true);
+                SimpleIoc.Default.Register<User>(() => null);
+                SimpleIoc.Default.Register<GpStockAgent>();
             }
             InitNavigation();
 
             SimpleIoc.Default.Register<MainWindowModel>();
             SimpleIoc.Default.Register<AccountButtonViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
         }
 
         /// <summary>
@@ -78,6 +89,14 @@ namespace StockTradingSystem.Client.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public AccountButtonViewModel AccountBtn => ServiceLocator.Current.GetInstance<AccountButtonViewModel>();
 
+        /// <summary>
+        /// Gets the <see cref="Login"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
         private static void InitNavigation()
         {
             var navigationService = new FrameNavigationService();
@@ -98,9 +117,13 @@ namespace StockTradingSystem.Client.ViewModel
         public static void Cleanup()
         {
             SimpleIoc.Default.Unregister<IDialogService>();
+            SimpleIoc.Default.Unregister<LoginViewModel>();
             SimpleIoc.Default.Unregister<AccountButtonViewModel>();
             SimpleIoc.Default.Unregister<MainWindowModel>();
             SimpleIoc.Default.Unregister<IFrameNavigationService>();
+            SimpleIoc.Default.Unregister<IBusiness>();
+            SimpleIoc.Default.Unregister<IUserAccess>();
+            SimpleIoc.Default.Unregister<GpStockAgent>();
         }
     }
 }

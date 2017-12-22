@@ -12,7 +12,7 @@ namespace StockTradingSystem.Client.Model.Access
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.cancel_order(userId, orderId) >= 1;
+                return gpEntities.cancel_order(userId, orderId).First() == 0;
             }
         }
 
@@ -20,7 +20,7 @@ namespace StockTradingSystem.Client.Model.Access
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.exec_order(userId, stockId, type, price, amount) >= 1;
+                return gpEntities.exec_order(userId, stockId, type, price, amount).First() == 0;
             }
         }
 
@@ -49,11 +49,10 @@ namespace StockTradingSystem.Client.Model.Access
                 var cfed = new ObjectParameter("cny_freezed", cnyFreezed);
                 var gm = new ObjectParameter("gp_money", gpMoney);
                 var res = gpEntities.user_cny(userId, cf, cfed, gm);
-                if (res < 1) return res >= 1;
                 cnyFree = cf.Value as decimal?;
                 cnyFreezed = cfed.Value as decimal?;
                 gpMoney = gm.Value as decimal?;
-                return res >= 1;
+                return res.First() == 0;
             }
         }
 

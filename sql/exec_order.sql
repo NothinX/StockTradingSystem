@@ -26,7 +26,7 @@ BEGIN
             ELSE
             BEGIN
                 COMMIT TRAN
-                RETURN -1
+                SELECT -1
             END
         END
         ELSE
@@ -38,16 +38,16 @@ BEGIN
             ELSE
             BEGIN
                 COMMIT TRAN
-                RETURN -2
+                SELECT -2
             END
         END
         INSERT INTO orders VALUES(GETDATE(), @user_id, @stock_id, @type, @price, @amount, 0, 0)
         COMMIT
-	    RETURN 0
+	    SELECT 0
     END TRY
     BEGIN CATCH
         PRINT ERROR_MESSAGE()
         ROLLBACK TRAN
-        RETURN -3
+        SELECT -3
     END CATCH
 END

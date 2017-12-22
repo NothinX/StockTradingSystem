@@ -419,11 +419,11 @@
             <End Role="users" EntitySet="users" />
             <End Role="user_positions" EntitySet="user_positions" />
           </AssociationSet>
-          <FunctionImport Name="cancel_order">
+          <FunctionImport Name="cancel_order" ReturnType="Collection(Int32)">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
             <Parameter Name="order_id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="exec_order">
+          <FunctionImport Name="exec_order" ReturnType="Collection(Int32)">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
             <Parameter Name="stock_id" Mode="In" Type="Int32" />
             <Parameter Name="type" Mode="In" Type="Int32" />
@@ -434,20 +434,20 @@
             <Parameter Name="stock_id" Mode="In" Type="Int32" />
             <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="user_cny">
+          <FunctionImport Name="user_cny" ReturnType="Collection(Int32)">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
             <Parameter Name="cny_free" Mode="InOut" Type="Decimal" />
             <Parameter Name="cny_freezed" Mode="InOut" Type="Decimal" />
             <Parameter Name="gp_money" Mode="InOut" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="user_create">
+          <FunctionImport Name="user_create" ReturnType="Collection(Int32)">
             <Parameter Name="login_name" Mode="In" Type="String" />
             <Parameter Name="passwd" Mode="In" Type="String" />
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="Int32" />
             <Parameter Name="cny_free" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="user_login">
+          <FunctionImport Name="user_login" ReturnType="Collection(Int32)">
             <Parameter Name="login_name" Mode="In" Type="String" />
             <Parameter Name="passwd" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="InOut" Type="Int64" />
@@ -457,7 +457,7 @@
           <FunctionImport Name="user_order" ReturnType="Collection(GPModel.user_order_Result)">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="user_repasswd">
+          <FunctionImport Name="user_repasswd" ReturnType="Collection(Int32)">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
             <Parameter Name="old_passwd" Mode="In" Type="String" />
             <Parameter Name="new_passwd" Mode="In" Type="String" />

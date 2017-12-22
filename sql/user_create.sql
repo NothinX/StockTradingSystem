@@ -16,7 +16,10 @@ BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name)
-        RETURN -1
+        SELECT -1
     ELSE
+    BEGIN
         INSERT INTO users VALUES(@name, @login_name, @passwd, @type, @cny_free, 0)
+        SELECT 0
+    END
 END

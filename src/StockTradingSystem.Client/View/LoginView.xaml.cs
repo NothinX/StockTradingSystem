@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 
@@ -25,6 +26,7 @@ namespace StockTradingSystem.Client.View
         public LoginView()
         {
             InitializeComponent();
+            Unloaded += (s, e) => (DataContext as ViewModelBase)?.Cleanup();
         }
     }
 }

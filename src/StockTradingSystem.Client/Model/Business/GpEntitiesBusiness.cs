@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity.Core.Objects;
+using System.Linq;
 using StockTradingSystem.Core.Access;
 
 namespace StockTradingSystem.Client.Model.Business
@@ -9,7 +10,7 @@ namespace StockTradingSystem.Client.Model.Business
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.user_create(loginName, passwd, name, type, cnyFree) >= 1;
+                return gpEntities.user_create(loginName, passwd, name, type, cnyFree).First() == 0;
             }
         }
 
@@ -27,7 +28,7 @@ namespace StockTradingSystem.Client.Model.Business
                 userId = uid.Value as long?;
                 name = n.Value as string;
                 type = t.Value as int?;
-                return res >= 1;
+                return res.First() == 0;
             }
         }
 
@@ -35,7 +36,7 @@ namespace StockTradingSystem.Client.Model.Business
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.user_repasswd(userId, oldPasswd, newPasswd) >= 1;
+                return gpEntities.user_repasswd(userId, oldPasswd, newPasswd).First() == 0;
             }
         }
     }
