@@ -62,14 +62,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public const string LoginNameFocusPropertyName = nameof(LoginNameFocus);
 
-        private bool _loginNameFocus;
+        private bool? _loginNameFocus;
 
         /// <summary>
         /// Sets and gets the <see cref="LoginNameFocus"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool LoginNameFocus
+        public bool? LoginNameFocus
         {
             get => _loginNameFocus;
             set => Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true);
@@ -80,14 +80,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public const string LoginPasswordFocusPropertyName = nameof(LoginPasswordFocus);
 
-        private bool _loginPasswordFocus;
+        private bool? _loginPasswordFocus;
 
         /// <summary>
         /// Sets and gets the <see cref="LoginPasswordFocus"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool LoginPasswordFocus
+        public bool? LoginPasswordFocus
         {
             get => _loginPasswordFocus;
             set => Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true);

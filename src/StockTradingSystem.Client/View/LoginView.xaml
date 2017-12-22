@@ -27,8 +27,8 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" ui:UieHelper.IsFocusAttached="True" ui:UieHelper.IsFocused="{Binding LoginNameFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
-            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" ui:UieHelper.IsFocusAttached="True" ui:UieHelper.IsFocused="{Binding LoginPasswordFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" ui:UieHelper.IsFocused="{Binding LoginNameFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" ui:UieHelper.IsFocused="{Binding LoginPasswordFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <PasswordBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding LoginCommand}"/>
                 </PasswordBox.InputBindings>
