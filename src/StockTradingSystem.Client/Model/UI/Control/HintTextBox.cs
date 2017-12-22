@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace StockTradingSystem.Client.Control
+namespace StockTradingSystem.Client.Model.UI.Control
 {
     public class HintTextBox : TextBox
     {

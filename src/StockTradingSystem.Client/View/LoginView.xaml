@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
-      xmlns:c="clr-namespace:StockTradingSystem.Client.Control"
-      xmlns:viewModel="clr-namespace:StockTradingSystem.Client.ViewModel"
+      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="LoginView" Background="White" DataContext="{Binding Login,Source={StaticResource Locator}}">
@@ -14,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml"/>
+                <ResourceDictionary Source="../Skins/LoginSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -26,14 +26,16 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
-            <c:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
-            <c:HintPasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" HintText="密码" Text="{Binding LoginPasswordCharText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Password="{Binding LoginPasswordText,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}">
-                <c:HintPasswordBox.InputBindings>
+            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <PasswordBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding LoginCommand}"/>
-                </c:HintPasswordBox.InputBindings>
-            </c:HintPasswordBox>
+                </PasswordBox.InputBindings>
+            </PasswordBox>
             <Button Grid.Row="3" FontSize="24" Width="300" Margin="0 25 0 0" Content="登录" Command="{Binding LoginCommand}" Style="{StaticResource ThemeBrushBtn}"/>
         </Grid>
     </Grid>
 </Page>
+
+
 

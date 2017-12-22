@@ -57,24 +57,6 @@ namespace StockTradingSystem.Client.ViewModel
             set => Set(LoginPasswordTextPropertyName, ref _loginPasswordText, value, true);
         }
 
-        /// <summary>
-        /// The <see cref="LoginPasswordCharText" /> property's name.
-        /// </summary>
-        public const string LoginPasswordCharTextPropertyName = nameof(LoginPasswordCharText);
-
-        private string _loginPasswordCharText = string.Empty;
-
-        /// <summary>
-        /// Sets and gets the <see cref="LoginPasswordCharText"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public string LoginPasswordCharText
-        {
-            get => _loginPasswordCharText;
-            set => Set(LoginPasswordCharTextPropertyName, ref _loginPasswordCharText, value, true);
-        }
-
         #endregion
 
         #region Command
@@ -109,7 +91,6 @@ namespace StockTradingSystem.Client.ViewModel
                     }
                     else
                     {
-                        LoginPasswordCharText = "";
                         LoginPasswordText = "";
                         throw new Exception("账号或密码错误");
                     }
@@ -127,7 +108,7 @@ namespace StockTradingSystem.Client.ViewModel
         {
             base.Cleanup();
             LoginNameText = "";
-            LoginPasswordCharText = "";
+            LoginPasswordText = "";
         }
     }
 }

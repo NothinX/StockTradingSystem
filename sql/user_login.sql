@@ -21,5 +21,5 @@ BEGIN
         SELECT 0
     END
     ELSE
-        RETURN -1
+        SELECT -1
 END
