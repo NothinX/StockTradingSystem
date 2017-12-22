@@ -11,14 +11,15 @@ namespace StockTradingSystem.Core.Model
         private readonly IBusiness _business;
         public User User { get; set; }
 
-        public StockAgent(IUserAccess userAccess, IBusiness business, User user = null)
+        public StockAgent(IUserAccess userAccess, IBusiness business)
         {
             _userAccess = userAccess ?? throw new ArgumentNullException(nameof(userAccess));
             _business = business ?? throw new ArgumentNullException(nameof(business));
         }
 
-        public bool User_create(string passwd, decimal cnyFree)
+        public UserCreateResult User_create(string passwd, decimal cnyFree)
         {
+            CheckUser();
             if (string.IsNullOrWhiteSpace(passwd))
             {
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(passwd));
@@ -29,7 +30,7 @@ namespace StockTradingSystem.Core.Model
             return _userAccess.User_create(User.LoginName, passwd, User.Name, User.Type, cnyFree);
         }
 
-        public bool User_login(string passwd)
+        public UserLoginResult User_login(string passwd)
         {
             CheckUserLogin(true);
             if (string.IsNullOrWhiteSpace(passwd))
@@ -38,14 +39,13 @@ namespace StockTradingSystem.Core.Model
             }
 
             var res = _userAccess.User_login(User.LoginName, passwd, out var userId, out var name, out var type);
-            if (!res) return false;
             User.UserId = userId ?? 0;
             User.Name = name ?? "";
             User.Type = type ?? -1;
-            return true;
+            return res;
         }
 
-        public bool User_repasswd(string oldPasswd, string newPasswd)
+        public UserRepasswdResult User_repasswd(string oldPasswd, string newPasswd)
         {
             CheckUserLogin();
             if (string.IsNullOrWhiteSpace(oldPasswd))
@@ -61,13 +61,13 @@ namespace StockTradingSystem.Core.Model
             return _userAccess.User_repasswd(User.UserId, oldPasswd, newPasswd);
         }
 
-        public bool Cancel_Order(long orderId)
+        public CancelOrderResult Cancel_Order(long orderId)
         {
             CheckUserLogin();
             return _business.Cancel_Order(User.UserId, orderId);
         }
 
-        public bool Exec_Order(int stockId, int type, decimal price, int amount)
+        public ExecOrderResult Exec_Order(int stockId, int type, decimal price, int amount)
         {
             CheckUserLogin();
             return _business.Exec_Order(User.UserId, stockId, type, price, amount);
@@ -76,29 +76,33 @@ namespace StockTradingSystem.Core.Model
         public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
             CheckUserLogin();
-            var res = _business.Stock_depth(stockId, type, out var stockDepthResult);
-            return res ? stockDepthResult : null;
+            return _business.Stock_depth(stockId, type);
         }
 
         public UserCnyResult User_cny(long userId)
         {
             CheckUserLogin();
-            var res = _business.User_cny(User.UserId, out var cnyFree, out var cnyFreezed, out var gpMoney);
-            return res ? new UserCnyResult(cnyFree ?? 0, cnyFreezed ?? 0, gpMoney ?? 0) : null;
+            return _business.User_cny(User.UserId);
         }
 
         public List<UserOrderResult> User_order(long userId)
         {
             CheckUserLogin();
-            var res = _business.User_order(User.UserId, out var userOrderResult);
-            return res ? userOrderResult : null;
+            return _business.User_order(User.UserId);
         }
 
         public List<UserStockResult> User_stock(long userId)
         {
             CheckUserLogin();
-            var res = _business.User_stock(User.UserId, out var userStockResult);
-            return res ? userStockResult : null;
+            return _business.User_stock(User.UserId);
+        }
+
+        /// <summary>
+        /// 检查User是否为空
+        /// </summary>
+        private void CheckUser()
+        {
+            if (User == null) throw new ArgumentNullException(nameof(User));
         }
 
         /// <summary>
@@ -107,6 +111,7 @@ namespace StockTradingSystem.Core.Model
         /// <param name="checkFlag">目标状态</param>
         private void CheckUserLogin(bool checkFlag = false)
         {
+            CheckUser();
             if (User.IsLogin == checkFlag && checkFlag)
             {
                 throw new Exception("用户已经登录，无法进行当前操作");

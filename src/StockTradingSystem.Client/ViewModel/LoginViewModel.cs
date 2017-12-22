@@ -1,9 +1,9 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model;
+using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel
@@ -102,7 +102,7 @@ namespace StockTradingSystem.Client.ViewModel
                 if (_gpStockAgent.User == null || _gpStockAgent.User.LoginName != LoginNameText) _gpStockAgent.User = new User(LoginNameText);
                 try
                 {
-                    if (_gpStockAgent.User_login(LoginPasswordText))
+                    if (_gpStockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
                     {
                         await _iDialogService.ShowMessage("登录成功", "提示");
                         _gpStockAgent.User.IsLogin = true;

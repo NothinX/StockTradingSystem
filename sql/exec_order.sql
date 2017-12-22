@@ -42,7 +42,7 @@ BEGIN
             END
         END
         INSERT INTO orders VALUES(GETDATE(), @user_id, @stock_id, @type, @price, @amount, 0, 0)
-        COMMIT
+        COMMIT TRAN
 	    SELECT 0
     END TRY
     BEGIN CATCH

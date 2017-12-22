@@ -84,13 +84,13 @@ namespace StockTradingSystem.Client.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<stock_depth_Result>("stock_depth", stock_idParameter, typeParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> user_cny(Nullable<long> user_id, ObjectParameter cny_free, ObjectParameter cny_freezed, ObjectParameter gp_money)
+        public virtual int user_cny(Nullable<long> user_id, ObjectParameter cny_free, ObjectParameter cny_freezed, ObjectParameter gp_money)
         {
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_cny", user_idParameter, cny_free, cny_freezed, gp_money);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_cny", user_idParameter, cny_free, cny_freezed, gp_money);
         }
     
         public virtual ObjectResult<Nullable<int>> user_create(string login_name, string passwd, string name, Nullable<int> type, Nullable<decimal> cny_free)

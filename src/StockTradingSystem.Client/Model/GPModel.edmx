@@ -434,7 +434,7 @@
             <Parameter Name="stock_id" Mode="In" Type="Int32" />
             <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="user_cny" ReturnType="Collection(Int32)">
+          <FunctionImport Name="user_cny">
             <Parameter Name="user_id" Mode="In" Type="Int64" />
             <Parameter Name="cny_free" Mode="InOut" Type="Decimal" />
             <Parameter Name="cny_freezed" Mode="InOut" Type="Decimal" />

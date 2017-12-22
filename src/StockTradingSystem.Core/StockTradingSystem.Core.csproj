@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Access\IUserAccess.cs" />
+    <Compile Include="Access\UserAccessResultEnums.cs" />
+    <Compile Include="Business\BusinessResultEnums.cs" />
     <Compile Include="Business\IBusiness.cs" />
     <Compile Include="Business\IOrderBusiness.cs" />
     <Compile Include="Business\IStockBusiness.cs" />

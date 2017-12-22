@@ -22,7 +22,6 @@ using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Business;
-using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel
 {
@@ -47,7 +46,6 @@ namespace StockTradingSystem.Client.ViewModel
                 SimpleIoc.Default.Register<IDialogService, DialogService>(true);
                 SimpleIoc.Default.Register<IUserAccess, GpEntitiesUserAccess>(true);
                 SimpleIoc.Default.Register<IBusiness, GpEntitiesBusiness>(true);
-                SimpleIoc.Default.Register<User>(() => null);
                 SimpleIoc.Default.Register<GpStockAgent>();
             }
             InitNavigation();

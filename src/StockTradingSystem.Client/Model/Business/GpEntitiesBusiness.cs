@@ -1,42 +1,95 @@
-﻿using System.Data.Entity.Core.Objects;
+﻿using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
-using StockTradingSystem.Core.Access;
+using StockTradingSystem.Core.Business;
+using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.Model.Business
 {
-    internal class GpEntitiesUserAccess : IUserAccess
+    internal class GpEntitiesBusiness : IBusiness
     {
-        public bool User_create(string loginName, string passwd, string name, int type, decimal cnyFree)
+        public CancelOrderResult Cancel_Order(long userId, long orderId)
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.user_create(loginName, passwd, name, type, cnyFree).First() == 0;
+                return gpEntities.cancel_order(userId, orderId).First() == 0 ? CancelOrderResult.Ok : CancelOrderResult.Wrong;
             }
         }
 
-        public bool User_login(string loginName, string passwd, out long? userId, out string name, out int? type)
+        public ExecOrderResult Exec_Order(long userId, int stockId, int type, decimal price, int amount)
         {
             using (var gpEntities = new GPEntities())
             {
-                userId = 0;
-                name = "";
-                type = -1;
-                var uid = new ObjectParameter("user_id", userId);
-                var n = new ObjectParameter("name", name);
-                var t = new ObjectParameter("type", type);
-                var res = gpEntities.user_login(loginName, passwd, uid, n, t);
-                userId = uid.Value as long?;
-                name = n.Value as string;
-                type = t.Value as int?;
-                return res.First() == 0;
+                switch (gpEntities.exec_order(userId, stockId, type, price, amount).First())
+                {
+                    case 0: return ExecOrderResult.Ok;
+                    case -1: return ExecOrderResult.NotEnoughCnyFree;
+                    case -2: return ExecOrderResult.NotEnoughNumFree;
+                    case -3: return ExecOrderResult.Wrong;
+                    default: return ExecOrderResult.Wrong;
+                }
             }
         }
 
-        public bool User_repasswd(long userId, string oldPasswd, string newPasswd)
+        public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.user_repasswd(userId, oldPasswd, newPasswd).First() == 0;
+                var res = gpEntities.stock_depth(stockId, type).ToList();
+                return res.Select(x => new StockDepthResult()
+                {
+                    Price = x.price,
+                    Num = x.num ?? 0
+                }).ToList();
+            }
+        }
+
+        public UserCnyResult User_cny(long userId)
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                decimal? cnyFree = 0;
+                decimal? cnyFreezed = 0;
+                decimal? gpMoney = 0;
+                var cf = new ObjectParameter("cny_free", cnyFree);
+                var cfed = new ObjectParameter("cny_freezed", cnyFreezed);
+                var gm = new ObjectParameter("gp_money", gpMoney);
+                gpEntities.user_cny(userId, cf, cfed, gm);
+                return new UserCnyResult(cf.Value as decimal? ?? 0, cfed.Value as decimal? ?? 0, gm.Value as decimal? ?? 0);
+            }
+        }
+
+        public List<UserOrderResult> User_order(long userId)
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                var res = gpEntities.user_order(userId).ToList();
+                return res.Select(x => new UserOrderResult
+                {
+                    OrderId = x.order_id,
+                    CreateDatetime = x.create_datetime,
+                    UserId = x.user_id,
+                    StockId = x.stock_id,
+                    Type = x.type,
+                    Price = x.price,
+                    Undealed = x.undealed,
+                    Dealed = x.dealed,
+                    Canceled = x.canceled
+                }).ToList();
+            }
+        }
+
+        public List<UserStockResult> User_stock(long userId)
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                var res = gpEntities.user_stock(userId).ToList();
+                return res.Select(x => new UserStockResult()
+                {
+                    StockId = x.stock_id,
+                    NumFree = x.num_free,
+                    NumFreezed = x.num_freezed
+                }).ToList();
             }
         }
     }
