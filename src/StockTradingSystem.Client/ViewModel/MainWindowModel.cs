@@ -28,12 +28,14 @@ namespace StockTradingSystem.Client.ViewModel
         private const string TitleBtnViews = "StockView#TradeView#AccountView";
 
         private readonly IFrameNavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
         private bool _titleBtnState = true;
 
-        public MainWindowModel(IFrameNavigationService navigationService)
+        public MainWindowModel(IFrameNavigationService navigationService, IDialogService dialogService)
         {
             _navigationService = navigationService;
+            _dialogService = dialogService;
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
             {
                 IsEnabledWithDialog = !b.Content;
@@ -253,9 +255,9 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public RelayCommand CloseCommand => _closeCommand ?? (_closeCommand = new RelayCommand(ExecuteClose));
 
-        private static async void ExecuteClose()
+        private async void ExecuteClose()
         {
-            await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("确定要退出吗？", "提示", "确定", "取消", b =>
+            await _dialogService.ShowMessage("确定要退出吗？", "提示", "确定", "取消", b =>
             {
                 if (b) Application.Current.Shutdown();
             });

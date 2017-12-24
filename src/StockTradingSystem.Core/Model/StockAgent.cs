@@ -9,12 +9,13 @@ namespace StockTradingSystem.Core.Model
     {
         private readonly IUserAccess _userAccess;
         private readonly IBusiness _business;
-        public User User { get; set; }
+        public IUser User { get; set; }
 
-        public StockAgent(IUserAccess userAccess, IBusiness business)
+        public StockAgent(IUserAccess userAccess, IBusiness business, IUser user)
         {
             _userAccess = userAccess ?? throw new ArgumentNullException(nameof(userAccess));
             _business = business ?? throw new ArgumentNullException(nameof(business));
+            User = user;
         }
 
         public UserCreateResult User_create(string passwd, decimal cnyFree)

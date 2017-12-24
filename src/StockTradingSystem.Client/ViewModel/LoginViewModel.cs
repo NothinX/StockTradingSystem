@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Views;
-using StockTradingSystem.Client.Model;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
 
@@ -10,12 +9,14 @@ namespace StockTradingSystem.Client.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        private readonly GpStockAgent _gpStockAgent;
+        private readonly MainWindowModel _mainWindowModel;
+        private readonly StockAgent _stockAgent;
         private readonly IDialogService _iDialogService;
 
-        public LoginViewModel(GpStockAgent gpStockAgent, IDialogService iDialogService)
+        public LoginViewModel(MainWindowModel mainWindowModel,StockAgent stockAgent, IDialogService iDialogService)
         {
-            _gpStockAgent = gpStockAgent;
+            _mainWindowModel = mainWindowModel;
+            _stockAgent = stockAgent;
             _iDialogService = iDialogService;
         }
 
@@ -118,18 +119,17 @@ namespace StockTradingSystem.Client.ViewModel
             }
             else
             {
-                if (_gpStockAgent.User == null || _gpStockAgent.User.LoginName != LoginNameText) _gpStockAgent.User = new User(LoginNameText);
+                 _stockAgent.User.LoginName = LoginNameText;
                 try
                 {
-                    if (_gpStockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
+                    if (_stockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
                     {
-                        await _iDialogService.ShowMessage("登录成功", "提示", "确定", () =>
-                        {
-                            LoginNameText = "";
-                            LoginPasswordText = "";
-                            LoginNameFocus = true;
-                            _gpStockAgent.User.IsLogin = true;
-                        });
+                        LoginNameText = "";
+                        LoginPasswordText = "";
+                        LoginNameFocus = true;
+                        _stockAgent.User.IsLogin = true;
+
+                        _mainWindowModel.NavigateCommand.Execute("StockView");
                     }
                     else
                     {

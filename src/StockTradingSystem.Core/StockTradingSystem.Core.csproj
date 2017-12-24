@@ -51,7 +51,7 @@
     <Compile Include="Business\IUserBusiness.cs" />
     <Compile Include="Model\StockAgent.cs" />
     <Compile Include="Model\StockDepthResult.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\IUser.cs" />
     <Compile Include="Model\UserCnyResult.cs" />
     <Compile Include="Model\UserOrderResult.cs" />
     <Compile Include="Model\UserStockResult.cs" />

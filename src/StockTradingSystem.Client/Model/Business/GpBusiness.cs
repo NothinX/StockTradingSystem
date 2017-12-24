@@ -6,7 +6,7 @@ using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.Model.Business
 {
-    internal class GpEntitiesBusiness : IBusiness
+    internal class GpBusiness : IBusiness
     {
         public CancelOrderResult Cancel_Order(long userId, long orderId)
         {

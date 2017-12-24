@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StockTradingSystem.Client.View.Control"
+             xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+             xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
              mc:Ignorable="d" 
              d:DesignHeight="34"
              DataContext="{Binding AccountBtn,Source={StaticResource Locator}}">
@@ -52,6 +54,7 @@
             </Style>
             <Style x:Key="UserNameBtn" TargetType="{x:Type ToggleButton}">
                 <Setter Property="Cursor" Value="{x:Static Cursors.Hand}"/>
+                <Setter Property="MinWidth" Value="87"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Padding" Value="10 0 10 0"/>
@@ -62,9 +65,9 @@
                                 <Rectangle Stroke="{x:Null}" StrokeThickness="0" Fill="Transparent" x:Name="background" SnapsToDevicePixels="True"/>
                                 <ContentPresenter x:Name="contentPresenter" Focusable="False" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 <Popup Name="hide">
-                                    <StackPanel Width="{Binding ActualWidth, ElementName=contentGrid}">
-                                        <Button Content="切换账户" Command="{Binding SwitchCommand}" Style="{StaticResource UserNameHideBtn}"/>
-                                        <Button Content="注销账户" Command="{Binding LogoutCommand}" Style="{StaticResource UserNameHideBtn}"/>
+                                    <StackPanel Width="{Binding ActualWidth,ElementName=contentGrid}">
+                                        <Button Content="切换账号" Command="{Binding SwitchCommand}" Style="{StaticResource UserNameHideBtn}"/>
+                                        <Button Content="注销账号" Command="{Binding LogoutCommand}" Style="{StaticResource UserNameHideBtn}"/>
                                     </StackPanel>
                                 </Popup>
                             </Grid>
@@ -77,21 +80,22 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <control:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
         </Grid.Resources>
-        <StackPanel Orientation="Horizontal" Visibility="{Binding BeforeLoginVisibility}">
+        <StackPanel Orientation="Horizontal" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter}}">
             <Button Content="登录" Width="60" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="LoginView" Style="{StaticResource UserNameHideBtn}"/>
             <Button Content="注册" Width="60" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="RegisterView" Style="{StaticResource UserNameHideBtn}"/>
         </StackPanel>
-        <StackPanel Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" Orientation="Horizontal" Visibility="{Binding AfterLoginVisibility}">
-            <Button Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="AccountView" Style="{StaticResource MoneyBtn}">
+        <DockPanel Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}">
+            <Button DockPanel.Dock="Left" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="AccountView" Style="{StaticResource MoneyBtn}">
                 <StackPanel>
                     <TextBlock Text="{Binding TotalMoneyText}"/>
                     <TextBlock Text="{Binding AvailableMoneyText}"/>
                 </StackPanel>
             </Button>
-            <Separator Background="White" Margin="0 4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-            <ToggleButton Content="{Binding UserNameText}" HorizontalAlignment="Stretch" Style="{StaticResource UserNameBtn}"/>
-        </StackPanel>
+            <Separator DockPanel.Dock="Left" Background="White" Margin="0 4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <ToggleButton Content="{Binding StockAgent.User.Name,Source={StaticResource Locator}}" Style="{StaticResource UserNameBtn}"/>
+        </DockPanel>
     </Grid>
 </UserControl>
 

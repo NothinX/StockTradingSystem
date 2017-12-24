@@ -1,10 +1,12 @@
-﻿using System.Data.Entity.Core.Objects;
+﻿using System.Data;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 using System.Linq;
 using StockTradingSystem.Core.Access;
 
 namespace StockTradingSystem.Client.Model.Access
 {
-    internal class GpEntitiesUserAccess : IUserAccess
+    internal class GpUserAccess : IUserAccess
     {
         public UserCreateResult User_create(string loginName, string passwd, string name, int type, decimal cnyFree)
         {
@@ -21,14 +23,17 @@ namespace StockTradingSystem.Client.Model.Access
                 userId = 0;
                 name = "";
                 type = -1;
-                var uid = new ObjectParameter("user_id", userId);
-                var n = new ObjectParameter("name", name);
-                var t = new ObjectParameter("type", type);
-                var res = gpEntities.user_login(loginName, passwd, uid, n, t);
+                var r = new SqlParameter("@r", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                var uid = new SqlParameter("@user_id", SqlDbType.BigInt) { Direction = ParameterDirection.Output };
+                var n = new SqlParameter("@name", SqlDbType.NVarChar, 255) { Direction = ParameterDirection.Output };
+                var t = new SqlParameter("@type", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                var res = gpEntities.Database.SqlQuery<object>(
+                    $"exec @r = dbo.user_login '{loginName}', '{passwd}', @user_id out, @name out, @type out", r, uid, n, t);
+                var data = res.FirstOrDefault();
                 userId = uid.Value as long?;
                 name = n.Value as string;
                 type = t.Value as int?;
-                return res.First() == 0 ? UserLoginResult.Ok : UserLoginResult.Wrong;
+                return (int)r.Value == 0 ? UserLoginResult.Ok : UserLoginResult.Wrong;
             }
         }
 

@@ -6,7 +6,7 @@ namespace StockTradingSystem.Client.Model
 {
     public class GpStockAgent : StockAgent
     {
-        public GpStockAgent(IUserAccess userAccess, IBusiness business) : base(userAccess, business)
+        public GpStockAgent(IUserAccess userAccess, IBusiness business, IUser user) : base(userAccess, business, user)
         {
 
         }

@@ -42,7 +42,7 @@ namespace StockTradingSystem.Client.Model.UI
             IsFocusedPropertyName,
             typeof(bool?),
             typeof(UieHelper),
-            new UIPropertyMetadata(false, OnIsFocusedChanged));
+            new UIPropertyMetadata(null, OnIsFocusedChanged));
 
         private static void OnIsFocusedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {

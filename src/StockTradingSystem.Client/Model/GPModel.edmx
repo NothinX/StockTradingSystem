@@ -447,7 +447,7 @@
             <Parameter Name="type" Mode="In" Type="Int32" />
             <Parameter Name="cny_free" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="user_login" ReturnType="Collection(Int32)">
+          <FunctionImport Name="user_login">
             <Parameter Name="login_name" Mode="In" Type="String" />
             <Parameter Name="passwd" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="InOut" Type="Int64" />

@@ -14,6 +14,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
+using StockTradingSystem.Client.Design.Model;
+using StockTradingSystem.Client.Design.Model.Access;
+using StockTradingSystem.Client.Design.Model.Business;
 using StockTradingSystem.Client.Model;
 using StockTradingSystem.Client.Model.Access;
 using StockTradingSystem.Client.Model.Business;
@@ -22,6 +25,7 @@ using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Business;
+using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel
 {
@@ -40,13 +44,18 @@ namespace StockTradingSystem.Client.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                SimpleIoc.Default.Register<IUserAccess, DesignGpUserAccess>();
+                SimpleIoc.Default.Register<IBusiness, DesignGpBusiness>();
+                SimpleIoc.Default.Register<IUser, DesignGpUser>();
+                SimpleIoc.Default.Register<StockAgent, DesignGpStockAgent>();
             }
             else
             {
-                SimpleIoc.Default.Register<IDialogService, DialogService>(true);
-                SimpleIoc.Default.Register<IUserAccess, GpEntitiesUserAccess>(true);
-                SimpleIoc.Default.Register<IBusiness, GpEntitiesBusiness>(true);
-                SimpleIoc.Default.Register<GpStockAgent>();
+                SimpleIoc.Default.Register<IDialogService, DialogService>();
+                SimpleIoc.Default.Register<IUserAccess, GpUserAccess>();
+                SimpleIoc.Default.Register<IBusiness, GpBusiness>();
+                SimpleIoc.Default.Register<IUser, GpUser>();
+                SimpleIoc.Default.Register<StockAgent, GpStockAgent>();
             }
             InitNavigation();
 
@@ -78,6 +87,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
+
+        /// <summary>
+        /// Gets the <see cref="StockAgent"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public StockAgent StockAgent => ServiceLocator.Current.GetInstance<StockAgent>();
 
         /// <summary>
         /// Gets the <see cref="AccountBtn"/> property.
@@ -114,14 +131,15 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public static void Cleanup()
         {
-            SimpleIoc.Default.Unregister<IDialogService>();
             SimpleIoc.Default.Unregister<LoginViewModel>();
             SimpleIoc.Default.Unregister<AccountButtonViewModel>();
             SimpleIoc.Default.Unregister<MainWindowModel>();
-            SimpleIoc.Default.Unregister<IFrameNavigationService>();
+            SimpleIoc.Default.Unregister<IUser>();
             SimpleIoc.Default.Unregister<IBusiness>();
             SimpleIoc.Default.Unregister<IUserAccess>();
             SimpleIoc.Default.Unregister<GpStockAgent>();
+            SimpleIoc.Default.Unregister<IFrameNavigationService>();
+            SimpleIoc.Default.Unregister<IDialogService>();
         }
     }
 }

@@ -1,12 +1,24 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
     public class AccountButtonViewModel : ViewModelBase
     {
+        private readonly MainWindowModel _mainWindowModel;
+        private readonly StockAgent _stockAgent;
+        private readonly IDialogService _dialogService;
+
+        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService)
+        {
+            _mainWindowModel = mainWindowModel;
+            _stockAgent = stockAgent;
+            _dialogService = dialogService;
+        }
+
         #region Property
 
         /// <summary>
@@ -129,9 +141,15 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public RelayCommand LogoutCommand => _logoutCommand
                                              ?? (_logoutCommand = new RelayCommand(ExecuteLogoutCommand));
 
-        private void ExecuteLogoutCommand()
+        private async void ExecuteLogoutCommand()
         {
-
+            await _dialogService.ShowMessage("确定要注销账号吗？", "提示", "确定", "取消", b =>
+            {
+                if (b)
+                {
+                    _stockAgent.User.IsLogin = false;
+                }
+            });
         }
 
         private RelayCommand _switchCommand;
@@ -142,9 +160,16 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public RelayCommand SwitchCommand => _switchCommand
                                              ?? (_switchCommand = new RelayCommand(ExecuteSwitchCommand));
 
-        private void ExecuteSwitchCommand()
+        private async void ExecuteSwitchCommand()
         {
-
+            await _dialogService.ShowMessage("确定要切换账号吗？", "提示", "确定", "取消", b =>
+            {
+                if (b)
+                {
+                    _stockAgent.User.IsLogin = false;
+                    _mainWindowModel.NavigateCommand.Execute("LoginView");
+                }
+            });
         }
 
         #endregion

@@ -18,8 +18,8 @@ BEGIN
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name AND passwd = @passwd)
     BEGIN
         SELECT @user_id = user_id, @name = name, @type = type FROM users WHERE login_name = @login_name AND passwd = @passwd
-        SELECT 0
+        RETURN 0
     END
     ELSE
-        SELECT -1
+        RETURN -1
 END

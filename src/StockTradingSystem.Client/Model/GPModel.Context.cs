@@ -118,7 +118,7 @@ namespace StockTradingSystem.Client.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_create", login_nameParameter, passwdParameter, nameParameter, typeParameter, cny_freeParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> user_login(string login_name, string passwd, ObjectParameter user_id, ObjectParameter name, ObjectParameter type)
+        public virtual int user_login(string login_name, string passwd, ObjectParameter user_id, ObjectParameter name, ObjectParameter type)
         {
             var login_nameParameter = login_name != null ?
                 new ObjectParameter("login_name", login_name) :
@@ -128,7 +128,7 @@ namespace StockTradingSystem.Client.Model
                 new ObjectParameter("passwd", passwd) :
                 new ObjectParameter("passwd", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("user_login", login_nameParameter, passwdParameter, user_id, name, type);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_login", login_nameParameter, passwdParameter, user_id, name, type);
         }
     
         public virtual ObjectResult<user_order_Result> user_order(Nullable<long> user_id)

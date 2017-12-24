@@ -81,8 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
-    <Compile Include="Model\UI\Control\HintTextBox.cs" />
+    <Compile Include="Design\Model\Access\DesignGpUserAccess.cs" />
+    <Compile Include="Design\Model\Business\DesignGpBusiness.cs" />
+    <Compile Include="Design\Model\DesignGpUser.cs" />
+    <Compile Include="Design\Model\DesignGpStockAgent.cs" />
     <Compile Include="Model\GPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,7 +100,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GPModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model\GpStockAgent.cs" />
+    <Compile Include="Model\GpUser.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -111,7 +113,12 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
+    <Compile Include="Model\UI\Control\HintTextBox.cs" />
+    <Compile Include="Model\GpStockAgent.cs" />
     <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
+    <Compile Include="Model\UI\SystemTypeExtension.cs" />
     <Compile Include="Model\users.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -139,8 +146,8 @@
     <Compile Include="View\Control\AccountButton.xaml.cs">
       <DependentUpon>AccountButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Business\GpEntitiesBusiness.cs" />
-    <Compile Include="Model\Access\GpEntitiesUserAccess.cs" />
+    <Compile Include="Model\Business\GpBusiness.cs" />
+    <Compile Include="Model\Access\GpUserAccess.cs" />
     <Compile Include="ViewModel\Control\MessageGridViewModel.cs" />
     <Compile Include="View\Control\MessageGrid.xaml.cs">
       <DependentUpon>MessageGrid.xaml</DependentUpon>
@@ -265,18 +272,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Design\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
-      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
-      <Name>StockTradingSystem.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Model\GPModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GPModel.edmx</DependentUpon>
@@ -287,6 +282,15 @@
       <DependentUpon>GPModel.edmx</DependentUpon>
       <LastGenOutput>GPModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
+      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
+      <Name>StockTradingSystem.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
