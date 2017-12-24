@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
 
@@ -11,12 +12,14 @@ namespace StockTradingSystem.Client.ViewModel
     {
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
+        private readonly UserMoneyInfo _userMoneyInfo;
         private readonly IDialogService _iDialogService;
 
-        public LoginViewModel(MainWindowModel mainWindowModel,StockAgent stockAgent, IDialogService iDialogService)
+        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, UserMoneyInfo userMoneyInfo, IDialogService iDialogService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
+            _userMoneyInfo = userMoneyInfo;
             _iDialogService = iDialogService;
         }
 
@@ -119,7 +122,22 @@ namespace StockTradingSystem.Client.ViewModel
             }
             else
             {
-                 _stockAgent.User.LoginName = LoginNameText;
+                if (_stockAgent.User.LoginName != LoginNameText && _stockAgent.User.IsLogin)
+                {
+                    var flag = true;
+                    await _iDialogService.ShowMessage("当前你已经登录，需要先注销才能切换账号\n请问要注销吗？", "提示", "确定", "取消", b =>
+                    {
+                        if (!b) return;
+                        _stockAgent.User.IsLogin = false;
+                        flag = false;
+                    });
+                    if (flag)
+                    {
+                        LoginPasswordText = "";
+                        return;
+                    }
+                }
+                _stockAgent.User.LoginName = LoginNameText;
                 try
                 {
                     if (_stockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
@@ -127,8 +145,7 @@ namespace StockTradingSystem.Client.ViewModel
                         LoginNameText = "";
                         LoginPasswordText = "";
                         LoginNameFocus = true;
-                        _stockAgent.User.IsLogin = true;
-
+                        _userMoneyInfo.Update();
                         _mainWindowModel.NavigateCommand.Execute("StockView");
                     }
                     else

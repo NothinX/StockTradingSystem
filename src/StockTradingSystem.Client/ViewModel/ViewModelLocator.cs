@@ -20,6 +20,7 @@ using StockTradingSystem.Client.Design.Model.Business;
 using StockTradingSystem.Client.Model;
 using StockTradingSystem.Client.Model.Access;
 using StockTradingSystem.Client.Model.Business;
+using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Client.Model.UI.Dialog;
 using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Client.ViewModel.Control;
@@ -59,6 +60,7 @@ namespace StockTradingSystem.Client.ViewModel
             }
             InitNavigation();
 
+            SimpleIoc.Default.Register<UserMoneyInfo>();
             SimpleIoc.Default.Register<MainWindowModel>();
             SimpleIoc.Default.Register<AccountButtonViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();

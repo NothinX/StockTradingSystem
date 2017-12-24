@@ -88,9 +88,9 @@
         </StackPanel>
         <DockPanel Background="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}">
             <Button DockPanel.Dock="Left" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="AccountView" Style="{StaticResource MoneyBtn}">
-                <StackPanel>
-                    <TextBlock Text="{Binding TotalMoneyText}"/>
-                    <TextBlock Text="{Binding AvailableMoneyText}"/>
+                <StackPanel Margin="0 0 10 0">
+                    <TextBlock HorizontalAlignment="Left" Text="{Binding TotalMoneyText}"/>
+                    <TextBlock HorizontalAlignment="Left" Text="{Binding AvailableMoneyText}"/>
                 </StackPanel>
             </Button>
             <Separator DockPanel.Dock="Left" Background="White" Margin="0 4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>

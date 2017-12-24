@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Core.Model;
 
@@ -8,6 +9,9 @@ namespace StockTradingSystem.Client.ViewModel.Control
 {
     public class AccountButtonViewModel : ViewModelBase
     {
+        public static readonly string UpdateTotalMoney = "UpdateTotalMoney";
+        public static readonly string UpdateAvailableMoney = "UpdateAvailableMoney";
+
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
@@ -17,70 +21,30 @@ namespace StockTradingSystem.Client.ViewModel.Control
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
+            Messenger.Default.Register<GenericMessage<decimal>>(this, UpdateTotalMoney, d =>
+            {
+                lock (this)
+                {
+                    TotalMoneyText = $"总共：{d.Content:F2}";
+                }
+            });
+            Messenger.Default.Register<GenericMessage<decimal>>(this, UpdateAvailableMoney, d =>
+            {
+                lock (this)
+                {
+                    AvailableMoneyText = $"可用：{d.Content:F2}";
+                }
+            });
         }
 
         #region Property
-
-        /// <summary>
-        /// The <see cref="BeforeLoginVisibility" /> property's name.
-        /// </summary>
-        public const string BeforeLoginIsEnabledPropertyName = nameof(BeforeLoginVisibility);
-
-        private Visibility _beforeLoginVisibility = Visibility.Visible;
-
-        /// <summary>
-        /// Sets and gets the <see cref="BeforeLoginVisibility"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public Visibility BeforeLoginVisibility
-        {
-            get => _beforeLoginVisibility;
-            set => Set(BeforeLoginIsEnabledPropertyName, ref _beforeLoginVisibility, value, true);
-        }
-
-        /// <summary>
-        /// The <see cref="AfterLoginVisibility" /> property's name.
-        /// </summary>
-        public const string AfterLoginIsEnabledPropertyName = nameof(AfterLoginVisibility);
-
-        private Visibility _afterLoginVisibility = Visibility.Collapsed;
-
-        /// <summary>
-        /// Sets and gets the <see cref="AfterLoginVisibility"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public Visibility AfterLoginVisibility
-        {
-            get => _afterLoginVisibility;
-            set => Set(AfterLoginIsEnabledPropertyName, ref _afterLoginVisibility, value, true);
-        }
-
-        /// <summary>
-        /// The <see cref="UserNameText" /> property's name.
-        /// </summary>
-        public const string UserNameTextPropertyName = nameof(UserNameText);
-
-        private string _userNameText = string.Empty;
-
-        /// <summary>
-        /// Sets and gets the <see cref="UserNameText"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public string UserNameText
-        {
-            get => _userNameText;
-            set => Set(UserNameTextPropertyName, ref _userNameText, value, true);
-        }
 
         /// <summary>
         /// The <see cref="TotalMoneyText" /> property's name.
         /// </summary>
         public const string TotalMoneyTextPropertyName = nameof(TotalMoneyText);
 
-        private string _totalMoneyText = "总：";
+        private string _totalMoneyText = "总共：";
 
         /// <summary>
         /// Sets and gets the <see cref="TotalMoneyText"/> property.
@@ -109,24 +73,6 @@ namespace StockTradingSystem.Client.ViewModel.Control
         {
             get => _availableMoneyText;
             set => Set(AvailableMoneyTextPropertyName, ref _availableMoneyText, value, true);
-        }
-
-        /// <summary>
-        /// The <see cref="IsChecked" /> property's name.
-        /// </summary>
-        public const string IsCheckedPropertyName = nameof(IsChecked);
-
-        private bool _isChecked;
-
-        /// <summary>
-        /// Sets and gets the <see cref="IsChecked"/> property.
-        /// Changes to that property's value raise the PropertyChanged event.
-        /// This property's value is broadcasted by the MessengerInstance when it changes.
-        /// </summary>
-        public bool IsChecked
-        {
-            get => _isChecked;
-            set => Set(IsCheckedPropertyName, ref _isChecked, value, true);
         }
 
         #endregion

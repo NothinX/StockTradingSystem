@@ -101,6 +101,8 @@
       <DependentUpon>GPModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\GpUser.cs" />
+    <Compile Include="Model\Info\Info.cs" />
+    <Compile Include="Model\Info\UserMoneyInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>

@@ -40,6 +40,7 @@ namespace StockTradingSystem.Core.Model
             }
 
             var res = _userAccess.User_login(User.LoginName, passwd, out var userId, out var name, out var type);
+            User.IsLogin = res == UserLoginResult.Ok;
             User.UserId = userId ?? 0;
             User.Name = name ?? "";
             User.Type = type ?? -1;
@@ -80,19 +81,19 @@ namespace StockTradingSystem.Core.Model
             return _business.Stock_depth(stockId, type);
         }
 
-        public UserCnyResult User_cny(long userId)
+        public UserCnyResult User_cny()
         {
             CheckUserLogin();
             return _business.User_cny(User.UserId);
         }
 
-        public List<UserOrderResult> User_order(long userId)
+        public List<UserOrderResult> User_order()
         {
             CheckUserLogin();
             return _business.User_order(User.UserId);
         }
 
-        public List<UserStockResult> User_stock(long userId)
+        public List<UserStockResult> User_stock()
         {
             CheckUserLogin();
             return _business.User_stock(User.UserId);
