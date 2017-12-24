@@ -5,45 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:navigation="clr-namespace:StockTradingSystem.Client.Model.UI.Navigation"
+        xmlns:control="clr-namespace:StockTradingSystem.Client.View.Control"
         mc:Ignorable="d ignore"
-        Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
+        Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" x:Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-                <ResourceDictionary Source="Skins/PathGrid.xaml" />
+                <ResourceDictionary Source="Themes/MainSkin.xaml" />
+                <ResourceDictionary Source="Themes/PathGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" GlassFrameThickness="1" CornerRadius="0" ResizeBorderThickness="7"/>
+        <WindowChrome CaptionHeight="33" GlassFrameThickness="1" CornerRadius="0" ResizeBorderThickness="7"/>
     </WindowChrome.WindowChrome>
 
-    <Border Name="WindowBorder" Margin="{Binding WindowBorderMargin}" Background="{x:Null}">
-        <DockPanel>
-            <Border DockPanel.Dock="Top" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 0">
-                <DockPanel Background="{Binding ThemeBrush}" Height="30">
-                    <Button Name="BackBtn" Command="{Binding GoBackCommand}" DockPanel.Dock="Left" Style="{StaticResource WindowTitleBtn}" IsEnabled="{Binding BackBtnIsEnabled}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
+    <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid Name="MainGrid" IsEnabled="{Binding IsEnabledWithDialog}" Effect="{Binding MainGridEffect}">
+                    <Grid.Resources>
+                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
+                        <TextBlock FontSize="50" Text="买入卖出" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <Frame Name="MainFrame" navigation:DisableNavigation.Disable="True" Focusable="False"/>
+                    </Border>
+                </Grid>
+                <Grid Name="DialogsGrid" MaxHeight="{Binding ActualHeight, ElementName=MainGrid}" MaxWidth="{Binding ActualWidth, ElementName=MainGrid}"/>
+            </Grid>
+            <Grid Grid.Row="0" IsHitTestVisible="True" Background="{Binding ThemeBrush}" IsEnabled="{Binding IsEnabledWithDialog}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="{Binding IsEnabledWithDialog}">
+                    <ToggleButton Name="TitleBtn" Content="{Binding WindowTitle}" Padding="32 5 32 5" Command="{Binding TitleBtnCommand}" IsEnabled="{Binding TitleBtnIsEnabled}" IsChecked="{Binding TitleBtnIsChecked}" Style="{DynamicResource TitleBtn}"/>
+                    <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <StackPanel.Resources>
+                            <navigation:NavBarItemIsCheckedConverter x:Key="NavBarItemIsCheckedConverter"/>
+                        </StackPanel.Resources>
+                        <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=StockView}"/>
+                        <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=TradeView}"/>
+                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"/>
+                        <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"  IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SettingsView}"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel Grid.Row="0" HorizontalAlignment="Right" IsEnabled="{Binding IsEnabledWithDialog}">
+                    <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseBtn}"/>
+                    <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowMaxBtn}"/>
+                    <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowMinBtn}"/>
+                    <Button Command="{Binding GoBackCommand}" Style="{StaticResource WindowTitleBtn}" Visibility="{Binding BackBtnVisibility}" ToolTip="返回" Focusable="False">
                         <Viewbox Height="12.5" Width="12.5" Child="{StaticResource LeftArrowPath}" />
                     </Button>
-                    <TextBlock Text="{Binding WindowTitle}" FontSize="17" DockPanel.Dock="Left" Margin="10 5 5 5" Foreground="White"/>
-                    <Button Name="CloseBtn" Command="{Binding CloseCommand}" Style="{StaticResource WindowCloseBtn}"/>
-                    <Button Name="MaxBtn" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowMaxBtn}"/>
-                    <Button Name="MinBtn" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowMinBtn}"/>
                     <Grid/>
                 </DockPanel>
-            </Border>
-            <Border BorderBrush="{Binding ThemeBrush}" BorderThickness="1 0 1 1">
-                <Grid>
-                    <Frame Name="MainFrame" Content="{Binding WindowContent}" IsEnabled="{Binding MainFrameIsEnabled}" navigation:DisableNavigation.Disable="True" Focusable="False" Effect="{Binding MainFrameEffect}"/>
-                    <Grid Name="DialogsGrid" MaxHeight="{Binding Height,ElementName=MainFrame}" MaxWidth="{Binding Width,ElementName=MainFrame}">
-
-                    </Grid>
-                </Grid>
-            </Border>
-        </DockPanel>
+                <control:AccountButton HorizontalAlignment="Right" Grid.Row="1"/>
+            </Grid>
+        </Grid>
     </Border>
 </Window>

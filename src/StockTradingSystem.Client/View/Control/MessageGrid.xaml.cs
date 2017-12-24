@@ -22,14 +22,6 @@ namespace StockTradingSystem.Client.View.Control
             OkBtn.Focus();
         }
 
-        private void MessageGrid_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && Keyboard.IsKeyDown(Key.C))
-            {
-                Clipboard.SetDataObject(MessageText.Text);
-            }
-        }
-
         public static MessageGrid Show(Action<Guid, bool> dialogCallback, Guid guid, string message, string title, string okBtnText)
         {
             var mgvm = new MessageGridViewModel(dialogCallback, guid, message, title, okBtnText);

@@ -41,7 +41,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private void SetBorderBrush()
         {
-            BorderBrush = _titleText == "错误" ? new SolidColorBrush(Color.FromArgb(255, 232, 17, 35)) : SimpleIoc.Default.GetInstance<MainViewModel>().ThemeBrush;
+            BorderBrush = _titleText == "错误" ? new SolidColorBrush(Color.FromArgb(255, 232, 17, 35)) : SimpleIoc.Default.GetInstance<MainWindowModel>().ThemeBrush;
         }
 
         #region Property
@@ -51,7 +51,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public const string BorderBrushPropertyName = nameof(BorderBrush);
 
-        private Brush _borderBrush = SimpleIoc.Default.GetInstance<MainViewModel>().ThemeBrush;
+        private Brush _borderBrush = SimpleIoc.Default.GetInstance<MainWindowModel>().ThemeBrush;
 
         /// <summary>
         /// Sets and gets the <see cref="BorderBrush"/> property.
@@ -182,6 +182,19 @@ namespace StockTradingSystem.Client.ViewModel.Control
         private void ExecuteCancelCommand()
         {
             _dialogCallback(_dialogGuid, false);
+        }
+
+        private RelayCommand _copyCommand;
+
+        /// <summary>
+        /// Gets the CopyCommand.
+        /// </summary>
+        public RelayCommand CopyCommand => _copyCommand
+                                           ?? (_copyCommand = new RelayCommand(ExecuteCopyCommand));
+
+        private void ExecuteCopyCommand()
+        {
+            Clipboard.SetDataObject(MessageText);
         }
 
         #endregion

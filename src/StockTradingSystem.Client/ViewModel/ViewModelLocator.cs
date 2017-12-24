@@ -7,7 +7,28 @@
   
   In the View:
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-*/using System;using GalaSoft.MvvmLight;using GalaSoft.MvvmLight.Ioc;using GalaSoft.MvvmLight.Views;using Microsoft.Practices.ServiceLocation;using StockTradingSystem.Client.Model.UI.Dialog;using StockTradingSystem.Client.Model.UI.Navigation;namespace StockTradingSystem.Client.ViewModel
+*/
+
+using System;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
+using Microsoft.Practices.ServiceLocation;
+using StockTradingSystem.Client.Design.Model;
+using StockTradingSystem.Client.Design.Model.Access;
+using StockTradingSystem.Client.Design.Model.Business;
+using StockTradingSystem.Client.Model;
+using StockTradingSystem.Client.Model.Access;
+using StockTradingSystem.Client.Model.Business;
+using StockTradingSystem.Client.Model.Info;
+using StockTradingSystem.Client.Model.UI.Dialog;
+using StockTradingSystem.Client.Model.UI.Navigation;
+using StockTradingSystem.Client.ViewModel.Control;
+using StockTradingSystem.Core.Access;
+using StockTradingSystem.Core.Business;
+using StockTradingSystem.Core.Model;
+
+namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -24,14 +45,26 @@
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                SimpleIoc.Default.Register<IUserAccess, DesignGpUserAccess>();
+                SimpleIoc.Default.Register<IBusiness, DesignGpBusiness>();
+                SimpleIoc.Default.Register<IUser, DesignGpUser>();
+                SimpleIoc.Default.Register<StockAgent, DesignGpStockAgent>();
             }
             else
             {
-                SimpleIoc.Default.Register<IDialogService, DialogService>(true);
+                SimpleIoc.Default.Register<IDialogService, DialogService>();
+                SimpleIoc.Default.Register<IUserAccess, GpUserAccess>();
+                SimpleIoc.Default.Register<IBusiness, GpBusiness>();
+                SimpleIoc.Default.Register<IUser, GpUser>();
+                SimpleIoc.Default.Register<StockAgent, GpStockAgent>();
             }
             InitNavigation();
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<UserMoneyInfo>();
+            SimpleIoc.Default.Register<MainWindowModel>();
+            SimpleIoc.Default.Register<AccountButtonViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<RegisterViewModel>();
         }
 
         /// <summary>
@@ -40,7 +73,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public MainWindowModel Main => ServiceLocator.Current.GetInstance<MainWindowModel>();
 
         /// <summary>
         /// Gets the <see cref="FrameNavigationService"/> property.
@@ -58,11 +91,48 @@
             Justification = "This non-static member is needed for data binding purposes.")]
         public IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
 
+        /// <summary>
+        /// Gets the <see cref="StockAgent"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public StockAgent StockAgent => ServiceLocator.Current.GetInstance<StockAgent>();
+
+        /// <summary>
+        /// Gets the <see cref="AccountBtn"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public AccountButtonViewModel AccountBtn => ServiceLocator.Current.GetInstance<AccountButtonViewModel>();
+
+        /// <summary>
+        /// Gets the <see cref="Login"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
+        /// <summary>
+        /// Gets the <see cref="Register"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public RegisterViewModel Register => ServiceLocator.Current.GetInstance<RegisterViewModel>();
+
         private static void InitNavigation()
         {
             var navigationService = new FrameNavigationService();
             navigationService.Configure("MainView", new Uri("../View/MainView.xaml", UriKind.Relative));
             navigationService.Configure("LoginView", new Uri("../View/LoginView.xaml", UriKind.Relative));
+            navigationService.Configure("RegisterView", new Uri("../View/RegisterView.xaml", UriKind.Relative));
+            navigationService.Configure("StockView", new Uri("../View/StockView.xaml", UriKind.Relative));
+            navigationService.Configure("TradeView", new Uri("../View/TradeView.xaml", UriKind.Relative));
+            navigationService.Configure("AccountView", new Uri("../View/AccountView.xaml", UriKind.Relative));
+            navigationService.Configure("SettingsView", new Uri("../View/SettingsView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
@@ -72,9 +142,15 @@
         /// </summary>
         public static void Cleanup()
         {
-            SimpleIoc.Default.Unregister<IDialogService>();
-            SimpleIoc.Default.Unregister<MainViewModel>();
+            SimpleIoc.Default.Unregister<LoginViewModel>();
+            SimpleIoc.Default.Unregister<AccountButtonViewModel>();
+            SimpleIoc.Default.Unregister<MainWindowModel>();
+            SimpleIoc.Default.Unregister<IUser>();
+            SimpleIoc.Default.Unregister<IBusiness>();
+            SimpleIoc.Default.Unregister<IUserAccess>();
+            SimpleIoc.Default.Unregister<GpStockAgent>();
             SimpleIoc.Default.Unregister<IFrameNavigationService>();
+            SimpleIoc.Default.Unregister<IDialogService>();
         }
     }
 }

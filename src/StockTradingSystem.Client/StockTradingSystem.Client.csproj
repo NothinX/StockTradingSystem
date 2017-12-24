@@ -81,8 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Access\GpEntitiesUserAccess.cs" />
-    <Compile Include="Model\Business\GpEntitiesBusiness.cs" />
+    <Compile Include="Design\Model\Access\DesignGpUserAccess.cs" />
+    <Compile Include="Design\Model\Business\DesignGpBusiness.cs" />
+    <Compile Include="Design\Model\DesignGpUser.cs" />
+    <Compile Include="Design\Model\DesignGpStockAgent.cs" />
     <Compile Include="Model\GPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,6 +100,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GPModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\GpUser.cs" />
+    <Compile Include="Model\Info\Info.cs" />
+    <Compile Include="Model\Info\UserMoneyInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -110,6 +115,12 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
+    <Compile Include="Model\UI\Control\HintTextBox.cs" />
+    <Compile Include="Model\GpStockAgent.cs" />
+    <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
+    <Compile Include="Model\UI\SystemTypeExtension.cs" />
     <Compile Include="Model\users.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -122,6 +133,23 @@
     <Compile Include="Model\user_stock_Result.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StockView.xaml.cs">
+      <DependentUpon>StockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\AccountButton.xaml.cs">
+      <DependentUpon>AccountButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Business\GpBusiness.cs" />
+    <Compile Include="Model\Access\GpUserAccess.cs" />
     <Compile Include="ViewModel\Control\MessageGridViewModel.cs" />
     <Compile Include="View\Control\MessageGrid.xaml.cs">
       <DependentUpon>MessageGrid.xaml</DependentUpon>
@@ -130,8 +158,8 @@
     <Compile Include="Model\UI\Navigation\DisableNavigation.cs" />
     <Compile Include="Model\UI\Navigation\FrameNavigationService.cs" />
     <Compile Include="Model\UI\Navigation\IFrameNavigationService.cs" />
-    <Compile Include="Model\UI\UIHelper.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Model\UI\UieHelper.cs" />
+    <Compile Include="ViewModel\MainWindowModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -139,6 +167,36 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TradeView.xaml.cs">
+      <DependentUpon>TradeView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Themes\LoginSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\RegisterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\AccountButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,11 +209,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Skins\MainSkin.xaml">
+    <Page Include="Themes\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Skins\PathGrid.xaml">
+    <Page Include="Themes\PathGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,6 +226,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,13 +274,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Design\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Model\GPModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
       <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model\GPModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -227,7 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
-      <Project>{101A204C-9747-4892-97B1-FDF18567E444}</Project>
+      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
       <Name>StockTradingSystem.Core</Name>
     </ProjectReference>
   </ItemGroup>

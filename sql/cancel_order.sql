@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[cancel_order]
   @user_id AS bigint ,
-  @order_id AS bigint 
+  @order_id AS bigint
 AS
 BEGIN
 	-- routine body goes here, e.g.
@@ -26,11 +26,11 @@ BEGIN
             UPDATE user_positions SET num_free = num_free + @undealed, num_freezed = num_freezed - @undealed WHERE user_id = @user_id AND stock_id = @stock_id
         END
         COMMIT
-	    RETURN 0
+	    SELECT 0
     END TRY
     BEGIN CATCH
         PRINT ERROR_MESSAGE()
         ROLLBACK TRAN
-        RETURN -1
+        SELECT -1
     END CATCH
 END

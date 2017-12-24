@@ -4,12 +4,43 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
+      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
+      xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="LoginView" Background="White">
+      Title="LoginView" Background="White" DataContext="{Binding Login,Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/MainSkin.xaml"/>
+                <ResourceDictionary Source="../Themes/LoginSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Margin="50">
-        <TextBlock Text="LoginView" FontSize="50"/>
-        <Button Margin="100" VerticalAlignment="Top" HorizontalAlignment="Left" Name="LoginBtn" Content="Login" Click="LoginBtn_OnClick"/>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100">
+            <TextBlock Text="欢迎" FontSize="50"/>
+            <TextBlock Text="新用户白送你一万元！！！" Foreground="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" FontSize="27" Margin="0 10 0 0"/>
+        </StackPanel> 
+        <Grid Margin="100" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+            <control:HintTextBox Grid.Row="1" Height="50" FontSize="24" Width="300" HintText="用户名" ui:UieHelper.IsFocused="{Binding LoginNameFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding LoginNameText,UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Grid.Row="2" Height="50" FontSize="24" Width="300" ui:UieHelper.IsFocused="{Binding LoginPasswordFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LoginPb}" control:PasswordBoxHelper.HintText="密码" control:PasswordBoxHelper.Password="{Binding LoginPasswordText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <PasswordBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding LoginCommand}"/>
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+            <Button Grid.Row="3" FontSize="24" Width="300" Margin="0 25 0 0" Content="登录" Command="{Binding LoginCommand}" Style="{StaticResource ThemeBrushBtn}"/>
+        </Grid>
     </Grid>
 </Page>
+
+
+

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 
@@ -25,20 +26,7 @@ namespace StockTradingSystem.Client.View
         public LoginView()
         {
             InitializeComponent();
-        }
-
-        private async void LoginBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            var r = new Random();
-            var i = r.Next(2);
-            if (i == 0)
-            {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录失败", "错误");
-            }
-            else
-            {
-                await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("登录成功", "提示");
-            }
+            Unloaded += (s, e) => (DataContext as ViewModelBase)?.Cleanup();
         }
     }
 }

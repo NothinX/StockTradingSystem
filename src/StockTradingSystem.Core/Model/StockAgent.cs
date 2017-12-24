@@ -5,48 +5,49 @@ using StockTradingSystem.Core.Business;
 
 namespace StockTradingSystem.Core.Model
 {
-    public sealed class StockAgent
+    public class StockAgent
     {
         private readonly IUserAccess _userAccess;
         private readonly IBusiness _business;
-        private readonly User _user;
+        public IUser User { get; set; }
 
-        public StockAgent(IUserAccess userAccess, IBusiness business, User user)
+        public StockAgent(IUserAccess userAccess, IBusiness business, IUser user)
         {
             _userAccess = userAccess ?? throw new ArgumentNullException(nameof(userAccess));
             _business = business ?? throw new ArgumentNullException(nameof(business));
-            _user = user ?? throw new ArgumentNullException(nameof(user));
+            User = user;
         }
 
-        public bool User_create(string passwd, decimal cnyFree)
+        public UserCreateResult User_create(IUser user, string passwd, decimal cnyFree)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
             if (string.IsNullOrWhiteSpace(passwd))
             {
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(passwd));
             }
             if (cnyFree < 0) throw new ArgumentOutOfRangeException(nameof(cnyFree), "初始账户余额应该大于等于零");
-            if (_user.Name == null) throw new ArgumentNullException(nameof(_user.Name));
+            if (user.Name == null) throw new ArgumentNullException(nameof(user.Name));
 
-            return _userAccess.User_create(_user.LoginName, passwd, _user.Name, _user.Type, cnyFree);
+            return _userAccess.User_create(user.LoginName, passwd, user.Name, user.Type, cnyFree);
         }
 
-        public bool User_login(string passwd)
+        public UserLoginResult User_login(string passwd)
         {
-            CheckUserLogin();
+            CheckUserLogin(true);
             if (string.IsNullOrWhiteSpace(passwd))
             {
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(passwd));
             }
 
-            var res = _userAccess.User_login(_user.LoginName, passwd, out var userId, out var name, out var type);
-            if (!res) return false;
-            _user.UserId = userId ?? 0;
-            _user.Name = name ?? "";
-            _user.Type = type ?? -1;
-            return true;
+            var res = _userAccess.User_login(User.LoginName, passwd, out var userId, out var name, out var type);
+            User.IsLogin = res == UserLoginResult.Ok;
+            User.UserId = userId ?? 0;
+            User.Name = name ?? "";
+            User.Type = type ?? -1;
+            return res;
         }
 
-        public bool User_repasswd(string oldPasswd, string newPasswd)
+        public UserRepasswdResult User_repasswd(string oldPasswd, string newPasswd)
         {
             CheckUserLogin();
             if (string.IsNullOrWhiteSpace(oldPasswd))
@@ -59,52 +60,69 @@ namespace StockTradingSystem.Core.Model
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(newPasswd));
             }
 
-            return _userAccess.User_repasswd(_user.UserId, oldPasswd, newPasswd);
+            return _userAccess.User_repasswd(User.UserId, oldPasswd, newPasswd);
         }
 
-        public bool Cancel_Order(long orderId)
+        public CancelOrderResult Cancel_Order(long orderId)
         {
             CheckUserLogin();
-            return _business.Cancel_Order(_user.UserId, orderId);
+            return _business.Cancel_Order(User.UserId, orderId);
         }
 
-        public bool Exec_Order(int stockId, int type, decimal price, int amount)
+        public ExecOrderResult Exec_Order(int stockId, int type, decimal price, int amount)
         {
             CheckUserLogin();
-            return _business.Exec_Order(_user.UserId, stockId, type, price, amount);
+            return _business.Exec_Order(User.UserId, stockId, type, price, amount);
         }
 
         public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
             CheckUserLogin();
-            var res = _business.Stock_depth(stockId, type, out var stockDepthResult);
-            return res ? stockDepthResult : null;
+            return _business.Stock_depth(stockId, type);
         }
 
-        public UserCnyResult User_cny(long userId)
+        public UserCnyResult User_cny()
         {
             CheckUserLogin();
-            var res = _business.User_cny(_user.UserId, out var cnyFree, out var cnyFreezed, out var gpMoney);
-            return res ? new UserCnyResult(cnyFree ?? 0, cnyFreezed ?? 0, gpMoney ?? 0) : null;
+            return _business.User_cny(User.UserId);
         }
 
-        public List<UserOrderResult> User_order(long userId)
+        public List<UserOrderResult> User_order()
         {
             CheckUserLogin();
-            var res = _business.User_order(_user.UserId, out var userOrderResult);
-            return res ? userOrderResult : null;
+            return _business.User_order(User.UserId);
         }
 
-        public List<UserStockResult> User_stock(long userId)
+        public List<UserStockResult> User_stock()
         {
             CheckUserLogin();
-            var res = _business.User_stock(_user.UserId, out var userStockResult);
-            return res ? userStockResult : null;
+            return _business.User_stock(User.UserId);
         }
 
-        private void CheckUserLogin()
+        /// <summary>
+        /// 检查User是否为空
+        /// </summary>
+        private void CheckUser()
         {
-            throw _user.IsLogin ? new Exception("用户已经登录，无法进行当前操作") : new Exception("用户尚未登录，无法进行当前操作");
+            if (User == null) throw new ArgumentNullException(nameof(User));
+        }
+
+        /// <summary>
+        /// 检查当前登录状态
+        /// </summary>
+        /// <param name="checkFlag">目标状态</param>
+        private void CheckUserLogin(bool checkFlag = false)
+        {
+            CheckUser();
+            if (User.IsLogin == checkFlag && checkFlag)
+            {
+                throw new Exception("用户已经登录，无法进行当前操作");
+            }
+
+            if (User.IsLogin == checkFlag && !checkFlag)
+            {
+                throw new Exception("用户尚未登录，无法进行当前操作");
+            }
         }
     }
 }

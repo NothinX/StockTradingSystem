@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using GalaSoft.MvvmLight;
@@ -7,35 +9,51 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model.UI;
 using StockTradingSystem.Client.Model.UI.Navigation;
 
 namespace StockTradingSystem.Client.ViewModel
 {
     /// <summary>
-    /// This class contains properties that the main View can data bind to.
+    /// This class contains properties that the <see cref="MainWindow"/> can data bind to.
     /// <para>
     /// See http://www.mvvmlight.net
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainWindowModel : ViewModelBase
     {
-        public static readonly string Canback = "FrameNavigationServiceCanBack";
         public static readonly string ShowDialog = "DialogServiceShowDialog";
+        public static readonly string FirstView = "NavigateToFirstView";
+
+        private const string TitleBtnViews = "StockView#TradeView#AccountView";
 
         private readonly IFrameNavigationService _navigationService;
+        private readonly IDialogService _dialogService;
 
-        public MainViewModel(IFrameNavigationService navigationService)
+        private bool _titleBtnState = true;
+
+        public MainWindowModel(IFrameNavigationService navigationService, IDialogService dialogService)
         {
             _navigationService = navigationService;
-            Messenger.Default.Register<GenericMessage<bool>>(this, Canback, b => BackBtnVisibility = b.Content ? Visibility.Visible : Visibility.Collapsed);
+            _dialogService = dialogService;
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
             {
-                BackBtnIsEnabled = !b.Content;
-                MainFrameIsEnabled = !b.Content;
-                MainFrameEffect = b.Content
-                    ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Performance }
+                IsEnabledWithDialog = !b.Content;
+                MainGridEffect = b.Content
+                    ? new BlurEffect { Radius = 17, RenderingBias = RenderingBias.Quality, KernelType = KernelType.Gaussian }
                     : null;
             });
+            Messenger.Default.Register<GenericMessage<string>>(this, FirstView, v =>
+            {
+                _navigationService.NavigateTo(v.Content);
+                SyncTitleBarState();
+            });
+        }
+
+        private void SyncTitleBarState()
+        {
+            TitleBtnIsEnabled = TitleBtnViews.Split('#').ToList().Contains(_navigationService.CurrentPageKey);
+            TitleBtnIsChecked = TitleBtnIsEnabled && _titleBtnState;
         }
 
         #region Property
@@ -143,74 +161,75 @@ namespace StockTradingSystem.Client.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="WindowContent" /> property's name.
+        /// The <see cref="IsEnabledWithDialog" /> property's name.
         /// </summary>
-        public const string ContentPropertyName = nameof(WindowContent);
+        public const string BackBtnEnabledPropertyName = nameof(IsEnabledWithDialog);
 
-        private object _windowContent;
+        private bool _isEnabledWithDialog = true;
 
         /// <summary>
-        /// Sets and gets the <see cref="WindowContent"/> property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public object WindowContent
-        {
-            get => _windowContent;
-            set => Set(ContentPropertyName, ref _windowContent, value);
-        }
-
-        /// <summary>
-        /// The <see cref="BackBtnIsEnabled" /> property's name.
-        /// </summary>
-        public const string BackBtnEnabledPropertyName = nameof(BackBtnIsEnabled);
-
-        private bool _backBtnIsEnabled = true;
-
-        /// <summary>
-        /// Sets and gets the <see cref="BackBtnIsEnabled"/> property.
+        /// Sets and gets the <see cref="IsEnabledWithDialog"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool BackBtnIsEnabled
+        public bool IsEnabledWithDialog
         {
-            get => _backBtnIsEnabled;
-            set => Set(BackBtnEnabledPropertyName, ref _backBtnIsEnabled, value, true);
+            get => _isEnabledWithDialog;
+            set => Set(BackBtnEnabledPropertyName, ref _isEnabledWithDialog, value, true);
         }
 
         /// <summary>
-        /// The <see cref="MainFrameIsEnabled" /> property's name.
+        /// The <see cref="MainGridEffect" /> property's name.
         /// </summary>
-        public const string MainFrameEnabledPropertyName = nameof(MainFrameIsEnabled);
+        public const string MainFrameEffectPropertyName = nameof(MainGridEffect);
 
-        private bool _mainFrameIsEnabled = true;
+        private Effect _mainGridEffect;
 
         /// <summary>
-        /// Sets and gets the <see cref="MainFrameIsEnabled"/> property.
+        /// Sets and gets the <see cref="MainGridEffect"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public bool MainFrameIsEnabled
+        public Effect MainGridEffect
         {
-            get => _mainFrameIsEnabled;
-            set => Set(MainFrameEnabledPropertyName, ref _mainFrameIsEnabled, value, true);
+            get => _mainGridEffect;
+            set => Set(MainFrameEffectPropertyName, ref _mainGridEffect, value, true);
         }
 
         /// <summary>
-        /// The <see cref="MainFrameEffect" /> property's name.
+        /// The <see cref="TitleBtnIsEnabled" /> property's name.
         /// </summary>
-        public const string MainFrameEffectPropertyName = nameof(MainFrameEffect);
+        public const string TitleBtnIsEnabledPropertyName = nameof(TitleBtnIsEnabled);
 
-        private Effect _mainFrameEffect;
+        private bool _titleBtnIsEnabled;
 
         /// <summary>
-        /// Sets and gets the <see cref="MainFrameEffect"/> property.
+        /// Sets and gets the <see cref="TitleBtnIsEnabled"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public Effect MainFrameEffect
+        public bool TitleBtnIsEnabled
         {
-            get => _mainFrameEffect;
-            set => Set(MainFrameEffectPropertyName, ref _mainFrameEffect, value, true);
+            get => _titleBtnIsEnabled;
+            set => Set(TitleBtnIsEnabledPropertyName, ref _titleBtnIsEnabled, value, true);
+        }
+
+        /// <summary>
+        /// The <see cref="TitleBtnIsChecked" /> property's name.
+        /// </summary>
+        public const string TitleBtnIsCheckedPropertyName = nameof(TitleBtnIsChecked);
+
+        private bool _titleBtnIsChecked;
+
+        /// <summary>
+        /// Sets and gets the <see cref="TitleBtnIsChecked"/> property.
+        /// Changes to that property's value raise the PropertyChanged event.
+        /// This property's value is broadcasted by the MessengerInstance when it changes.
+        /// </summary>
+        public bool TitleBtnIsChecked
+        {
+            get => _titleBtnIsChecked;
+            set => Set(TitleBtnIsCheckedPropertyName, ref _titleBtnIsChecked, value, true);
         }
 
         #endregion
@@ -236,12 +255,12 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public RelayCommand CloseCommand => _closeCommand ?? (_closeCommand = new RelayCommand(ExecuteClose));
 
-        private static async void ExecuteClose()
+        private async void ExecuteClose()
         {
-            await SimpleIoc.Default.GetInstance<IDialogService>().ShowMessage("确定要退出吗？", "提示", "确定", "取消", b =>
-              {
-                  if (b) Application.Current.Shutdown();
-              });
+            await _dialogService.ShowMessage("确定要退出吗？", "提示", "确定", "取消", b =>
+            {
+                if (b) Application.Current.Shutdown();
+            });
         }
 
         private RelayCommand _maximizeCommand;
@@ -266,7 +285,9 @@ namespace StockTradingSystem.Client.ViewModel
 
         private void ExecuteNavigateCommand(string pageKey)
         {
-            SimpleIoc.Default.GetInstance<IFrameNavigationService>()?.NavigateTo(pageKey);
+            _navigationService.NavigateTo(pageKey);
+            BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
+            SyncTitleBarState();
         }
 
         private RelayCommand _goBackCommand;
@@ -280,6 +301,21 @@ namespace StockTradingSystem.Client.ViewModel
         private void ExecuteGoBackCommand()
         {
             _navigationService.GoBack();
+            BackBtnVisibility = _navigationService.CanBack() ? Visibility.Visible : Visibility.Collapsed;
+            SyncTitleBarState();
+        }
+
+        private RelayCommand _titleBtnCommand;
+
+        /// <summary>
+        /// Gets the <see cref="TitleBtnCommand"/>.
+        /// </summary>
+        public RelayCommand TitleBtnCommand => _titleBtnCommand
+                                               ?? (_titleBtnCommand = new RelayCommand(ExecuteTitleBtnCommand));
+
+        private void ExecuteTitleBtnCommand()
+        {
+            _titleBtnState = !_titleBtnState;
         }
 
         #endregion

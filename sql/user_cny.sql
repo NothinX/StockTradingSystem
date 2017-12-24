@@ -9,19 +9,19 @@ ALTER PROCEDURE [dbo].[user_cny]
   @user_id AS bigint ,
   @cny_free AS money OUTPUT ,
   @cny_freezed AS money OUTPUT ,
-  @gp_money AS money OUTPUT 
+  @gp_money AS money OUTPUT
 AS
 BEGIN
 	-- routine body goes here, e.g.
 	-- SELECT 'Navicat for SQL Server'
 	SELECT @cny_free = cny_free FROM users WHERE @user_id = user_id
 	SELECT @cny_freezed = cny_freezed FROM users WHERE @user_id = user_id
-	
+
 	DECLARE @stock_id INT, @num_free INT, @num_freezed INT, @price money
 	DECLARE	@t TABLE(stock_id INT, num_free INT, num_freezed INT)
 	set @price = 0
     set @gp_money = 0
-	
+
 	INSERT INTO @t EXEC user_stock @user_id
 	DECLARE tt CURSOR FOR SELECT * FROM @t
 	OPEN tt

@@ -5,6 +5,6 @@ namespace StockTradingSystem.Core.Business
 {
     public interface IStockBusiness
     {
-        bool Stock_depth(int stockId, int type, out List<StockDepthResult> stockDepthResult);
+        List<StockDepthResult> Stock_depth(int stockId, int type);
     }
 }
