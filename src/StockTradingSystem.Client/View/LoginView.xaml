@@ -13,13 +13,17 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Skins/MainSkin.xaml"/>
-                <ResourceDictionary Source="../Skins/LoginSkin.xaml"/>
+                <ResourceDictionary Source="../Themes/MainSkin.xaml"/>
+                <ResourceDictionary Source="../Themes/LoginSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
 
     <Grid Margin="50">
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100">
+            <TextBlock Text="欢迎" FontSize="50"/>
+            <TextBlock Text="新用户白送你一万元！！！" Foreground="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" FontSize="27" Margin="0 10 0 0"/>
+        </StackPanel> 
         <Grid Margin="100" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

@@ -13,8 +13,8 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-                <ResourceDictionary Source="Skins/PathGrid.xaml" />
+                <ResourceDictionary Source="Themes/MainSkin.xaml" />
+                <ResourceDictionary Source="Themes/PathGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

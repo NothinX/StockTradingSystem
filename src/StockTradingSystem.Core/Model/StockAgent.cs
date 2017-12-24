@@ -18,17 +18,17 @@ namespace StockTradingSystem.Core.Model
             User = user;
         }
 
-        public UserCreateResult User_create(string passwd, decimal cnyFree)
+        public UserCreateResult User_create(IUser user, string passwd, decimal cnyFree)
         {
-            CheckUser();
+            if (user == null) throw new ArgumentNullException(nameof(user));
             if (string.IsNullOrWhiteSpace(passwd))
             {
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(passwd));
             }
             if (cnyFree < 0) throw new ArgumentOutOfRangeException(nameof(cnyFree), "初始账户余额应该大于等于零");
-            if (User.Name == null) throw new ArgumentNullException(nameof(User.Name));
+            if (user.Name == null) throw new ArgumentNullException(nameof(user.Name));
 
-            return _userAccess.User_create(User.LoginName, passwd, User.Name, User.Type, cnyFree);
+            return _userAccess.User_create(user.LoginName, passwd, user.Name, user.Type, cnyFree);
         }
 
         public UserLoginResult User_login(string passwd)

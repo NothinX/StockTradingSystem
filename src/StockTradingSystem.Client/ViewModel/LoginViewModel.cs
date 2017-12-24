@@ -13,14 +13,14 @@ namespace StockTradingSystem.Client.ViewModel
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
         private readonly UserMoneyInfo _userMoneyInfo;
-        private readonly IDialogService _iDialogService;
+        private readonly IDialogService _dialogService;
 
-        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, UserMoneyInfo userMoneyInfo, IDialogService iDialogService)
+        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, UserMoneyInfo userMoneyInfo, IDialogService dialogService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _userMoneyInfo = userMoneyInfo;
-            _iDialogService = iDialogService;
+            _dialogService = dialogService;
         }
 
         #region Property
@@ -113,19 +113,18 @@ namespace StockTradingSystem.Client.ViewModel
         {
             if (LoginNameText == "")
             {
-                await _iDialogService.ShowMessage("请输入用户名", "错误", "确定", () => LoginNameFocus = true);
-
+                await _dialogService.ShowMessage("请输入用户名", "错误", "确定", () => LoginNameFocus = true);
             }
             else if (LoginPasswordText == "")
             {
-                await _iDialogService.ShowMessage("请输入密码", "错误", "确定", () => LoginPasswordFocus = true);
+                await _dialogService.ShowMessage("请输入密码", "错误", "确定", () => LoginPasswordFocus = true);
             }
             else
             {
                 if (_stockAgent.User.LoginName != LoginNameText && _stockAgent.User.IsLogin)
                 {
                     var flag = true;
-                    await _iDialogService.ShowMessage("当前你已经登录，需要先注销才能切换账号\n请问要注销吗？", "提示", "确定", "取消", b =>
+                    await _dialogService.ShowMessage("当前你已经登录，需要先注销才能切换账号\n请问要注销吗？", "提示", "确定", "取消", b =>
                     {
                         if (!b) return;
                         _stockAgent.User.IsLogin = false;
@@ -157,7 +156,8 @@ namespace StockTradingSystem.Client.ViewModel
                 }
                 catch (Exception e)
                 {
-                    await _iDialogService.ShowError(e, "错误", "确定", () => LoginNameFocus = true);
+                    LoginPasswordText = "";
+                    await _dialogService.ShowError(e, "错误", "确定", () => LoginNameFocus = true);
                 }
             }
         }
