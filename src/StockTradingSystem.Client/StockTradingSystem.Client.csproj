@@ -137,6 +137,7 @@
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
