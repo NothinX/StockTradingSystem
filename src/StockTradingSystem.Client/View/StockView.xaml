@@ -4,14 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
+      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
+      xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="StockView" Background="AliceBlue">
+      Title="StockView" Background="AliceBlue" DataContext="{Binding Stock,Source={StaticResource Locator}}">
 
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/MainSkin.xaml" />
+                <ResourceDictionary Source="../Themes/StockSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -27,12 +30,50 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Height="40" FontSize="22" Style="{StaticResource ThemeBrushTb}"/>
-                <Button Grid.Column="1" Margin="10 0 0 0" Padding="40 0" FontSize="22" Content="查询" Style="{StaticResource ThemeBrushBtn}"/>
-            </Grid> 
+                <control:HintTextBox Grid.Column="0" Height="40" FontSize="22" ui:UieHelper.IsFocused="{Binding SearchTextFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" HintText="股票代码、股票名称" Style="{StaticResource ThemeBrushTb}">
+                    <control:HintTextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
+                    </control:HintTextBox.InputBindings>
+                </control:HintTextBox>
+                <Button Grid.Column="1" Margin="10 0 0 0" Padding="40 0" FontSize="22" Content="查询" Command="{Binding SearchCommand}" Style="{StaticResource ThemeBrushBtn}"/>
+            </Grid>
         </Border>
-        <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Margin="0 10 0 0" Background="White">
-            <TextBlock FontSize="50" Text="股票列表" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Border Grid.Row="1" Padding="5" BorderThickness="1" BorderBrush="LightGray" Margin="0 10 0 0" Background="White">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
+                <ItemsControl ItemsSource="{Binding StockInfoList}">
+                    <ItemsControl.Resources>
+                        <control:StockPriceChangeBrushConverter x:Key="StockPriceChangeBrushConverter"/>
+                        <control:StockPriceChangeTextConverter x:Key="StockPriceChangeTextConverter"/>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton FontSize="24" Style="{StaticResource StockBtn}" IsChecked="{Binding IsCurrent,Mode=OneWay}" Command="{Binding CheckStockBtnCommand}" GroupName="StockBtn">
+                                <StackPanel Orientation="Horizontal" TextBlock.Foreground="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeBrushConverter}}">
+                                    <TextBlock Text="{Binding StockInfo.StockId}"/>
+                                    <TextBlock Text="{Binding StockInfo.Name}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding StockInfo.Price,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding StockInfo.PriceChange,StringFormat={}{0:F2}}"/>
+                                    <TextBlock Text="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding StockInfo.PricePercent,StringFormat={}{0:F2}%}"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Control.Margin" Value="5"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+            </ScrollViewer>
         </Border>
     </Grid>
 </Page>

@@ -65,6 +65,7 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<AccountButtonViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
+            SimpleIoc.Default.Register<StockViewModel>();
         }
 
         /// <summary>
@@ -74,22 +75,6 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public MainWindowModel Main => ServiceLocator.Current.GetInstance<MainWindowModel>();
-
-        /// <summary>
-        /// Gets the <see cref="FrameNavigationService"/> property.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes.")]
-        public IFrameNavigationService FrameNavigationService => ServiceLocator.Current.GetInstance<IFrameNavigationService>();
-
-        /// <summary>
-        /// Gets the <see cref="DialogService"/> property.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes.")]
-        public IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
 
         /// <summary>
         /// Gets the <see cref="StockAgent"/> property.
@@ -123,6 +108,14 @@ namespace StockTradingSystem.Client.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public RegisterViewModel Register => ServiceLocator.Current.GetInstance<RegisterViewModel>();
 
+        /// <summary>
+        /// Gets the <see cref="Stock"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public StockViewModel Stock => ServiceLocator.Current.GetInstance<StockViewModel>();
+
         private static void InitNavigation()
         {
             var navigationService = new FrameNavigationService();
@@ -142,13 +135,15 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            SimpleIoc.Default.Unregister<StockViewModel>();
+            SimpleIoc.Default.Unregister<RegisterViewModel>();
             SimpleIoc.Default.Unregister<LoginViewModel>();
             SimpleIoc.Default.Unregister<AccountButtonViewModel>();
             SimpleIoc.Default.Unregister<MainWindowModel>();
             SimpleIoc.Default.Unregister<IUser>();
             SimpleIoc.Default.Unregister<IBusiness>();
             SimpleIoc.Default.Unregister<IUserAccess>();
-            SimpleIoc.Default.Unregister<GpStockAgent>();
+            SimpleIoc.Default.Unregister<StockAgent>();
             SimpleIoc.Default.Unregister<IFrameNavigationService>();
             SimpleIoc.Default.Unregister<IDialogService>();
         }

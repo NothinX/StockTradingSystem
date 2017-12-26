@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Diagnostics;
 using System.Linq;
 using StockTradingSystem.Core.Business;
 using StockTradingSystem.Core.Model;
@@ -90,6 +92,27 @@ namespace StockTradingSystem.Client.Model.Business
                     NumFree = x.num_free,
                     NumFreezed = x.num_freezed
                 }).ToList();
+            }
+        }
+
+        public List<StockResult> GetAllStocks()
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                return gpEntities.stocks.Select(x => new StockResult { StockId = x.stock_id, Name = x.name, Price = x.price }).ToList();
+            }
+        }
+
+        public StockResult GetStock(int stockId, DateTime dateTime)
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                var s = gpEntities.stocks.FirstOrDefault(x => x.stock_id == stockId);
+                Debug.Assert(s != null, nameof(s) + " != null");
+                var q = gpEntities.transactions.Where(x => x.stock_id == stockId && x.create_datetime < dateTime)
+                    .OrderBy(x => x.create_datetime).ToList();
+                var ql = q.LastOrDefault();
+                return ql != null ? new StockResult { StockId = stockId, Name = s.name, Price = ql.deal_price } : new StockResult { StockId = stockId, Name = s.name, Price = s.price };
             }
         }
     }

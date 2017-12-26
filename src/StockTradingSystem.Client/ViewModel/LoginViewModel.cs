@@ -1,8 +1,10 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.Info;
+using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
 
@@ -12,14 +14,12 @@ namespace StockTradingSystem.Client.ViewModel
     {
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
-        private readonly UserMoneyInfo _userMoneyInfo;
         private readonly IDialogService _dialogService;
 
-        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, UserMoneyInfo userMoneyInfo, IDialogService dialogService)
+        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
-            _userMoneyInfo = userMoneyInfo;
             _dialogService = dialogService;
         }
 
@@ -128,6 +128,7 @@ namespace StockTradingSystem.Client.ViewModel
                     {
                         if (!b) return;
                         _stockAgent.User.IsLogin = false;
+                        Messenger.Default.Send(new GenericMessage<bool>(false), AccountButtonViewModel.UpdateUserMoneyInfo);
                         flag = false;
                     });
                     if (flag)
@@ -144,7 +145,7 @@ namespace StockTradingSystem.Client.ViewModel
                         LoginNameText = "";
                         LoginPasswordText = "";
                         LoginNameFocus = true;
-                        _userMoneyInfo.Update();
+                        Messenger.Default.Send(new GenericMessage<bool>(true), AccountButtonViewModel.UpdateUserMoneyInfo);
                         _mainWindowModel.NavigateCommand.Execute("StockView");
                     }
                     else

@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Model\GpUser.cs" />
     <Compile Include="Model\Info\Info.cs" />
+    <Compile Include="Model\Info\StockInfo.cs" />
     <Compile Include="Model\Info\UserMoneyInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
@@ -119,6 +120,8 @@
     <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
     <Compile Include="Model\UI\Control\HintTextBox.cs" />
     <Compile Include="Model\GpStockAgent.cs" />
+    <Compile Include="Model\UI\Control\StockPriceChangeBrushConverter.cs" />
+    <Compile Include="Model\UI\Control\StockPriceChangeTextConverter.cs" />
     <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
     <Compile Include="Model\UI\SystemTypeExtension.cs" />
     <Compile Include="Model\users.cs">
@@ -134,8 +137,10 @@
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\StockViewModel.cs" />
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -173,6 +178,10 @@
     <Compile Include="View\TradeView.xaml.cs">
       <DependentUpon>TradeView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\StockSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\LoginSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

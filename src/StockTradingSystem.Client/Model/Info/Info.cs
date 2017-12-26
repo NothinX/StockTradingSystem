@@ -2,8 +2,9 @@
 
 namespace StockTradingSystem.Client.Model.Info
 {
-    public abstract class Info : ObservableObject
+    public abstract class Info<T> : ObservableObject
     {
-        public abstract void Update();
+        public abstract void Create(T obj);
+        public abstract void Update(T obj);
     }
 }
