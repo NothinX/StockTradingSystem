@@ -1,40 +1,65 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
-    public class AccountButtonViewModel : ViewModelBase
+    public sealed class AccountButtonViewModel : ViewModelBase, IDisposable
     {
-        public static readonly string UpdateTotalMoney = "UpdateTotalMoney";
-        public static readonly string UpdateAvailableMoney = "UpdateAvailableMoney";
+        public static readonly string UpdateUserMoneyInfo = "UpdateUserMoneyInfo";
 
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
+        private readonly UserMoneyInfo _userMoneyInfo;
 
-        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService)
+        private Task _updateUserMoneyInfo;
+        private CancellationTokenSource _cts;
+
+        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, UserMoneyInfo userMoneyInfo)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
-            Messenger.Default.Register<GenericMessage<decimal>>(this, UpdateTotalMoney, d =>
+            _userMoneyInfo = userMoneyInfo;
+            Messenger.Default.Register<GenericMessage<bool>>(this, UpdateUserMoneyInfo, b =>
             {
                 lock (this)
                 {
-                    TotalMoneyText = $"总共：{d.Content:F2}";
+                    if (b.Content && _updateUserMoneyInfo == null)
+                    {
+                        _cts = new CancellationTokenSource();
+                        _updateUserMoneyInfo = Update(_cts.Token);
+                    }
+                    else if (!b.Content && _cts != null && _updateUserMoneyInfo != null)
+                    {
+                        _cts.Cancel();
+                        _updateUserMoneyInfo = null;
+                    }
                 }
             });
-            Messenger.Default.Register<GenericMessage<decimal>>(this, UpdateAvailableMoney, d =>
+        }
+
+        private async Task Update(CancellationToken ct)
+        {
+            var t = new TimeSpan(0, 0, 5);
+            while (!ct.IsCancellationRequested)
             {
+                var ucr = _stockAgent.User_cny();
                 lock (this)
                 {
-                    AvailableMoneyText = $"可用：{d.Content:F2}";
+                    TotalMoneyText = $"总共：{ucr.CnyFree + ucr.CnyFreezed:F2}";
+                    AvailableMoneyText = $"可用：{ucr.CnyFree:F2}";
                 }
-            });
+                _userMoneyInfo.Update(ucr);
+                await Task.Delay(t, ct);
+            }
         }
 
         #region Property
@@ -94,6 +119,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (b)
                 {
                     _stockAgent.User.IsLogin = false;
+                    Messenger.Default.Send(new GenericMessage<bool>(true), UpdateUserMoneyInfo);
                 }
             });
         }
@@ -113,11 +139,19 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (b)
                 {
                     _stockAgent.User.IsLogin = false;
+                    Messenger.Default.Send(new GenericMessage<bool>(true), UpdateUserMoneyInfo);
                     _mainWindowModel.NavigateCommand.Execute("LoginView");
                 }
             });
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            _cts?.Cancel();
+            _updateUserMoneyInfo?.Dispose();
+            _cts?.Dispose();
+        }
     }
 }

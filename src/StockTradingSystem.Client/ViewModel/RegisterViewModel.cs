@@ -1,7 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model;
 using StockTradingSystem.Core.Access;

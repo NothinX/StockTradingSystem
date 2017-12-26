@@ -5,7 +5,7 @@ using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.Model.Info
 {
-    public class UserMoneyInfo : Info
+    public class UserMoneyInfo : Info<UserCnyResult>
     {
         private readonly StockAgent _stockAgent;
 
@@ -65,14 +65,16 @@ namespace StockTradingSystem.Client.Model.Info
             set => Set(GpMoneyPropertyName, ref _gpMoney, value);
         }
 
-        public override void Update()
+        public override void Create(UserCnyResult obj)
         {
-            var ucr = _stockAgent.User_cny();
-            CnyFree = ucr.CnyFree;
-            CnyFreezed = ucr.CnyFreezed;
-            GpMoney = ucr.GpMoney;
-            Messenger.Default.Send(new GenericMessage<decimal>(ucr.CnyFree + ucr.CnyFreezed), AccountButtonViewModel.UpdateTotalMoney);
-            Messenger.Default.Send(new GenericMessage<decimal>(ucr.CnyFree), AccountButtonViewModel.UpdateAvailableMoney);
+            throw new System.NotImplementedException();
+        }
+
+        public override void Update(UserCnyResult obj)
+        {
+            CnyFree = obj.CnyFree;
+            CnyFreezed = obj.CnyFreezed;
+            GpMoney = obj.GpMoney;
         }
     }
 }

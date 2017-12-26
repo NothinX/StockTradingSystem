@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StockTradingSystem.Core.Business;
 using StockTradingSystem.Core.Model;
 
@@ -9,6 +10,16 @@ namespace StockTradingSystem.Client.Design.Model.Business
         public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<StockResult> GetAllStocks()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public StockResult GetStock(int stockId, DateTime dateTime)
+        {
+            throw new NotImplementedException();
         }
 
         public ExecOrderResult Exec_Order(long userId, int stockId, int type, decimal price, int amount)

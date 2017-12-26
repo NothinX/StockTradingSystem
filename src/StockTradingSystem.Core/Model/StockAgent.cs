@@ -99,6 +99,16 @@ namespace StockTradingSystem.Core.Model
             return _business.User_stock(User.UserId);
         }
 
+        public List<StockResult> GetAllStocks()
+        {
+            return _business.GetAllStocks();
+        }
+
+        public StockResult GetStock(int stockId, DateTime dateTime)
+        {
+            return _business.GetStock(stockId, dateTime);
+        }
+
         /// <summary>
         /// 检查User是否为空
         /// </summary>

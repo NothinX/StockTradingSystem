@@ -53,6 +53,7 @@
     <Compile Include="Model\StockAgent.cs" />
     <Compile Include="Model\StockDepthResult.cs" />
     <Compile Include="Model\IUser.cs" />
+    <Compile Include="Model\StockResult.cs" />
     <Compile Include="Model\UserCnyResult.cs" />
     <Compile Include="Model\UserOrderResult.cs" />
     <Compile Include="Model\UserStockResult.cs" />
