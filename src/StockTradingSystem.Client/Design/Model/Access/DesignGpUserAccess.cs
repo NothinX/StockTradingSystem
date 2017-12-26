@@ -9,12 +9,12 @@ namespace StockTradingSystem.Client.Design.Model.Access
             throw new System.NotImplementedException();
         }
 
-        public UserLoginResult User_login(string loginName, string passwd, out long? userId, out string name, out int? type)
+        public UserRepasswdResult User_repasswd(long userId, string oldPasswd, string newPasswd)
         {
             throw new System.NotImplementedException();
         }
 
-        public UserRepasswdResult User_repasswd(long userId, string oldPasswd, string newPasswd)
+        public UserLoginResult User_login(string loginName, string passwd, out long? userId, out string name, out int? type)
         {
             throw new System.NotImplementedException();
         }

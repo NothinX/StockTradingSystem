@@ -140,7 +140,7 @@ namespace StockTradingSystem.Client.ViewModel
                 _stockAgent.User.LoginName = LoginNameText;
                 try
                 {
-                    if (_stockAgent.User_login(Security.Pbkdf2(LoginPasswordText)) == UserLoginResult.Ok)
+                    if (_stockAgent.User_login(LoginPasswordText) == UserLoginResult.Ok)
                     {
                         LoginNameText = "";
                         LoginPasswordText = "";

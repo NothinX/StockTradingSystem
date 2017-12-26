@@ -116,11 +116,9 @@ namespace StockTradingSystem.Client.ViewModel.Control
         {
             await _dialogService.ShowMessage("确定要注销账号吗？", "提示", "确定", "取消", b =>
             {
-                if (b)
-                {
-                    _stockAgent.User.IsLogin = false;
-                    Messenger.Default.Send(new GenericMessage<bool>(true), UpdateUserMoneyInfo);
-                }
+                if (!b) return;
+                _stockAgent.User.IsLogin = false;
+                Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
             });
         }
 
@@ -136,12 +134,10 @@ namespace StockTradingSystem.Client.ViewModel.Control
         {
             await _dialogService.ShowMessage("确定要切换账号吗？", "提示", "确定", "取消", b =>
             {
-                if (b)
-                {
-                    _stockAgent.User.IsLogin = false;
-                    Messenger.Default.Send(new GenericMessage<bool>(true), UpdateUserMoneyInfo);
-                    _mainWindowModel.NavigateCommand.Execute("LoginView");
-                }
+                if (!b) return;
+                _stockAgent.User.IsLogin = false;
+                Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
+                _mainWindowModel.NavigateCommand.Execute("LoginView");
             });
         }
 

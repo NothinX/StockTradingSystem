@@ -211,7 +211,7 @@ namespace StockTradingSystem.Client.ViewModel
                 IUser user = new GpUser { LoginName = LoginNameText, Name = UserNameText, Type = 1 };
                 try
                 {
-                    if (_stockAgent.User_create(user, Security.Pbkdf2(LoginPasswordText), 10000) == UserCreateResult.Ok)
+                    if (_stockAgent.User_create(user, LoginPasswordText, 10000) == UserCreateResult.Ok)
                     {
                         ClearAllText();
                         LoginNameFocus = true;

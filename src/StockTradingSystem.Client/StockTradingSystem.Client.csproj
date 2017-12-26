@@ -85,6 +85,7 @@
     <Compile Include="Design\Model\Business\DesignGpBusiness.cs" />
     <Compile Include="Design\Model\DesignGpUser.cs" />
     <Compile Include="Design\Model\DesignGpStockAgent.cs" />
+    <Compile Include="Design\Model\UI\Dialog\DesignDialogService.cs" />
     <Compile Include="Model\GPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,6 +141,7 @@
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -178,6 +180,10 @@
     <Compile Include="View\TradeView.xaml.cs">
       <DependentUpon>TradeView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\SettingsSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\StockSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

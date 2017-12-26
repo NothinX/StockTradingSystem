@@ -19,14 +19,13 @@ namespace StockTradingSystem.Client.ViewModel
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
 
-        private readonly Task _updateStockInfo;
+        private Task _updateStockInfo;
 
         public StockViewModel(StockAgent stockAgent, IDialogService dialogService)
         {
             _stockAgent = stockAgent;
             _dialogService = dialogService;
             Messenger.Default.Register<GenericMessage<int>>(this, UpdateCurrentStockIdToken, m => UpdateCurrentStockId(m.Content));
-            _updateStockInfo = Update();
         }
 
         private void UpdateCurrentStockId(int id)
@@ -47,36 +46,43 @@ namespace StockTradingSystem.Client.ViewModel
         private async Task Update()
         {
             var t = new TimeSpan(0, 0, 5);
-            while (true)
+            try
             {
-                var addlist = new List<StockInfoViewModel>();
-                var deletelist = new List<StockInfoViewModel>();
-                var s = _stockAgent.GetAllStocks();
-                lock (this)
+                while (true)
                 {
-                    s.ForEach(x =>
+                    var addlist = new List<StockInfoViewModel>();
+                    var deletelist = new List<StockInfoViewModel>();
+                    var s = _stockAgent.GetAllStocks();
+                    lock (this)
                     {
-                        var ss = StockInfoList.FirstOrDefault(y => y.StockInfo.StockId == x.StockId);
-                        if (ss != null) ss.StockInfo.Update(x);
-                        else
+                        s.ForEach(x =>
                         {
-                            var si = new StockInfo();
-                            si.Create(_stockAgent.GetStock(x.StockId, DateTime.Now));
-                            si.Update(x);
-                            addlist.Add(new StockInfoViewModel(si));
-                        }
-                    });
-                    StockInfoList.ForEach(x =>
-                    {
-                        var ss = s.FirstOrDefault(y => y.StockId == x.StockInfo.StockId);
-                        if (ss == null) deletelist.Add(x);
-                    });
-                    addlist.ForEach(x => StockInfoList.Add(x));
-                    deletelist.ForEach(x => StockInfoList.Remove(x));
-                    StockInfoList = StockInfoList.OrderByDescending(x => x.IsCurrent).ThenBy(x => x.StockInfo.StockId).ToList();
+                            var ss = StockInfoList.FirstOrDefault(y => y.StockInfo.StockId == x.StockId);
+                            if (ss != null) ss.StockInfo.Update(x);
+                            else
+                            {
+                                var si = new StockInfo();
+                                si.Create(_stockAgent.GetStock(x.StockId, DateTime.Now));
+                                si.Update(x);
+                                addlist.Add(new StockInfoViewModel(si));
+                            }
+                        });
+                        StockInfoList.ForEach(x =>
+                        {
+                            var ss = s.FirstOrDefault(y => y.StockId == x.StockInfo.StockId);
+                            if (ss == null) deletelist.Add(x);
+                        });
+                        addlist.ForEach(x => StockInfoList.Add(x));
+                        deletelist.ForEach(x => StockInfoList.Remove(x));
+                        StockInfoList = StockInfoList.OrderByDescending(x => x.IsCurrent).ThenBy(x => x.StockInfo.StockId).ToList();
+                    }
+                    await Task.Delay(t);
                 }
-                await Task.Delay(t);
             }
+            catch (Exception e)
+            {
+                await _dialogService.ShowError(e, "错误", "确定", null);
+            } 
         }
 
         #region Property
@@ -161,6 +167,19 @@ namespace StockTradingSystem.Client.ViewModel
 
         #region Command
 
+        private RelayCommand _loadedCommand;
+
+        /// <summary>
+        /// Gets the LoadedCommand.
+        /// </summary>
+        public RelayCommand LoadedCommand => _loadedCommand
+                                             ?? (_loadedCommand = new RelayCommand(ExecuteLoadedCommand));
+
+        private async void ExecuteLoadedCommand()
+        {
+            await Task.Run(() => _updateStockInfo = Update());
+        }
+
         private RelayCommand _searchCommand;
 
         /// <summary>
@@ -176,7 +195,11 @@ namespace StockTradingSystem.Client.ViewModel
             {
                 var ss = StockInfoList.Where(x =>
                     x.StockInfo.StockId.ToString() == SearchText || x.StockInfo.Name.Contains(SearchText)).ToList();
-                if (ss.Count == 1) UpdateCurrentStockId(ss.First().StockInfo.StockId);
+                if (ss.Count == 1)
+                {
+                    UpdateCurrentStockId(ss.First().StockInfo.StockId);
+                    SearchText = "";
+                } 
                 else if (ss.Count > 1)
                 {
                     await _dialogService.ShowMessage($"找到与“{SearchText}”相关的股票不唯一", "提示");

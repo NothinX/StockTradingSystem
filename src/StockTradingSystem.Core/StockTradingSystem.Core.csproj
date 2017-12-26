@@ -49,7 +49,7 @@
     <Compile Include="Business\IOrderBusiness.cs" />
     <Compile Include="Business\IStockBusiness.cs" />
     <Compile Include="Business\IUserBusiness.cs" />
-    <Compile Include="Model\Security.cs" />
+    <Compile Include="Security\Crypto.cs" />
     <Compile Include="Model\StockAgent.cs" />
     <Compile Include="Model\StockDepthResult.cs" />
     <Compile Include="Model\IUser.cs" />

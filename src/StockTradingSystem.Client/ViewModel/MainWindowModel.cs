@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using StockTradingSystem.Client.Model.UI;
 using StockTradingSystem.Client.Model.UI.Navigation;
 
 namespace StockTradingSystem.Client.ViewModel

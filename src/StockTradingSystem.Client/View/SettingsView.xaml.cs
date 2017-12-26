@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.Ioc;
+using StockTradingSystem.Client.ViewModel;
 
 namespace StockTradingSystem.Client.View
 {
