@@ -19,7 +19,15 @@ namespace StockTradingSystem.Client.Model.Access
         {
             using (var gpEntities = new GPEntities())
             {
-                return gpEntities.user_repasswd(userId, oldPasswd, newPasswd).First() == 0 ? UserRepasswdResult.Ok : UserRepasswdResult.Wrong;
+                var hashedPassword = GetHashedPassword(userId);
+                if (hashedPassword == null) return UserRepasswdResult.Wrong;
+                if (!Crypto.VerifyHashedPassword(hashedPassword, oldPasswd)) return UserRepasswdResult.Wrong;
+                var hashedNewPasswd = Crypto.HashPassword(newPasswd);
+                var q=gpEntities.users.FirstOrDefault(u => u.user_id == userId);
+                if (q == null) return UserRepasswdResult.Wrong;
+                q.passwd = hashedNewPasswd;
+                gpEntities.SaveChanges();
+                return UserRepasswdResult.Ok;
             }
         }
 

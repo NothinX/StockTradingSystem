@@ -17,6 +17,7 @@ using Microsoft.Practices.ServiceLocation;
 using StockTradingSystem.Client.Design.Model;
 using StockTradingSystem.Client.Design.Model.Access;
 using StockTradingSystem.Client.Design.Model.Business;
+using StockTradingSystem.Client.Design.Model.UI.Dialog;
 using StockTradingSystem.Client.Model;
 using StockTradingSystem.Client.Model.Access;
 using StockTradingSystem.Client.Model.Business;
@@ -45,6 +46,7 @@ namespace StockTradingSystem.Client.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                SimpleIoc.Default.Register<IDialogService, DesignDialogService>();
                 SimpleIoc.Default.Register<IUserAccess, DesignGpUserAccess>();
                 SimpleIoc.Default.Register<IBusiness, DesignGpBusiness>();
                 SimpleIoc.Default.Register<IUser, DesignGpUser>();
