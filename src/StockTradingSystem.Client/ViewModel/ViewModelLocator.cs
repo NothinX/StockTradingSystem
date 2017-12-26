@@ -66,7 +66,16 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<StockViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
         }
+
+        /// <summary>
+        /// Gets the <see cref="FrameNavigationService"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public IFrameNavigationService FrameNavigationService => ServiceLocator.Current.GetInstance<IFrameNavigationService>();
 
         /// <summary>
         /// Gets the <see cref="Main"/> property.
@@ -116,6 +125,14 @@ namespace StockTradingSystem.Client.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public StockViewModel Stock => ServiceLocator.Current.GetInstance<StockViewModel>();
 
+        /// <summary>
+        /// Gets the <see cref="Settings"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
         private static void InitNavigation()
         {
             var navigationService = new FrameNavigationService();
@@ -135,6 +152,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            SimpleIoc.Default.Unregister<SettingsViewModel>();
             SimpleIoc.Default.Unregister<StockViewModel>();
             SimpleIoc.Default.Unregister<RegisterViewModel>();
             SimpleIoc.Default.Unregister<LoginViewModel>();

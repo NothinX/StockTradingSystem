@@ -6,9 +6,11 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"   
+      xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="StockView" Background="AliceBlue" DataContext="{Binding Stock,Source={StaticResource Locator}}">
+      Title="StockView" Background="AliceBlue" DataContext="{Binding Stock,Source={StaticResource Locator}}" >
 
     <Page.Resources>
         <ResourceDictionary>
@@ -18,6 +20,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger>
+            <cmd:EventToCommand Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
