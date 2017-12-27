@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Windows;
 using System.Windows.Media;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -269,6 +268,9 @@ namespace StockTradingSystem.Client.ViewModel
             var r = Convert.ToByte(RValue);
             var g = Convert.ToByte(GValue);
             var b = Convert.ToByte(BValue);
+            RValue = Convert.ToDouble(r);
+            GValue = Convert.ToDouble(g);
+            BValue = Convert.ToDouble(b);
             _mainWindowModel.ThemeBrush = new SolidColorBrush(Color.FromRgb(r, g, b));
         }
 

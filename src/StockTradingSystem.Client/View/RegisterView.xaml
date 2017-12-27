@@ -8,7 +8,7 @@
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="RegisterView" Background="White" DataContext="{Binding Register,Source={StaticResource Locator}}">
+      Title="RegisterView" Background="#BFFFFFFF" DataContext="{Binding Register,Source={StaticResource Locator}}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Margin="50">
+    <Grid Margin="50" Background="White">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100">
             <TextBlock Text="欢迎" FontSize="50"/>
             <TextBlock Text="新用户白送你一万元！！！" Foreground="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" FontSize="27" Margin="0 10 0 0"/>

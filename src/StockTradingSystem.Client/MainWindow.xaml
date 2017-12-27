@@ -23,7 +23,7 @@
         <WindowChrome CaptionHeight="33" GlassFrameThickness="1" CornerRadius="0" ResizeBorderThickness="7"/>
     </WindowChrome.WindowChrome>
 
-    <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
+    <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" Background="{Binding ThemeBrush}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

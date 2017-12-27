@@ -10,7 +10,7 @@
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="StockView" Background="AliceBlue" DataContext="{Binding Stock,Source={StaticResource Locator}}" >
+      Title="StockView" Background="#BFFFFFFF" DataContext="{Binding Stock,Source={StaticResource Locator}}" >
 
     <Page.Resources>
         <ResourceDictionary>
@@ -20,7 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding LoadedCommand}"/>

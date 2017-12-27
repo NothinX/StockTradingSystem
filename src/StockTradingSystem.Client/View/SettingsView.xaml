@@ -10,7 +10,7 @@
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       mc:Ignorable="d" 
        d:DesignWidth="1190"
-      Title="SettingsView" Background="AliceBlue" DataContext="{Binding Settings,Source={StaticResource Locator}}">
+      Title="SettingsView" Background="#BFFFFFFF" DataContext="{Binding Settings,Source={StaticResource Locator}}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <StackPanel Margin="10 0">
             <StackPanel.Resources>
                 <control:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
@@ -67,7 +67,7 @@
                         <StackPanel HorizontalAlignment="Left" TextBlock.FontSize="24">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="R" Width="30"/>
-                                <Slider Minimum="0" Maximum="254" SmallChange="1" Width="255" VerticalAlignment="Center" Value="{Binding RValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
+                                <Slider Minimum="0" Maximum="255" SmallChange="1" Width="256" VerticalAlignment="Center" Value="{Binding RValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="ValueChanged">
                                             <cmd:EventToCommand Command="{Binding ValueChangedCommand}"/>
@@ -77,7 +77,7 @@
                             </StackPanel> 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="G" Width="30"/>
-                                <Slider Minimum="0" Maximum="254" SmallChange="1" Width="255" VerticalAlignment="Center" Value="{Binding GValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
+                                <Slider Minimum="0" Maximum="255" SmallChange="1" Width="256" VerticalAlignment="Center" Value="{Binding GValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="ValueChanged">
                                             <cmd:EventToCommand Command="{Binding ValueChangedCommand}"/>

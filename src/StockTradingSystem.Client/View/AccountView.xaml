@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="AccountView" Background="AliceBlue">
+      Title="AccountView" Background="#BFFFFFFF">
 
     <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <Grid Margin="10 0">
