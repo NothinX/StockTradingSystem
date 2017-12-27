@@ -86,6 +86,7 @@
     <Compile Include="Design\Model\Business\DesignGpBusiness.cs" />
     <Compile Include="Design\Model\DesignGpUser.cs" />
     <Compile Include="Design\Model\DesignGpStockAgent.cs" />
+    <Compile Include="Design\Model\Info\DesignUserMoneyInfo.cs" />
     <Compile Include="Design\Model\UI\Dialog\DesignDialogService.cs" />
     <Compile Include="Model\GPModel.Context.cs">
       <AutoGen>True</AutoGen>

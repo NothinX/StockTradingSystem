@@ -6,6 +6,8 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:navigation="clr-namespace:StockTradingSystem.Client.Model.UI.Navigation"
         xmlns:control="clr-namespace:StockTradingSystem.Client.View.Control"
+        xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+        xmlns:uicontrol="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
         mc:Ignorable="d ignore"
         Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" x:Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
@@ -57,10 +59,12 @@
                     <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <StackPanel.Resources>
                             <navigation:NavBarItemIsCheckedConverter x:Key="NavBarItemIsCheckedConverter"/>
+                            <uicontrol:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
                         </StackPanel.Resources>
                         <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=StockView}"/>
                         <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=TradeView}"/>
-                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"/>
+                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"
+                                     Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}"/>
                         <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"  IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SettingsView}"/>
                     </StackPanel>
                 </DockPanel>
