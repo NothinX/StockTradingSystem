@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.Info;
+using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel.Control
@@ -18,16 +19,18 @@ namespace StockTradingSystem.Client.ViewModel.Control
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
         private readonly UserMoneyInfo _userMoneyInfo;
+        private readonly IFrameNavigationService _frameNavigationService;
 
         private Task _updateUserMoneyInfo;
         private CancellationTokenSource _cts;
 
-        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, UserMoneyInfo userMoneyInfo)
+        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, UserMoneyInfo userMoneyInfo, IFrameNavigationService frameNavigationService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
             _userMoneyInfo = userMoneyInfo;
+            _frameNavigationService = frameNavigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, UpdateUserMoneyInfo, b =>
             {
                 lock (this)
@@ -119,6 +122,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (!b) return;
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                if (_frameNavigationService.CurrentPageKey == "AccountView") _mainWindowModel.GoBackCommand.Execute(null);
             });
         }
 
@@ -137,6 +142,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (!b) return;
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
                 _mainWindowModel.NavigateCommand.Execute("LoginView");
             });
         }

@@ -18,11 +18,7 @@ namespace StockTradingSystem.Client.Model.Info
         public decimal CnyFree
         {
             get => _cnyFree;
-            set
-            {
-                Set(CnyFreePropertyName, ref _cnyFree, value);
-                UpdateTotalMoney();
-            }
+            set => Set(CnyFreePropertyName, ref _cnyFree, value);
         }
 
         /// <summary>
@@ -39,11 +35,7 @@ namespace StockTradingSystem.Client.Model.Info
         public decimal CnyFreezed
         {
             get => _cnyFreezed;
-            set
-            {
-                Set(CnyFreezedPropertyName, ref _cnyFreezed, value);
-                UpdateTotalMoney();
-            } 
+            set => Set(CnyFreezedPropertyName, ref _cnyFreezed, value);
         }
 
         /// <summary>
@@ -60,11 +52,7 @@ namespace StockTradingSystem.Client.Model.Info
         public decimal GpMoney
         {
             get => _gpMoney;
-            set
-            {
-                Set(GpMoneyPropertyName, ref _gpMoney, value);
-                UpdateTotalMoney();
-            } 
+            set => Set(GpMoneyPropertyName, ref _gpMoney, value);
         }
 
         /// <summary>
@@ -94,10 +82,6 @@ namespace StockTradingSystem.Client.Model.Info
             CnyFree = obj.CnyFree;
             CnyFreezed = obj.CnyFreezed;
             GpMoney = obj.GpMoney;
-        }
-
-        private void UpdateTotalMoney()
-        {
             TotalMoney = CnyFree + CnyFreezed + GpMoney;
         }
     }

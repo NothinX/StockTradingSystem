@@ -107,6 +107,7 @@
     <Compile Include="Model\Info\Info.cs" />
     <Compile Include="Model\Info\StockInfo.cs" />
     <Compile Include="Model\Info\UserMoneyInfo.cs" />
+    <Compile Include="Model\Info\UserStockInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -140,7 +141,9 @@
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
+    <Compile Include="ViewModel\Control\UserStockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />

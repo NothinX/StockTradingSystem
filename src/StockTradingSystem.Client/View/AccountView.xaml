@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="AccountView" Background="#BFFFFFFF">
+      Title="AccountView" Background="#BFFFFFFF" DataContext="{Binding Account,Source={StaticResource Locator}}">
 
     <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <Grid Margin="10 0">
@@ -38,7 +38,19 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                        <TextBlock FontSize="50" Text="持有股票" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
+                            <ListView ItemsSource="{Binding UserStockInfoViewModel.UserStockList,Source={StaticResource Locator}}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="股票代码" DisplayMemberBinding="{Binding StockId}"/>
+                                        <GridViewColumn Header="股票名称" DisplayMemberBinding="{Binding StockName}"/>
+                                        <GridViewColumn Header="持股数量" DisplayMemberBinding="{Binding TotalStock}"/>
+                                        <GridViewColumn Header="可用数量" DisplayMemberBinding="{Binding AvailableStock}"/>
+                                        <GridViewColumn Header="冻结数量" DisplayMemberBinding="{Binding FreezedStock}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer> 
                     </Border>
                     <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
                         <TextBlock FontSize="50" Text="委托记录" HorizontalAlignment="Center" VerticalAlignment="Center"/>

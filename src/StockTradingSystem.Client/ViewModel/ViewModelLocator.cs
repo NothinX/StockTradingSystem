@@ -67,11 +67,13 @@ namespace StockTradingSystem.Client.ViewModel
 
             InitNavigation();
 
+            SimpleIoc.Default.Register<UserStockInfoViewModel>();
             SimpleIoc.Default.Register<MainWindowModel>();
             SimpleIoc.Default.Register<AccountButtonViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<StockViewModel>();
+            SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
         }
 
@@ -98,6 +100,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public UserMoneyInfo UserMoneyInfo => ServiceLocator.Current.GetInstance<UserMoneyInfo>();
+
+        /// <summary>
+        /// Gets the <see cref="UserStockInfoViewModel"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserStockInfoViewModel UserStockInfoViewModel => ServiceLocator.Current.GetInstance<UserStockInfoViewModel>();
 
         /// <summary>
         /// Gets the <see cref="Main"/> property.
@@ -140,6 +150,14 @@ namespace StockTradingSystem.Client.ViewModel
         public StockViewModel Stock => ServiceLocator.Current.GetInstance<StockViewModel>();
 
         /// <summary>
+        /// Gets the <see cref="Account"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public AccountViewModel Account => ServiceLocator.Current.GetInstance<AccountViewModel>();
+
+        /// <summary>
         /// Gets the <see cref="Settings"/> property.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
@@ -166,18 +184,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public static void Cleanup()
         {
-            SimpleIoc.Default.Unregister<SettingsViewModel>();
-            SimpleIoc.Default.Unregister<StockViewModel>();
-            SimpleIoc.Default.Unregister<RegisterViewModel>();
-            SimpleIoc.Default.Unregister<LoginViewModel>();
-            SimpleIoc.Default.Unregister<AccountButtonViewModel>();
-            SimpleIoc.Default.Unregister<MainWindowModel>();
-            SimpleIoc.Default.Unregister<IUser>();
-            SimpleIoc.Default.Unregister<IBusiness>();
-            SimpleIoc.Default.Unregister<IUserAccess>();
-            SimpleIoc.Default.Unregister<StockAgent>();
-            SimpleIoc.Default.Unregister<IFrameNavigationService>();
-            SimpleIoc.Default.Unregister<IDialogService>();
+
         }
     }
 }
