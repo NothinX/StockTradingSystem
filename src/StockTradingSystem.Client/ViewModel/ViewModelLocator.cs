@@ -42,6 +42,7 @@ namespace StockTradingSystem.Client.ViewModel
     {
         static ViewModelLocator()
         {
+            SimpleIoc.Default.Reset();
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             if (ViewModelBase.IsInDesignModeStatic)
@@ -60,6 +61,7 @@ namespace StockTradingSystem.Client.ViewModel
                 SimpleIoc.Default.Register<IUser, GpUser>();
                 SimpleIoc.Default.Register<StockAgent, GpStockAgent>();
             }
+
             InitNavigation();
 
             SimpleIoc.Default.Register<UserMoneyInfo>();
