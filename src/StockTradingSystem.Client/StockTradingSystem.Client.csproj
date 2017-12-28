@@ -122,6 +122,7 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UI\Control\CurrentStockInfoVisibilityConverter.cs" />
     <Compile Include="Model\UI\Control\UndealedVisibilityConverter.cs" />
     <Compile Include="Model\UI\Control\IsCheckedStockInfoConverter.cs" />
     <Compile Include="Model\UI\Control\ListViewColumnWidthConverter.cs" />
