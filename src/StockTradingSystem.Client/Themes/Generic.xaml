@@ -3,14 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:StockTradingSystem.Client"
     xmlns:viewmodel="clr-namespace:StockTradingSystem.Client.ViewModel"
-    xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control">
+    xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <viewmodel:ViewModelLocator x:Key="Locator"/>
 
     <Style TargetType="{x:Type control:HintTextBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator }}"/>
+        <Setter Property="BorderBrush" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
         <Setter Property="SelectionBrush" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -49,5 +49,119 @@
                 <Setter Property="SelectionBrush" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
             </MultiTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ListViewWithGridViewStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListView}">
+                    <Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">
+                        <ScrollViewer Padding="{TemplateBinding Padding}" Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Themes:ListBoxChrome>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListViewWithGridViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                   <Grid>
+                       <Border x:Name="Bd" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true"/>
+                       <Border Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                           <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                       </Border>
+                   </Grid> 
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="Opacity" TargetName="Bd" Value="0.4"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="Opacity" TargetName="Bd" Value="0.2"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                   <Grid>
+                       <Border x:Name="Bd" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true"/>
+                       <Border BorderThickness="1" BorderBrush="LightGray" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                           <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                       </Border>
+                   </Grid> 
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="Opacity" TargetName="Bd" Value="0.4"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Main.ThemeBrush, Source={StaticResource Locator}}"/>
+                            <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -85,7 +85,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
             }
             catch (Exception e)
             {
-                await _dialogService.ShowError(e, "错误", "确定", null);
+                if (!ct.IsCancellationRequested) await _dialogService.ShowError(e, "错误", "确定", null);
             }
         }
 

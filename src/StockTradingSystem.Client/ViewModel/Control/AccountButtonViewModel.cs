@@ -52,16 +52,23 @@ namespace StockTradingSystem.Client.ViewModel.Control
         private async Task Update(CancellationToken ct)
         {
             var t = new TimeSpan(0, 0, 5);
-            while (!ct.IsCancellationRequested)
+            try
             {
-                var ucr = _stockAgent.User_cny();
-                lock (this)
+                while (!ct.IsCancellationRequested)
                 {
-                    TotalMoneyText = $"总共：{ucr.CnyFree + ucr.CnyFreezed:F2}";
-                    AvailableMoneyText = $"可用：{ucr.CnyFree:F2}";
+                    var ucr = _stockAgent.User_cny();
+                    lock (this)
+                    {
+                        TotalMoneyText = $"总共：{ucr.CnyFree + ucr.CnyFreezed:F2}";
+                        AvailableMoneyText = $"可用：{ucr.CnyFree:F2}";
+                    }
+                    _userMoneyInfo.Update(ucr);
+                    await Task.Delay(t, ct);
                 }
-                _userMoneyInfo.Update(ucr);
-                await Task.Delay(t, ct);
+            }
+            catch (Exception e)
+            {
+                if (!ct.IsCancellationRequested) await _dialogService.ShowError(e, "错误", "确定", null);
             }
         }
 

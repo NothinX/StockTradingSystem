@@ -4,9 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
+      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
+      xmlns:info="clr-namespace:StockTradingSystem.Client.Model.Info"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="AccountView" Background="#BFFFFFFF" DataContext="{Binding Account,Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <Grid Margin="10 0">
@@ -38,16 +48,55 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
-                            <ListView ItemsSource="{Binding UserStockInfoViewModel.UserStockInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserStockInfo}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer.Resources>
+                                <control:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                            </ScrollViewer.Resources>
+                            <ListView Name="UserStockInfoListView" ItemsSource="{Binding UserStockInfoViewModel.UserStockInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserStockInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
                                 <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="股票代码" DisplayMemberBinding="{Binding StockId}"/>
-                                        <GridViewColumn Header="股票名称" DisplayMemberBinding="{Binding StockInfo.Name}"/>
-                                        <GridViewColumn Header="股票价格" DisplayMemberBinding="{Binding StockInfo.Price,StringFormat={}{0:F2}}"/>
-                                        <GridViewColumn Header="持股数量" DisplayMemberBinding="{Binding TotalStock}"/>
-                                        <GridViewColumn Header="可用数量" DisplayMemberBinding="{Binding AvailableStock}"/>
-                                        <GridViewColumn Header="冻结数量" DisplayMemberBinding="{Binding FreezedStock}"/>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                        <GridViewColumn Header="股票代码" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockId}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票名称" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Name}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票价格" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="持股数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding TotalStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="可用数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding AvailableStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="冻结数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding FreezedStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
