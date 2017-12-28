@@ -15,6 +15,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -124,17 +139,18 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\UI\Control\CurrentStockInfoVisibilityConverter.cs" />
-    <Compile Include="Model\UI\Control\UndealedVisibilityConverter.cs" />
-    <Compile Include="Model\UI\Control\IsCheckedStockInfoConverter.cs" />
-    <Compile Include="Model\UI\Control\ListViewColumnWidthConverter.cs" />
-    <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
-    <Compile Include="Model\UI\Control\OrderTypeTextConverter.cs" />
+    <Compile Include="Model\UI\Converter\CurrentStockInfoVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\OrderTypeBrushConverter.cs" />
+    <Compile Include="Model\UI\Converter\UndealedVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\IsCheckedStockInfoConverter.cs" />
+    <Compile Include="Model\UI\Converter\ListViewColumnWidthConverter.cs" />
+    <Compile Include="Model\UI\Converter\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\OrderTypeTextConverter.cs" />
     <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
     <Compile Include="Model\UI\Control\HintTextBox.cs" />
     <Compile Include="Model\GpStockAgent.cs" />
-    <Compile Include="Model\UI\Control\StockPriceChangeBrushConverter.cs" />
-    <Compile Include="Model\UI\Control\StockPriceChangeTextConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockPriceChangeBrushConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockPriceChangeTextConverter.cs" />
     <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
     <Compile Include="Model\UI\SystemTypeExtension.cs" />
     <Compile Include="Model\users.cs">
@@ -332,6 +348,18 @@
       <DependentUpon>GPModel.edmx</DependentUpon>
       <LastGenOutput>GPModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

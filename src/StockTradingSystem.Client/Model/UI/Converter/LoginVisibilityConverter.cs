@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
-namespace StockTradingSystem.Client.Model.UI.Control
+namespace StockTradingSystem.Client.Model.UI.Converter
 {
     /// <inheritdoc />
     /// <summary>
-    /// OrderType和Text的属性转换器，用于UserOrderInfoListView
+    /// 登录状态和Visibility的属性转换器，用于AccountButton
     /// </summary>
-    [ValueConversion(typeof(int), typeof(string))]
-    public class OrderTypeTextConverter : IValueConverter
+    [ValueConversion(typeof(bool?), typeof(Visibility), ParameterType = typeof(bool?))]
+    public class LoginVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Debug.Assert(value != null, nameof(value) + " != null");
-            return (int)value == 0 ? "买入" : "卖出";
+            return (value as bool? ?? false) == (parameter as bool? ?? false) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

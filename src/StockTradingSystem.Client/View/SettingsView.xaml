@@ -8,6 +8,7 @@
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+      xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
       mc:Ignorable="d" 
        d:DesignWidth="1190"
       Title="SettingsView" Background="#BFFFFFFF" DataContext="{Binding Settings,Source={StaticResource Locator}}">
@@ -25,7 +26,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <StackPanel Margin="10 0">
             <StackPanel.Resources>
-                <control:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
+                <converter:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
             </StackPanel.Resources>
             <Border Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 10 0 0" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}">
                 <GroupBox Style="{StaticResource SettingsGroupBox}">

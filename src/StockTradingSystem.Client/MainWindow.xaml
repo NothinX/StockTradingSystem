@@ -7,7 +7,7 @@
         xmlns:navigation="clr-namespace:StockTradingSystem.Client.Model.UI.Navigation"
         xmlns:control="clr-namespace:StockTradingSystem.Client.View.Control"
         xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
-        xmlns:uicontrol="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
+        xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
         mc:Ignorable="d ignore"
         Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" x:Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
@@ -59,7 +59,7 @@
                     <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <StackPanel.Resources>
                             <navigation:NavBarItemIsCheckedConverter x:Key="NavBarItemIsCheckedConverter"/>
-                            <uicontrol:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
+                            <converter:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
                         </StackPanel.Resources>
                         <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=StockView}"/>
                         <RadioButton Content="行情" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SpotView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SpotView}"/>

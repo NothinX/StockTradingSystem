@@ -4,9 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
-      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       xmlns:info="clr-namespace:StockTradingSystem.Client.Model.Info"
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+      xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="AccountView" Background="#BFFFFFFF" DataContext="{Binding Account,Source={StaticResource Locator}}">
@@ -52,7 +52,7 @@
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <ScrollViewer.Resources>
-                                <control:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                                <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
                             </ScrollViewer.Resources>
                             <ListView Name="UserStockInfoListView" ItemsSource="{Binding UserStockInfoViewModel.UserStockInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserStockInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
                                 <ListView.View>
@@ -107,9 +107,9 @@
                     <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <ScrollViewer.Resources>
-                                <control:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
-                                <control:UndealedVisibilityConverter x:Key="UndealedVisibilityConverter"/>
-                                <control:OrderTypeTextConverter x:Key="OrderTypeTextConverter"/>
+                                <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                                <converter:UndealedVisibilityConverter x:Key="UndealedVisibilityConverter"/>
+                                <converter:OrderTypeTextConverter x:Key="OrderTypeTextConverter"/>
                             </ScrollViewer.Resources>
                             <ListView Name="UserOrderInfoListView" ItemsSource="{Binding UserOrderInfoViewModel.UserOrderInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserOrderInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
                                 <ListView.View>
@@ -176,7 +176,7 @@
             <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ScrollViewer.Resources>
-                        <control:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                        <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
                     </ScrollViewer.Resources>
                     <ListView Name="UserMoneyChangeInfoListView" SelectionMode="Single" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
                         <ListView.View>

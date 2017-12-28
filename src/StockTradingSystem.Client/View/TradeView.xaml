@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
-      xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+      xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="TradeView" Background="#BFFFFFFF">
@@ -28,9 +28,9 @@
                 <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
                     <Grid Margin="20" DataContext="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator}}">
                         <Grid.Resources>
-                            <control:StockPriceChangeBrushConverter x:Key="StockPriceChangeBrushConverter"/>
-                            <control:StockPriceChangeTextConverter x:Key="StockPriceChangeTextConverter"/>
-                            <control:CurrentStockInfoVisibilityConverter x:Key="CurrentStockInfoVisibilityConverter"/>
+                            <converter:StockPriceChangeBrushConverter x:Key="StockPriceChangeBrushConverter"/>
+                            <converter:StockPriceChangeTextConverter x:Key="StockPriceChangeTextConverter"/>
+                            <converter:CurrentStockInfoVisibilityConverter x:Key="CurrentStockInfoVisibilityConverter"/>
                         </Grid.Resources>
                         <Border Background="White">
                             <TextBlock FontSize="24" Text="请选择一个股票进行查看" VerticalAlignment="Center" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>

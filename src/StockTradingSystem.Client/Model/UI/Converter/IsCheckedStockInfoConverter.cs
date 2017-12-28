@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using StockTradingSystem.Client.Model.Info;
 
-namespace StockTradingSystem.Client.Model.UI.Control
+namespace StockTradingSystem.Client.Model.UI.Converter
 {
     /// <inheritdoc />
     /// <summary>
