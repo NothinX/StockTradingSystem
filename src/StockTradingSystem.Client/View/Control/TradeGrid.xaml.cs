@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StockTradingSystem.Client.View
+namespace StockTradingSystem.Client.View.Control
 {
     /// <summary>
-    /// TradeView.xaml 的交互逻辑
+    /// TradeGrid.xaml 的交互逻辑
     /// </summary>
-    public partial class TradeView : Page
+    public partial class TradeGrid : UserControl
     {
-        public TradeView()
+        public TradeGrid()
         {
             InitializeComponent();
         }

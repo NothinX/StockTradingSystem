@@ -44,6 +44,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
                         _cts.Cancel();
                         _updateBuyStockDepthInfo = null;
                         _updateSellStockDepthInfo = null;
+                        BuyStockDepthInfoList.Clear();
+                        SellStockDepthInfoList.Clear();
                     }
                 }
             });

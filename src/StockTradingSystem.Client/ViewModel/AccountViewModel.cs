@@ -23,13 +23,14 @@ namespace StockTradingSystem.Client.ViewModel
             _userStockInfoViewModel = userStockInfoViewModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
-            Messenger.Default.Register<GenericMessage<int>>(this, UpdateCurrentUserStockInfoToken, i => UpdateCurrentUserStockInfo(i.Content));
+            Messenger.Default.Register<GenericMessage<int?>>(this, UpdateCurrentUserStockInfoToken, i => UpdateCurrentUserStockInfo(i.Content));
         }
 
-        public void UpdateCurrentUserStockInfo(int sid)
+        public void UpdateCurrentUserStockInfo(int? sid)
         {
             lock (this)
             {
+                if (sid == null) return;
                 var usi = _userStockInfoViewModel.UserStockInfoList.FirstOrDefault(x => x.StockId == sid);
                 if (usi != null) Set(CurrentUserStockInfoPropertyName, ref _currentUserStockInfo, usi, true);
             }

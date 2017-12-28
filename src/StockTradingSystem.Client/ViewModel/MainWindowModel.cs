@@ -32,14 +32,21 @@ namespace StockTradingSystem.Client.ViewModel
 
         public MainWindowModel(IFrameNavigationService navigationService, IDialogService dialogService)
         {
-            try
-            {
-                var themeColors = Array.ConvertAll(ConfigurationManager.AppSettings["ThemeColorRGB"].Split('#'), Convert.ToByte);
-                ThemeBrush = new SolidColorBrush(Color.FromArgb(255, themeColors[0], themeColors[1], themeColors[2]));
-            }
-            catch
+            if (IsInDesignModeStatic)
             {
                 ThemeBrush = new SolidColorBrush(Color.FromArgb(255, 0, 99, 177));
+            }
+            else
+            {
+                try
+                {
+                    var themeColors = Array.ConvertAll(ConfigurationManager.AppSettings["ThemeColorRGB"].Split('#'), Convert.ToByte);
+                    ThemeBrush = new SolidColorBrush(Color.FromArgb(255, themeColors[0], themeColors[1], themeColors[2]));
+                }
+                catch
+                {
+                    ThemeBrush = new SolidColorBrush(Color.FromArgb(255, 0, 99, 177));
+                }
             }
             _navigationService = navigationService;
             _dialogService = dialogService;

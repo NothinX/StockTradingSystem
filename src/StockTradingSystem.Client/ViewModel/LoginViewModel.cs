@@ -149,7 +149,7 @@ namespace StockTradingSystem.Client.ViewModel
                         Messenger.Default.Send(new GenericMessage<bool>(true), AccountButtonViewModel.UpdateUserMoneyInfo);
                         Messenger.Default.Send(new GenericMessage<bool>(true), UserStockInfoViewModel.UpdateUserStockInfo);
                         Messenger.Default.Send(new GenericMessage<bool>(true), UserOrderInfoViewModel.UpdateUserOrderInfo);
-                        _mainWindowModel.NavigateCommand.Execute("StockView");
+                        _mainWindowModel.GoBackCommand.Execute(null);
                     }
                     else
                     {

@@ -108,9 +108,10 @@ namespace StockTradingSystem.Client.ViewModel.Control
             {
                 Set(CurrentStockInfoPropertyName, ref _currentStockInfo, value, true);
                 SortStockInfoList();
-                Messenger.Default.Send(new GenericMessage<int>(CurrentStockInfo.StockId), AccountViewModel.UpdateCurrentUserStockInfoToken);
+                Messenger.Default.Send(new GenericMessage<int?>(CurrentStockInfo.StockId), AccountViewModel.UpdateCurrentUserStockInfoToken);
                 Messenger.Default.Send(new GenericMessage<bool>(CurrentStockInfo != null), StockDepthInfoViewModel.UpdateStockDepthInfo);
                 Messenger.Default.Send(new GenericMessage<bool>(CurrentStockInfo != null), TransactionRecentInfoViewModel.UpdateTransactionRecentInfo);
+                Messenger.Default.Send(new GenericMessage<double?>(CurrentStockInfo == null ? (double?)null : Convert.ToDouble(CurrentStockInfo.Price)), TradeGridViewModel.UpdateSingleText);
             }
         }
 

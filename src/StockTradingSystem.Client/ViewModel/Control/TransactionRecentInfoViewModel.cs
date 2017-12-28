@@ -43,6 +43,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                     {
                         _cts.Cancel();
                         _updateTransactionRecentInfo = null;
+                        TransactionRecentInfoList.Clear();
                     }
                 }
             });

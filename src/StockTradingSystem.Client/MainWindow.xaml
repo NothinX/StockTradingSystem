@@ -40,8 +40,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
-                        <TextBlock FontSize="50" Text="买入卖出" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10 0 10 10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
+                        <control:TradeGrid/>
                     </Border>
                     <Border Grid.Column="1">
                         <Frame Name="MainFrame" navigation:DisableNavigation.Disable="True" Focusable="False"/>

@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Model\UI\Converter\CurrentStockInfoVisibilityConverter.cs" />
     <Compile Include="Model\UI\Converter\OrderTypeBrushConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockBalanceConverter.cs" />
     <Compile Include="Model\UI\Converter\UndealedVisibilityConverter.cs" />
     <Compile Include="Model\UI\Converter\IsCheckedStockInfoConverter.cs" />
     <Compile Include="Model\UI\Converter\ListViewColumnWidthConverter.cs" />
@@ -167,6 +168,7 @@
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\Control\TradeGridViewModel.cs" />
     <Compile Include="ViewModel\Control\TransactionRecentInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\StockDepthInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
@@ -176,6 +178,9 @@
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
+    <Compile Include="View\Control\TradeGrid.xaml.cs">
+      <DependentUpon>TradeGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -213,9 +218,10 @@
     <Compile Include="View\SpotView.xaml.cs">
       <DependentUpon>SpotView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TradeView.xaml.cs">
-      <DependentUpon>TradeView.xaml</DependentUpon>
-    </Compile>
+    <Page Include="Themes\TradeSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\SettingsSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -231,6 +237,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\TradeGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -287,10 +297,6 @@
     <Page Include="View\SpotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\TradeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -74,6 +74,7 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<StockViewModel>();
             SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<TradeGridViewModel>();
             SimpleIoc.Default.Register<StockInfoViewModel>();
             SimpleIoc.Default.Register<StockDepthInfoViewModel>(true);
             SimpleIoc.Default.Register<TransactionRecentInfoViewModel>(true);
@@ -200,6 +201,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
+        /// <summary>
+        /// Gets the <see cref="Trade"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public TradeGridViewModel Trade => ServiceLocator.Current.GetInstance<TradeGridViewModel>();
 
         private static void InitNavigation()
         {

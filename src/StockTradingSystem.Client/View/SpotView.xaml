@@ -15,6 +15,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/SettingsSkin.xaml"/>
+                <ResourceDictionary Source="../Themes/MainSkin.xaml"/>
                 <ResourceDictionary Source="../Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -36,11 +37,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                    <Grid Margin="20" DataContext="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator}}">
-                        <Border Background="White">
-                            <TextBlock FontSize="24" Text="请选择一个股票进行查看" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>
-                        </Border>
-                        <Grid Background="White" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
+                        <Grid Margin="20" DataContext="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator}}" Background="White" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextBlock.FontSize="24">
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Margin="15 0 0 0" Text="{Binding StockId,StringFormat=股票代码：{0}}"/>
@@ -53,7 +50,6 @@
                                 <TextBlock Text="{Binding PricePercent,StringFormat={}{0:F2}%}"/>
                             </StackPanel>
                         </Grid>
-                    </Grid>
                 </Border>
             </Grid>
             <Grid Grid.Row="1" Margin="0 10 0 0">
@@ -68,9 +64,6 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Grid.ColumnSpan="2" Background="White">
-                            <TextBlock FontSize="24" Text="请选择一个股票进行查看" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>
-                        </Border>
                         <GroupBox Grid.Column="0" Margin="2.5" Style="{StaticResource SettingsGroupBox}" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
                             <GroupBox.Header>
                                 <TextBlock Margin="20 10" FontSize="20" Text="买入" Foreground="#FF107C10"/>
@@ -135,56 +128,57 @@
                     <TextBlock FontSize="50" Text="市场图表" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
                 <Border Grid.Column="2" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
-                    <Grid>
-                        <Border Background="White">
-                            <TextBlock FontSize="24" Text="请选择一个股票进行查看" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>
+                    <GroupBox Margin="2.5" Style="{StaticResource SettingsGroupBox}" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
+                        <GroupBox.Header>
+                            <TextBlock Margin="20 10" FontSize="20" Text="最近成交"/>
+                        </GroupBox.Header>
+                        <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ListView Name="TranListView" ItemsSource="{Binding TransactionRecentInfoViewModel.TransactionRecentInfoList,Source={StaticResource Locator}}" SelectionMode="Single" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
+                                    <ListView.View>
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                            <GridViewColumn Header="时间" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
+                                                        <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="价格" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
+                                                        <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="数量" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
+                                                        <TextBlock Text="{Binding Dealed}" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="类型" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
+                                                        <TextBlock Text="{Binding TranType,Converter={StaticResource OrderTypeTextConverter}}" Foreground="{Binding TranType,Converter={StaticResource OrderTypeBrushConverter}}" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </ScrollViewer>
                         </Border>
-                        <GroupBox Margin="2.5" Style="{StaticResource SettingsGroupBox}" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
-                            <GroupBox.Header>
-                                <TextBlock Margin="20 10" FontSize="20" Text="最近成交"/>
-                            </GroupBox.Header>
-                            <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <ListView Name="TranListView" ItemsSource="{Binding TransactionRecentInfoViewModel.TransactionRecentInfoList,Source={StaticResource Locator}}" SelectionMode="Single" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
-                                        <ListView.View>
-                                            <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
-                                                <GridViewColumn Header="时间" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
-                                                            <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="价格" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
-                                                            <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="数量" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
-                                                            <TextBlock Text="{Binding Dealed}" HorizontalAlignment="Center"/>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="类型" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
-                                                            <TextBlock Text="{Binding TranType,Converter={StaticResource OrderTypeTextConverter}}" Foreground="{Binding TranType,Converter={StaticResource OrderTypeBrushConverter}}" HorizontalAlignment="Center"/>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </ScrollViewer>
-                            </Border>
-                        </GroupBox>
-                    </Grid>
+                    </GroupBox>
                 </Border>
             </Grid>
+            <Border Grid.Row="0" Grid.RowSpan="2" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontSize="24" Text="请选择一只股票"/>
+                    <Button Content="股票" Height="32" FontSize="20" Margin="0 10 0 0" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="StockView" Style="{StaticResource ThemeBrushBtn}"/>
+                </StackPanel> 
+            </Border>
         </Grid>
     </ScrollViewer>
 </Page>
