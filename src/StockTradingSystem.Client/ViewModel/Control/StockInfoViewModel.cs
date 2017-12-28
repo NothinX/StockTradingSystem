@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Core.Model;
@@ -11,6 +12,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
 {
     public class StockInfoViewModel : ViewModelBase
     {
+        public static readonly string UpdateCurrentStockInfoToken = "UpdateCurrentStockInfoToken";
+
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
 
@@ -21,6 +24,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
             _stockAgent = stockAgent;
             _dialogService = dialogService;
             _updateStockInfo = Update();
+            Messenger.Default.Register<GenericMessage<int>>(this, UpdateCurrentStockInfoToken, i => UpdateCurrentStockInfo(i.Content));
         }
 
         public void UpdateCurrentStockInfo(int sid)
@@ -103,6 +107,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
             {
                 Set(CurrentStockInfoPropertyName, ref _currentStockInfo, value, true);
                 SortStockInfoList();
+                Messenger.Default.Send(new GenericMessage<int>(CurrentStockInfo.StockId), AccountViewModel.UpdateCurrentUserStockInfoToken);
             }
         }
 

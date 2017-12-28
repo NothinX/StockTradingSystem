@@ -59,7 +59,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                     {
                         s.ForEach(x =>
                         {
-                            var ss = UserStockList.FirstOrDefault(y => y.StockId == x.StockId);
+                            var ss = UserStockInfoList.FirstOrDefault(y => y.StockId == x.StockId);
                             if (ss != null) ss.Update(x);
                             else
                             {
@@ -71,14 +71,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
                                 addlist.Add(si);
                             }
                         });
-                        UserStockList.ForEach(x =>
+                        UserStockInfoList.ForEach(x =>
                         {
                             var ss = s.FirstOrDefault(y => y.StockId == x.StockId);
                             if (ss == null) deletelist.Add(x);
                         });
-                        addlist.ForEach(x => UserStockList.Add(x));
-                        deletelist.ForEach(x => UserStockList.Remove(x));
-                        UserStockList = UserStockList.OrderBy(x => x.StockId).ToList();
+                        addlist.ForEach(x => UserStockInfoList.Add(x));
+                        deletelist.ForEach(x => UserStockInfoList.Remove(x));
+                        UserStockInfoList = UserStockInfoList.OrderBy(x => x.StockId).ToList();
                     }
                     await Task.Delay(t, ct);
                 }
@@ -90,21 +90,21 @@ namespace StockTradingSystem.Client.ViewModel.Control
         }
 
         /// <summary>
-        /// The <see cref="UserStockList" /> property's name.
+        /// The <see cref="UserStockInfoList" /> property's name.
         /// </summary>
-        public const string UserStockListPropertyName = nameof(UserStockList);
+        public const string UserStockListPropertyName = nameof(UserStockInfoList);
 
-        private List<UserStockInfo> _userStockList = new List<UserStockInfo>();
+        private List<UserStockInfo> _userStockInfoList = new List<UserStockInfo>();
 
         /// <summary>
-        /// Sets and gets the <see cref="UserStockList"/> property.
+        /// Sets and gets the <see cref="UserStockInfoList"/> property.
         /// Changes to that property's value raise the PropertyChanged event.
         /// This property's value is broadcasted by the MessengerInstance when it changes.
         /// </summary>
-        public List<UserStockInfo> UserStockList
+        public List<UserStockInfo> UserStockInfoList
         {
-            get => _userStockList;
-            set => Set(UserStockListPropertyName, ref _userStockList, value, true);
+            get => _userStockInfoList;
+            set => Set(UserStockListPropertyName, ref _userStockInfoList, value, true);
         }
 
         public void Dispose()
