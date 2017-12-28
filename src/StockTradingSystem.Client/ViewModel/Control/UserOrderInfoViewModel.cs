@@ -48,7 +48,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update(CancellationToken ct)
         {
-                        var t = RefreshTimeSpan;
+            var t = RefreshTimeSpan;
             try
             {
                 while (!ct.IsCancellationRequested)

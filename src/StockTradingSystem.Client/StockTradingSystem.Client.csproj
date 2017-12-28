@@ -108,6 +108,7 @@
     <Compile Include="Model\Info\Info.cs" />
     <Compile Include="Model\Info\StockDepthInfo.cs" />
     <Compile Include="Model\Info\StockInfo.cs" />
+    <Compile Include="Model\Info\TransactionRecentInfo.cs" />
     <Compile Include="Model\Info\UserMoneyInfo.cs" />
     <Compile Include="Model\Info\UserOrderInfo.cs" />
     <Compile Include="Model\Info\UserStockInfo.cs" />
@@ -150,6 +151,7 @@
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\Control\TransactionRecentInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\StockDepthInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\UserOrderInfoViewModel.cs" />
@@ -311,6 +313,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
+      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
+      <Name>StockTradingSystem.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Model\GPModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GPModel.edmx</DependentUpon>
@@ -321,15 +332,6 @@
       <DependentUpon>GPModel.edmx</DependentUpon>
       <LastGenOutput>GPModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
-      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
-      <Name>StockTradingSystem.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

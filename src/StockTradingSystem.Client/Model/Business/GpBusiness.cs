@@ -115,5 +115,13 @@ namespace StockTradingSystem.Client.Model.Business
                 return ql != null ? new StockResult { StockId = stockId, Name = s.name, Price = ql.deal_price } : new StockResult { StockId = stockId, Name = s.name, Price = s.price };
             }
         }
+
+        public List<TransactionResult> GetRecentTrans(int stockId, int num)
+        {
+            using (var gpEntities = new GPEntities())
+            {
+                return gpEntities.transactions.Where(x => x.stock_id == stockId).OrderBy(x => x.create_datetime).Take(num).Select(x => new TransactionResult() { CreateDateTime = x.create_datetime, Dealed = x.dealed, Price = x.deal_price, TranId = x.trans_id, TranType = x.type }).ToList();
+            }
+        }
     }
 }

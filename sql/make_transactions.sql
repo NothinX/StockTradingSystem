@@ -76,10 +76,10 @@ BEGIN
 		BEGIN
 			UPDATE orders SET dealed = @temp_order_dealed, undealed = @temp_order_undealed
 				WHERE order_id = @temp_order_id
-            INSERT INTO transactions VALUES(GETDATE(), @order_id, @temp_order_id, @temp_deal, @stock_id, @price)
+            INSERT INTO transactions VALUES(GETDATE(), @order_id, @temp_order_id, @temp_deal, @stock_id, @price, @type)
             UPDATE stocks SET price = @price WHERE stock_id = @stock_id
 
-            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @user_id AND stock_id = @stock_id) 
+            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @user_id AND stock_id = @stock_id)
 		        UPDATE user_positions SET num_free = num_free + @temp_deal
                     WHERE user_id = @user_id AND stock_id = @stock_id
             ELSE BEGIN
@@ -97,13 +97,13 @@ BEGIN
 		BEGIN
 			UPDATE orders SET dealed = @temp_order_dealed, undealed = @temp_order_undealed
                 WHERE order_id = @temp_order_id
-            INSERT INTO transactions VALUES(GETDATE(), @temp_order_id, @order_id, @temp_deal, @stock_id, @temp_price)
+            INSERT INTO transactions VALUES(GETDATE(), @temp_order_id, @order_id, @temp_deal, @stock_id, @temp_price, @type)
             UPDATE stocks SET price = @temp_price WHERE stock_id = @stock_id
 
-            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @temp_user_id AND stock_id = @stock_id) 
+            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @temp_user_id AND stock_id = @stock_id)
 		        UPDATE user_positions SET num_free=num_free + @temp_deal
                     WHERE user_id = @temp_user_id AND stock_id = @stock_id
-            ELSE 
+            ELSE
                 INSERT user_positions
                 VALUES(@temp_user_id, @stock_id, @temp_deal, 0)
             UPDATE users SET cny_free = cny_free + @temp_deal * (@temp_price - @price), cny_freezed = cny_freezed - @temp_deal * @temp_price

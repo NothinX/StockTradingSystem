@@ -76,6 +76,7 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<SettingsViewModel>();
             SimpleIoc.Default.Register<StockInfoViewModel>();
             SimpleIoc.Default.Register<StockDepthInfoViewModel>(true);
+            SimpleIoc.Default.Register<TransactionRecentInfoViewModel>(true);
             SimpleIoc.Default.Register<UserStockInfoViewModel>(true);
             SimpleIoc.Default.Register<UserOrderInfoViewModel>(true);
         }
@@ -119,6 +120,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public StockDepthInfoViewModel StockDepthInfoViewModel => ServiceLocator.Current.GetInstance<StockDepthInfoViewModel>();
+        
+        /// <summary>
+        /// Gets the <see cref="TransactionRecentInfoViewModel"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public TransactionRecentInfoViewModel TransactionRecentInfoViewModel => ServiceLocator.Current.GetInstance<TransactionRecentInfoViewModel>();
 
         /// <summary>
         /// Gets the <see cref="UserStockInfoViewModel"/> property.

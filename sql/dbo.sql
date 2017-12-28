@@ -12,7 +12,7 @@
  Target Server Version : 13004001
  File Encoding         : 65001
 
- Date: 22/12/2017 20:26:51
+ Date: 28/12/2017 22:27:53
 */
 
 
@@ -159,7 +159,8 @@ CREATE TABLE [dbo].[transactions] (
   [sell_order_id] bigint  NOT NULL,
   [dealed] int  NOT NULL,
   [stock_id] int  NOT NULL,
-  [deal_price] money  NOT NULL
+  [deal_price] money  NOT NULL,
+  [type] int  NOT NULL
 )
 GO
 
@@ -213,6 +214,13 @@ EXEC sp_addextendedproperty
 'SCHEMA', N'dbo',
 'TABLE', N'transactions',
 'COLUMN', N'deal_price'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'成交类型',
+'SCHEMA', N'dbo',
+'TABLE', N'transactions',
+'COLUMN', N'type'
 GO
 
 
@@ -382,7 +390,7 @@ BEGIN
             END
         END
         INSERT INTO orders VALUES(GETDATE(), @user_id, @stock_id, @type, @price, @amount, 0, 0)
-        COMMIT
+        COMMIT TRAN
 	    SELECT 0
     END TRY
     BEGIN CATCH
@@ -487,7 +495,6 @@ BEGIN
 	END
 	CLOSE tt
 	DEALLOCATE tt
-	SELECT 0
 END
 GO
 
@@ -549,7 +556,7 @@ BEGIN
     IF EXISTS(SELECT * FROM users WHERE login_name = @login_name AND passwd = @passwd)
     BEGIN
         SELECT @user_id = user_id, @name = name, @type = type FROM users WHERE login_name = @login_name AND passwd = @passwd
-        SELECT 0
+        RETURN 0
     END
     ELSE
         RETURN -1
@@ -674,10 +681,10 @@ BEGIN
 		BEGIN
 			UPDATE orders SET dealed = @temp_order_dealed, undealed = @temp_order_undealed
 				WHERE order_id = @temp_order_id
-            INSERT INTO transactions VALUES(GETDATE(), @order_id, @temp_order_id, @temp_deal, @stock_id, @price)
+            INSERT INTO transactions VALUES(GETDATE(), @order_id, @temp_order_id, @temp_deal, @stock_id, @price, @type)
             UPDATE stocks SET price = @price WHERE stock_id = @stock_id
 
-            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @user_id AND stock_id = @stock_id) 
+            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @user_id AND stock_id = @stock_id)
 		        UPDATE user_positions SET num_free = num_free + @temp_deal
                     WHERE user_id = @user_id AND stock_id = @stock_id
             ELSE BEGIN
@@ -695,13 +702,13 @@ BEGIN
 		BEGIN
 			UPDATE orders SET dealed = @temp_order_dealed, undealed = @temp_order_undealed
                 WHERE order_id = @temp_order_id
-            INSERT INTO transactions VALUES(GETDATE(), @temp_order_id, @order_id, @temp_deal, @stock_id, @temp_price)
+            INSERT INTO transactions VALUES(GETDATE(), @temp_order_id, @order_id, @temp_deal, @stock_id, @temp_price, @type)
             UPDATE stocks SET price = @temp_price WHERE stock_id = @stock_id
 
-            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @temp_user_id AND stock_id = @stock_id) 
+            IF EXISTS(SELECT * FROM user_positions WHERE user_id = @temp_user_id AND stock_id = @stock_id)
 		        UPDATE user_positions SET num_free=num_free + @temp_deal
                     WHERE user_id = @temp_user_id AND stock_id = @stock_id
-            ELSE 
+            ELSE
                 INSERT user_positions
                 VALUES(@temp_user_id, @stock_id, @temp_deal, 0)
             UPDATE users SET cny_free = cny_free + @temp_deal * (@temp_price - @price), cny_freezed = cny_freezed - @temp_deal * @temp_price

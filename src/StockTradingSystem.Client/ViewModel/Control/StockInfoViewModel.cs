@@ -38,7 +38,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update()
         {
-                        var t = RefreshTimeSpan;
+            var t = new TimeSpan(0, 0, 100);
             try
             {
                 while (true)
@@ -110,6 +110,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 SortStockInfoList();
                 Messenger.Default.Send(new GenericMessage<int>(CurrentStockInfo.StockId), AccountViewModel.UpdateCurrentUserStockInfoToken);
                 Messenger.Default.Send(new GenericMessage<bool>(CurrentStockInfo != null), StockDepthInfoViewModel.UpdateStockDepthInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(CurrentStockInfo != null), TransactionRecentInfoViewModel.UpdateTransactionRecentInfo);
             }
         }
 

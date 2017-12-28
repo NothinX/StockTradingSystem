@@ -108,6 +108,11 @@ namespace StockTradingSystem.Core.Model
             return _business.GetStock(stockId, dateTime);
         }
 
+        public List<TransactionResult> GetRecentTrans(int stockId, int num)
+        {
+            return _business.GetRecentTrans(stockId, num);
+        }
+
         /// <summary>
         /// 检查User是否为空
         /// </summary>
