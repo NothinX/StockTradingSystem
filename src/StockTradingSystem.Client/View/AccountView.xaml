@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       xmlns:info="clr-namespace:StockTradingSystem.Client.Model.Info"
+      xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="AccountView" Background="#BFFFFFFF" DataContext="{Binding Account,Source={StaticResource Locator}}">
@@ -14,6 +15,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Generic.xaml"/>
+                <ResourceDictionary Source="../Themes/MainSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -44,8 +46,8 @@
                 </Grid>
                 <Grid Grid.Row="1" Margin="0 10 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -103,7 +105,71 @@
                         </ScrollViewer>
                     </Border>
                     <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
-                        <TextBlock FontSize="50" Text="委托记录" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer.Resources>
+                                <control:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                                <control:UndealedVisibilityConverter x:Key="UndealedVisibilityConverter"/>
+                                <control:OrderTypeTextConverter x:Key="OrderTypeTextConverter"/>
+                            </ScrollViewer.Resources>
+                            <ListView Name="UserOrderInfoListView" ItemsSource="{Binding UserOrderInfoViewModel.UserOrderInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserOrderInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                        <GridViewColumn Header="创建时间" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票名称" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Name}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="委托类型" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding OrderType,Converter={StaticResource OrderTypeTextConverter}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="委托价格" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="未成交" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Undealed}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="已成交" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Dealed}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="已取消" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <Grid>
+                                                        <TextBlock Text="{Binding Canceled}" HorizontalAlignment="Center" Visibility="{Binding Undealed,Converter={StaticResource UndealedVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>
+                                                        <Button Content="取消" Command="{Binding Account.CancelOrderCommand,Source={StaticResource Locator}}" CommandParameter="{Binding OrderId}" Style="{StaticResource ThemeBrushBtn}" HorizontalAlignment="Center" Visibility="{Binding Undealed,Converter={StaticResource UndealedVisibilityConverter}}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
                     </Border>
                 </Grid>
             </Grid>

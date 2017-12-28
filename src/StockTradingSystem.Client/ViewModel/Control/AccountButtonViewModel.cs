@@ -130,6 +130,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
                 Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
                 if (_frameNavigationService.CurrentPageKey == "AccountView") _mainWindowModel.GoBackCommand.Execute(null);
             });
         }
@@ -150,6 +151,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
                 Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
                 _mainWindowModel.NavigateCommand.Execute("LoginView");
             });
         }

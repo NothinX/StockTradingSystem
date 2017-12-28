@@ -108,6 +108,7 @@
     <Compile Include="Model\Info\Info.cs" />
     <Compile Include="Model\Info\StockInfo.cs" />
     <Compile Include="Model\Info\UserMoneyInfo.cs" />
+    <Compile Include="Model\Info\UserOrderInfo.cs" />
     <Compile Include="Model\Info\UserStockInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
@@ -121,9 +122,11 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UI\Control\UndealedVisibilityConverter.cs" />
     <Compile Include="Model\UI\Control\IsCheckedStockInfoConverter.cs" />
     <Compile Include="Model\UI\Control\ListViewColumnWidthConverter.cs" />
     <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Control\OrderTypeTextConverter.cs" />
     <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
     <Compile Include="Model\UI\Control\HintTextBox.cs" />
     <Compile Include="Model\GpStockAgent.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
+    <Compile Include="ViewModel\Control\UserOrderInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\UserStockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />

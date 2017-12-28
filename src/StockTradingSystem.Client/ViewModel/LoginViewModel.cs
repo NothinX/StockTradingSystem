@@ -129,6 +129,7 @@ namespace StockTradingSystem.Client.ViewModel
                         _stockAgent.User.IsLogin = false;
                         Messenger.Default.Send(new GenericMessage<bool>(false), AccountButtonViewModel.UpdateUserMoneyInfo);
                         Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                        Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
                         flag = false;
                     });
                     if (flag)
@@ -147,6 +148,7 @@ namespace StockTradingSystem.Client.ViewModel
                         LoginNameFocus = true;
                         Messenger.Default.Send(new GenericMessage<bool>(true), AccountButtonViewModel.UpdateUserMoneyInfo);
                         Messenger.Default.Send(new GenericMessage<bool>(true), UserStockInfoViewModel.UpdateUserStockInfo);
+                        Messenger.Default.Send(new GenericMessage<bool>(true), UserOrderInfoViewModel.UpdateUserOrderInfo);
                         _mainWindowModel.NavigateCommand.Execute("StockView");
                     }
                     else
