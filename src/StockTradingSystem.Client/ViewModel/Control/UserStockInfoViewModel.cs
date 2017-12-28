@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Core.Model;
+using static StockTradingSystem.Client.App;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
@@ -47,7 +48,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update(CancellationToken ct)
         {
-            var t = new TimeSpan(0, 0, 3);
+            var t = RefreshTimeSpan;
             try
             {
                 while (!ct.IsCancellationRequested)
