@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.View.Control;
 using StockTradingSystem.Client.ViewModel;
@@ -99,32 +100,32 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
 
         public Task ShowError(string message, string title, string buttonText, Action afterHideCallback)
         {
-            return WaitDialog(message, title, buttonText, afterHideCallback);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await WaitDialog(message, title, buttonText, afterHideCallback)).Task;
         }
 
         public Task ShowError(Exception error, string title, string buttonText, Action afterHideCallback)
         {
-            return WaitDialog(error.Message, title, buttonText, afterHideCallback);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await WaitDialog(error.Message, title, buttonText, afterHideCallback)).Task;
         }
 
         public Task ShowMessage(string message, string title)
         {
-            return WaitDialog(message, title, "确定", null);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await WaitDialog(message, title, "确定", null)).Task;
         }
 
         public Task ShowMessage(string message, string title, string buttonText, Action afterHideCallback)
         {
-            return WaitDialog(message, title, buttonText, afterHideCallback);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await WaitDialog(message, title, buttonText, afterHideCallback)).Task;
         }
 
         public Task<bool> ShowMessage(string message, string title, string buttonConfirmText, string buttonCancelText, Action<bool> afterHideCallback)
         {
-            return WaitDialog(message, title, buttonConfirmText, buttonCancelText, afterHideCallback);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await WaitDialog(message, title, buttonConfirmText, buttonCancelText, afterHideCallback)).Result;
         }
 
         public Task ShowMessageBox(string message, string title)
         {
-            return ShowMessage(message, title);
+            return DispatcherHelper.UIDispatcher.InvokeAsync(async () => await ShowMessage(message, title)).Task;
         }
     }
 }

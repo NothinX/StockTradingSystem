@@ -6,8 +6,6 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       xmlns:control="clr-namespace:StockTradingSystem.Client.Model.UI.Control"
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
-      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-      xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="StockView" Background="#BFFFFFFF" DataContext="{Binding Stock,Source={StaticResource Locator}}" >
@@ -20,12 +18,6 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <cmd:EventToCommand Command="{Binding LoadedCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -48,22 +40,29 @@
         </Border>
         <Border Grid.Row="1" Padding="5" BorderThickness="1" BorderBrush="LightGray" Margin="0 10 0 0" Background="White">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
-                <ItemsControl ItemsSource="{Binding StockInfoList}">
+                <ItemsControl ItemsSource="{Binding StockInfoViewModel.StockInfoList,Source={StaticResource Locator}}">
                     <ItemsControl.Resources>
                         <control:StockPriceChangeBrushConverter x:Key="StockPriceChangeBrushConverter"/>
                         <control:StockPriceChangeTextConverter x:Key="StockPriceChangeTextConverter"/>
+                        <control:IsCheckedStockInfoConverter x:Key="IsCheckedStockInfoIdConverter"/>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <RadioButton FontSize="24" Style="{StaticResource StockBtn}" IsChecked="{Binding IsCurrent,Mode=OneWay}" Command="{Binding CheckStockBtnCommand}" GroupName="StockBtn">
-                                <StackPanel Orientation="Horizontal" TextBlock.Foreground="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeBrushConverter}}">
-                                    <TextBlock Text="{Binding StockInfo.StockId}"/>
-                                    <TextBlock Text="{Binding StockInfo.Name}" Margin="5 0 0 0"/>
-                                    <TextBlock Text="{Binding StockInfo.Price,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
-                                    <TextBlock Text="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
-                                    <TextBlock Text="{Binding StockInfo.PriceChange,StringFormat={}{0:F2}}"/>
-                                    <TextBlock Text="{Binding StockInfo.Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
-                                    <TextBlock Text="{Binding StockInfo.PricePercent,StringFormat={}{0:F2}%}"/>
+                            <RadioButton FontSize="24" Style="{StaticResource StockBtn}" Command="{Binding Stock.CheckStockBtnCommand,Source={StaticResource Locator}}" CommandParameter="{Binding StockId}" GroupName="StockBtn">
+                                <RadioButton.IsChecked>
+                                    <MultiBinding Mode="OneWay" Converter="{StaticResource IsCheckedStockInfoIdConverter}">
+                                        <Binding Path="StockInfoViewModel.CurrentStockInfo" Source="{StaticResource Locator}"/>
+                                        <Binding Path="StockId"/>
+                                    </MultiBinding>
+                                </RadioButton.IsChecked>
+                                <StackPanel Orientation="Horizontal" TextBlock.Foreground="{Binding Change,Converter={StaticResource StockPriceChangeBrushConverter}}">
+                                    <TextBlock Text="{Binding StockId}"/>
+                                    <TextBlock Text="{Binding Name}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding PriceChange,StringFormat={}{0:F2}}"/>
+                                    <TextBlock Text="{Binding Change,Converter={StaticResource StockPriceChangeTextConverter}}" Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding PricePercent,StringFormat={}{0:F2}%}"/>
                                 </StackPanel>
                             </RadioButton>
                         </DataTemplate>

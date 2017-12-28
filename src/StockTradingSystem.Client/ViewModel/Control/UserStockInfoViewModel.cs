@@ -11,20 +11,22 @@ using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
-    public class UserStockInfoViewModel : ViewModelBase
+    public class UserStockInfoViewModel : ViewModelBase, IDisposable
     {
         public static readonly string UpdateUserStockInfo = "UpdateUserStockInfo";
 
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
+        private readonly StockInfoViewModel _stockInfoViewModel;
 
         private Task _updateUserStockInfo;
         private CancellationTokenSource _cts;
 
-        public UserStockInfoViewModel(StockAgent stockAgent, IDialogService dialogService)
+        public UserStockInfoViewModel(StockAgent stockAgent, IDialogService dialogService, StockInfoViewModel stockInfoViewModel)
         {
             _stockAgent = stockAgent;
             _dialogService = dialogService;
+            _stockInfoViewModel = stockInfoViewModel;
             Messenger.Default.Register<GenericMessage<bool>>(this, UpdateUserStockInfo, b =>
             {
                 lock (this)
@@ -61,7 +63,10 @@ namespace StockTradingSystem.Client.ViewModel.Control
                             if (ss != null) ss.Update(x);
                             else
                             {
-                                var si = new UserStockInfo();
+                                var si = new UserStockInfo
+                                {
+                                    StockInfo = _stockInfoViewModel.StockInfoList.First(y => y.StockId == x.StockId)
+                                };
                                 si.Update(x);
                                 addlist.Add(si);
                             }
@@ -100,6 +105,12 @@ namespace StockTradingSystem.Client.ViewModel.Control
         {
             get => _userStockList;
             set => Set(UserStockListPropertyName, ref _userStockList, value, true);
+        }
+
+        public void Dispose()
+        {
+            _updateUserStockInfo?.Dispose();
+            _cts?.Dispose();
         }
     }
 }

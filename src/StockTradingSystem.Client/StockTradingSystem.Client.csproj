@@ -120,6 +120,7 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\UI\Control\IsCheckedStockInfoConverter.cs" />
     <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
     <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
     <Compile Include="Model\UI\Control\HintTextBox.cs" />

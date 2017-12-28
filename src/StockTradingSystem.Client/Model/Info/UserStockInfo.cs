@@ -4,6 +4,8 @@ namespace StockTradingSystem.Client.Model.Info
 {
     public class UserStockInfo : Info<UserStockResult>
     {
+        public StockInfo StockInfo { get; set; }
+
         /// <summary>
         /// The <see cref="StockId" /> property's name.
         /// </summary>
@@ -19,23 +21,6 @@ namespace StockTradingSystem.Client.Model.Info
         {
             get => _stockId;
             set => Set(StockIdPropertyName, ref _stockId, value);
-        }
-
-        /// <summary>
-        /// The <see cref="StockName" /> property's name.
-        /// </summary>
-        public const string StockNamePropertyName = nameof(StockName);
-
-        private string _stockName = string.Empty;
-
-        /// <summary>
-        /// Sets and gets the <see cref="StockName"/> property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string StockName
-        {
-            get => _stockName;
-            set => Set(StockNamePropertyName, ref _stockName, value);
         }
 
         /// <summary>

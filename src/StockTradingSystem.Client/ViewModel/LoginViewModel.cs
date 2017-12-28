@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;

@@ -67,7 +67,6 @@ namespace StockTradingSystem.Client.ViewModel
 
             InitNavigation();
 
-            SimpleIoc.Default.Register<UserStockInfoViewModel>();
             SimpleIoc.Default.Register<MainWindowModel>();
             SimpleIoc.Default.Register<AccountButtonViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
@@ -75,6 +74,8 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<StockViewModel>();
             SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<StockInfoViewModel>();
+            SimpleIoc.Default.Register<UserStockInfoViewModel>(true);
         }
 
         /// <summary>
@@ -100,6 +101,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public UserMoneyInfo UserMoneyInfo => ServiceLocator.Current.GetInstance<UserMoneyInfo>();
+
+        /// <summary>
+        /// Gets the <see cref="StockInfoViewModel"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public StockInfoViewModel StockInfoViewModel => ServiceLocator.Current.GetInstance<StockInfoViewModel>();
 
         /// <summary>
         /// Gets the <see cref="UserStockInfoViewModel"/> property.
