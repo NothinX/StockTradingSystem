@@ -173,7 +173,7 @@
                     </Border>
                 </Grid>
             </Grid>
-            <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
+            <!--<Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ScrollViewer.Resources>
                         <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
@@ -182,15 +182,15 @@
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
                                 <GridViewColumn Header="时间" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
-                                <GridViewColumn Header="类型" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
-                                <GridViewColumn Header="数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
-                                <GridViewColumn Header="余额" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
-                                <GridViewColumn Header="手续费" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="类型" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="数量" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="余额" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="手续费" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </ScrollViewer>
-            </Border>
+            </Border>-->
         </Grid>
     </ScrollViewer>
 </Page>

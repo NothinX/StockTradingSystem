@@ -124,9 +124,9 @@
                         </GroupBox>
                     </Grid>
                 </Border>
-                <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
+                <!--<Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
                     <TextBlock FontSize="50" Text="市场图表" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
+                </Border>-->
                 <Border Grid.Column="2" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
                     <GroupBox Margin="2.5" Style="{StaticResource SettingsGroupBox}" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter}}">
                         <GroupBox.Header>
