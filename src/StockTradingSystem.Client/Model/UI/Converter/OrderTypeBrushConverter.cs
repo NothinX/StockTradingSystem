@@ -1,30 +1,31 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using GalaSoft.MvvmLight.Ioc;
-using StockTradingSystem.Client.ViewModel;
 
-namespace StockTradingSystem.Client.Model.UI.Control
+namespace StockTradingSystem.Client.Model.UI.Converter
 {
+
     /// <inheritdoc />
     /// <summary>
-    /// 股票升跌状态和Brush的属性转换器，用于StockBtn
+    /// 交易类型和Brush的属性转换器，用于StockBtn
     /// </summary>
-    [ValueConversion(typeof(bool?), typeof(Brush))]
-    public class StockPriceChangeBrushConverter : IValueConverter
+    [ValueConversion(typeof(int), typeof(Brush))]
+    public class OrderTypeBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var b = value as bool?;
+            Debug.Assert(value != null, nameof(value) + " != null");
+            var b = (int)value;
             switch (b)
             {
-                case true:
+                case 0:
                     return new SolidColorBrush(Color.FromArgb(255, 16, 124, 16));
-                case null:
-                    return SimpleIoc.Default.GetInstance<MainWindowModel>().ThemeBrush;
-                default:
+                case 1:
                     return new SolidColorBrush(Color.FromArgb(255, 232, 17, 35));
+                default:
+                    return new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
             }
         }
 

@@ -6,6 +6,8 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:navigation="clr-namespace:StockTradingSystem.Client.Model.UI.Navigation"
         xmlns:control="clr-namespace:StockTradingSystem.Client.View.Control"
+        xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+        xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
         mc:Ignorable="d ignore"
         Title="{Binding WindowTitle}" Width="1200" Height="675" MinWidth="960" MinHeight="540" x:Name="Window" WindowStartupLocation="CenterScreen" WindowState="{Binding WindowState}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
@@ -23,7 +25,7 @@
         <WindowChrome CaptionHeight="33" GlassFrameThickness="1" CornerRadius="0" ResizeBorderThickness="7"/>
     </WindowChrome.WindowChrome>
 
-    <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
+    <Border x:Name="WindowBorder" Margin="{Binding WindowBorderMargin}" Background="{Binding ThemeBrush}" BorderBrush="{Binding ThemeBrush}" BorderThickness="1 1 1 1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -38,8 +40,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
-                        <TextBlock FontSize="50" Text="买入卖出" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Grid.Column="0" Background="{Binding ThemeBrush}" Padding="10 0 10 10" Visibility="{Binding IsChecked,ElementName=TitleBtn,Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth,ElementName=TitleBtn}">
+                        <control:TradeGrid/>
                     </Border>
                     <Border Grid.Column="1">
                         <Frame Name="MainFrame" navigation:DisableNavigation.Disable="True" Focusable="False"/>
@@ -57,10 +59,12 @@
                     <StackPanel Name="NavBar" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <StackPanel.Resources>
                             <navigation:NavBarItemIsCheckedConverter x:Key="NavBarItemIsCheckedConverter"/>
+                            <converter:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
                         </StackPanel.Resources>
                         <RadioButton Content="股票" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="StockView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=StockView}"/>
-                        <RadioButton Content="交易" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="TradeView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=TradeView}"/>
-                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"/>
+                        <RadioButton Content="行情" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SpotView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SpotView}"/>
+                        <RadioButton Content="账户" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="AccountView" IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=AccountView}"
+                                     Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}"/>
                         <RadioButton Content="设置" Margin="10 0 0 0" Style="{StaticResource NavBarBtn}" Command="{Binding NavigateCommand}" CommandParameter="SettingsView"  IsChecked="{Binding FrameNavigationService.CurrentPageKey,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource NavBarItemIsCheckedConverter},ConverterParameter=SettingsView}"/>
                     </StackPanel>
                 </DockPanel>

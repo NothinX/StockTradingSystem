@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Media;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -267,7 +268,50 @@ namespace StockTradingSystem.Client.ViewModel
             var r = Convert.ToByte(RValue);
             var g = Convert.ToByte(GValue);
             var b = Convert.ToByte(BValue);
+            RValue = Convert.ToDouble(r);
+            GValue = Convert.ToDouble(g);
+            BValue = Convert.ToDouble(b);
             _mainWindowModel.ThemeBrush = new SolidColorBrush(Color.FromRgb(r, g, b));
+        }
+
+        private RelayCommand _saveThemeColorCommand;
+
+        /// <summary>
+        /// Gets the <see cref="SaveThemeColorCommand"/>.
+        /// </summary>
+        public RelayCommand SaveThemeColorCommand => _saveThemeColorCommand
+                                                     ?? (_saveThemeColorCommand = new RelayCommand(ExecuteSaveThemeColorCommand));
+
+        private async void ExecuteSaveThemeColorCommand()
+        {
+            try
+            {
+                var cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var tc = cfa.AppSettings.Settings["ThemeColorRGB"];
+                if (tc == null) cfa.AppSettings.Settings.Add(new KeyValueConfigurationElement("ThemeColorRGB", $"{Convert.ToByte(RValue)}#{Convert.ToByte(GValue)}#{Convert.ToByte(BValue)}"));
+                else tc.Value = $"{Convert.ToByte(RValue)}#{Convert.ToByte(GValue)}#{Convert.ToByte(BValue)}";
+                cfa.Save();
+                await _dialogService.ShowMessage("保存成功", "提示");
+            }
+            catch (Exception e)
+            {
+                await _dialogService.ShowError($"保存失败\n{e.Message}", "错误", "确定", null);
+            }
+        }
+
+        private RelayCommand _defaultThemeColorCommand;
+
+        /// <summary>
+        /// Gets the <see cref="DefaultThemeColorCommand"/>.
+        /// </summary>
+        public RelayCommand DefaultThemeColorCommand => _defaultThemeColorCommand
+                                                        ?? (_defaultThemeColorCommand = new RelayCommand(ExecuteDefaultThemeColorCommand));
+
+        private void ExecuteDefaultThemeColorCommand()
+        {
+            RValue = 0;
+            GValue = 99;
+            BValue = 177;
         }
 
         #endregion

@@ -38,6 +38,7 @@
           <Property Name="dealed" Type="int" Nullable="false" />
           <Property Name="stock_id" Type="int" Nullable="false" />
           <Property Name="deal_price" Type="money" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="user_positions">
           <Key>
@@ -271,6 +272,7 @@
           <Property Name="dealed" Type="Int32" Nullable="false" />
           <Property Name="stock_id" Type="Int32" Nullable="false" />
           <Property Name="deal_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="orders" Relationship="Self.FK_transactions_orders_buy" FromRole="transactions" ToRole="orders" />
           <NavigationProperty Name="orders1" Relationship="Self.FK_transactions_orders_sell" FromRole="transactions" ToRole="orders" />
           <NavigationProperty Name="stocks" Relationship="Self.FK_transactions_stocks" FromRole="transactions" ToRole="stocks" />
@@ -526,6 +528,7 @@
                 <ScalarProperty Name="dealed" ColumnName="dealed" />
                 <ScalarProperty Name="stock_id" ColumnName="stock_id" />
                 <ScalarProperty Name="deal_price" ColumnName="deal_price" />
+                <ScalarProperty Name="type" ColumnName="type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

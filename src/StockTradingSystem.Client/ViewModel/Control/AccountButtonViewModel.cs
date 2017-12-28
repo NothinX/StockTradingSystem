@@ -6,7 +6,9 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using StockTradingSystem.Client.Model.Info;
+using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Core.Model;
+using static StockTradingSystem.Client.App;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
@@ -18,16 +20,18 @@ namespace StockTradingSystem.Client.ViewModel.Control
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
         private readonly UserMoneyInfo _userMoneyInfo;
+        private readonly IFrameNavigationService _frameNavigationService;
 
         private Task _updateUserMoneyInfo;
         private CancellationTokenSource _cts;
 
-        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, UserMoneyInfo userMoneyInfo)
+        public AccountButtonViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, UserMoneyInfo userMoneyInfo, IFrameNavigationService frameNavigationService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
             _userMoneyInfo = userMoneyInfo;
+            _frameNavigationService = frameNavigationService;
             Messenger.Default.Register<GenericMessage<bool>>(this, UpdateUserMoneyInfo, b =>
             {
                 lock (this)
@@ -48,17 +52,24 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update(CancellationToken ct)
         {
-            var t = new TimeSpan(0, 0, 5);
-            while (!ct.IsCancellationRequested)
+            var t = RefreshTimeSpan;
+            try
             {
-                var ucr = _stockAgent.User_cny();
-                lock (this)
+                while (!ct.IsCancellationRequested)
                 {
-                    TotalMoneyText = $"总共：{ucr.CnyFree + ucr.CnyFreezed:F2}";
-                    AvailableMoneyText = $"可用：{ucr.CnyFree:F2}";
+                    var ucr = _stockAgent.User_cny();
+                    lock (this)
+                    {
+                        TotalMoneyText = $"总共：{ucr.CnyFree + ucr.CnyFreezed:F2}";
+                        AvailableMoneyText = $"可用：{ucr.CnyFree:F2}";
+                    }
+                    _userMoneyInfo.Update(ucr);
+                    await Task.Delay(t, ct);
                 }
-                _userMoneyInfo.Update(ucr);
-                await Task.Delay(t, ct);
+            }
+            catch (Exception e)
+            {
+                if (!ct.IsCancellationRequested) await _dialogService.ShowError(e, "错误", "确定", null);
             }
         }
 
@@ -119,6 +130,9 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (!b) return;
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
+                if (_frameNavigationService.CurrentPageKey == "AccountView") _mainWindowModel.GoBackCommand.Execute(null);
             });
         }
 
@@ -137,6 +151,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 if (!b) return;
                 _stockAgent.User.IsLogin = false;
                 Messenger.Default.Send(new GenericMessage<bool>(false), UpdateUserMoneyInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
                 _mainWindowModel.NavigateCommand.Execute("LoginView");
             });
         }

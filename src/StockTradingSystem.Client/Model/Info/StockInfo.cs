@@ -1,7 +1,4 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
-using StockTradingSystem.Client.ViewModel;
-using StockTradingSystem.Core.Model;
+﻿using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.Model.Info
 {

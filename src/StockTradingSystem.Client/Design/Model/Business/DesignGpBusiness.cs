@@ -46,5 +46,10 @@ namespace StockTradingSystem.Client.Design.Model.Business
         {
             throw new System.NotImplementedException();
         }
+
+        public List<TransactionResult> GetRecentTrans(int stockId, int num)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

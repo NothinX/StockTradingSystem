@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using StockTradingSystem.Client.Model.Info;
 using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
@@ -129,6 +128,8 @@ namespace StockTradingSystem.Client.ViewModel
                         if (!b) return;
                         _stockAgent.User.IsLogin = false;
                         Messenger.Default.Send(new GenericMessage<bool>(false), AccountButtonViewModel.UpdateUserMoneyInfo);
+                        Messenger.Default.Send(new GenericMessage<bool>(false), UserStockInfoViewModel.UpdateUserStockInfo);
+                        Messenger.Default.Send(new GenericMessage<bool>(false), UserOrderInfoViewModel.UpdateUserOrderInfo);
                         flag = false;
                     });
                     if (flag)
@@ -146,7 +147,9 @@ namespace StockTradingSystem.Client.ViewModel
                         LoginPasswordText = "";
                         LoginNameFocus = true;
                         Messenger.Default.Send(new GenericMessage<bool>(true), AccountButtonViewModel.UpdateUserMoneyInfo);
-                        _mainWindowModel.NavigateCommand.Execute("StockView");
+                        Messenger.Default.Send(new GenericMessage<bool>(true), UserStockInfoViewModel.UpdateUserStockInfo);
+                        Messenger.Default.Send(new GenericMessage<bool>(true), UserOrderInfoViewModel.UpdateUserOrderInfo);
+                        _mainWindowModel.GoBackCommand.Execute(null);
                     }
                     else
                     {

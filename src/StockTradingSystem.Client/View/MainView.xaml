@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="MainView" Background="White">
+      Title="MainView" Background="#BFFFFFFF">
 
-    <Grid Margin="50">
+    <Grid Margin="50" Background="White">
         <StackPanel Margin="100">
             <TextBlock Text="欢迎" FontSize="50"/>
             <TextBlock Text="新用户白送你一万元！！！" Foreground="{Binding Main.ThemeBrush,Source={StaticResource Locator}}" FontSize="27" Margin="0 10 0 0"/>

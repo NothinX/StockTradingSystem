@@ -4,9 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StockTradingSystem.Client.View"
+      xmlns:info="clr-namespace:StockTradingSystem.Client.Model.Info"
+      xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+      xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
       mc:Ignorable="d" 
       d:DesignHeight="612" d:DesignWidth="1190"
-      Title="AccountView" Background="AliceBlue">
+      Title="AccountView" Background="#BFFFFFFF" DataContext="{Binding Account,Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
+                <ResourceDictionary Source="../Themes/MainSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <Grid Margin="10 0">
@@ -21,25 +33,164 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                        <TextBlock FontSize="50" Text="账户总览" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid Margin="20">
+                            <TextBlock FontSize="24" Text="{Binding StockAgent.User.Name,StringFormat=欢迎你回来，{0},Source={StaticResource Locator}}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextBlock.FontSize="17">
+                                <TextBlock Text="{Binding UserMoneyInfo.TotalMoney,StringFormat=账户总值：{0:F2},Source={StaticResource Locator}}"/>
+                                <TextBlock Margin="10 0 0 0" Text="{Binding UserMoneyInfo.CnyFree,StringFormat=可用资金：{0:F2},Source={StaticResource Locator}}"/>
+                                <TextBlock Margin="10 0 0 0" Text="{Binding UserMoneyInfo.CnyFreezed,StringFormat=冻结资金：{0:F2},Source={StaticResource Locator}}"/>
+                                <TextBlock Margin="10 0 0 0" Text="{Binding UserMoneyInfo.GpMoney,StringFormat=股票总值：{0:F2},Source={StaticResource Locator}}"/>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </Grid>
                 <Grid Grid.Row="1" Margin="0 10 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                        <TextBlock FontSize="50" Text="持有股票" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer.Resources>
+                                <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                            </ScrollViewer.Resources>
+                            <ListView Name="UserStockInfoListView" ItemsSource="{Binding UserStockInfoViewModel.UserStockInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserStockInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                        <GridViewColumn Header="股票代码" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockId}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票名称" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Name}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票价格" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="持股数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding TotalStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="可用数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding AvailableStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="冻结数量" Width="{Binding ElementName=UserStockInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=6}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserStockInfo}">
+                                                    <TextBlock Text="{Binding FreezedStock}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
                     </Border>
                     <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
-                        <TextBlock FontSize="50" Text="委托记录" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer.Resources>
+                                <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                                <converter:UndealedVisibilityConverter x:Key="UndealedVisibilityConverter"/>
+                                <converter:OrderTypeTextConverter x:Key="OrderTypeTextConverter"/>
+                            </ScrollViewer.Resources>
+                            <ListView Name="UserOrderInfoListView" ItemsSource="{Binding UserOrderInfoViewModel.UserOrderInfoList,Source={StaticResource Locator}}" SelectionMode="Single" SelectedValue="{Binding CurrentUserOrderInfo}" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                        <GridViewColumn Header="创建时间" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="股票名称" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding StockInfo.Name}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="委托类型" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding OrderType,Converter={StaticResource OrderTypeTextConverter}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="委托价格" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="未成交" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Undealed}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="已成交" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <TextBlock Text="{Binding Dealed}" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="已取消" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type info:UserOrderInfo}">
+                                                    <Grid>
+                                                        <TextBlock Text="{Binding Canceled}" HorizontalAlignment="Center" Visibility="{Binding Undealed,Converter={StaticResource UndealedVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}"/>
+                                                        <Button Content="取消" Command="{Binding Account.CancelOrderCommand,Source={StaticResource Locator}}" CommandParameter="{Binding OrderId}" Style="{StaticResource ThemeBrushBtn}" HorizontalAlignment="Center" Visibility="{Binding Undealed,Converter={StaticResource UndealedVisibilityConverter}}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
                     </Border>
                 </Grid>
             </Grid>
-            <Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
-                <TextBlock FontSize="50" Text="资产变动" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
+            <!--<Border Grid.Row="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 0 0 10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer.Resources>
+                        <converter:ListViewColumnWidthConverter x:Key="ListViewColumnWidthConverter"/>
+                    </ScrollViewer.Resources>
+                    <ListView Name="UserMoneyChangeInfoListView" SelectionMode="Single" Style="{StaticResource ListViewWithGridViewStyle}" ItemContainerStyle="{StaticResource ListViewWithGridViewItemStyle}">
+                        <ListView.View>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                <GridViewColumn Header="时间" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="类型" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="数量" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="余额" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                                <GridViewColumn Header="手续费" Width="{Binding ElementName=UserMoneyChangeInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=5}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </Border>-->
         </Grid>
     </ScrollViewer>
 </Page>

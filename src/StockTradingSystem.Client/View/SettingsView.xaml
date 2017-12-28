@@ -8,9 +8,10 @@
       xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+      xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
       mc:Ignorable="d" 
        d:DesignWidth="1190"
-      Title="SettingsView" Background="AliceBlue" DataContext="{Binding Settings,Source={StaticResource Locator}}">
+      Title="SettingsView" Background="#BFFFFFFF" DataContext="{Binding Settings,Source={StaticResource Locator}}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -22,10 +23,10 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <StackPanel Margin="10 0">
             <StackPanel.Resources>
-                <control:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
+                <converter:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
             </StackPanel.Resources>
             <Border Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="0 10 0 0" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}">
                 <GroupBox Style="{StaticResource SettingsGroupBox}">
@@ -67,7 +68,7 @@
                         <StackPanel HorizontalAlignment="Left" TextBlock.FontSize="24">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="R" Width="30"/>
-                                <Slider Minimum="0" Maximum="254" Width="255" VerticalAlignment="Center" Value="{Binding RValue}">
+                                <Slider Minimum="0" Maximum="255" SmallChange="1" Width="256" VerticalAlignment="Center" Value="{Binding RValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="ValueChanged">
                                             <cmd:EventToCommand Command="{Binding ValueChangedCommand}"/>
@@ -77,7 +78,7 @@
                             </StackPanel> 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="G" Width="30"/>
-                                <Slider Minimum="0" Maximum="254" Width="255" VerticalAlignment="Center" Value="{Binding GValue}">
+                                <Slider Minimum="0" Maximum="255" SmallChange="1" Width="256" VerticalAlignment="Center" Value="{Binding GValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="ValueChanged">
                                             <cmd:EventToCommand Command="{Binding ValueChangedCommand}"/>
@@ -87,7 +88,7 @@
                             </StackPanel> 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="B" Width="30"/>
-                                <Slider Minimum="0" Maximum="254" Width="255" VerticalAlignment="Center" Value="{Binding BValue}">
+                                <Slider Minimum="0" Maximum="254" SmallChange="1" Width="255" VerticalAlignment="Center" Value="{Binding BValue}" ToolTip="{Binding Value,RelativeSource={RelativeSource Self}}" Style="{StaticResource ColorSliderStyle}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="ValueChanged">
                                             <cmd:EventToCommand Command="{Binding ValueChangedCommand}"/>
@@ -95,6 +96,14 @@
                                     </i:Interaction.Triggers>
                                 </Slider>
                             </StackPanel> 
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="保存" Margin="0 10 10 0" Style="{StaticResource ThemeBrushBtn}" Command="{Binding SaveThemeColorCommand}"/>
+                                <Button Grid.Column="1" Content="默认" Margin="10 10 0 0" Style="{StaticResource ThemeBrushBtn}" Command="{Binding DefaultThemeColorCommand}"/>
+                            </Grid> 
                         </StackPanel>
                     </GroupBox>
                 </GroupBox>
@@ -106,7 +115,7 @@
                     </GroupBox.Header>
                     <StackPanel Margin="20 10 20 20" TextBlock.FontSize="20">
                         <TextBlock Text="A Nothing Stock Trading System."/>
-                        <TextBlock Text="Version: 0.4.0, Update is nothing." Margin="0 10 0 0"/>
+                        <TextBlock Text="Version: 0.7.7, Update is nothing." Margin="0 10 0 0"/>
                         <TextBlock Text="Powered By Nothin and His Friends." Margin="0 10 0 0"/>
                     </StackPanel>
                 </GroupBox>

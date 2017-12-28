@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="StockTradingSystem.Client.View.Control.TradeGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StockTradingSystem.Client.View.Control"
+             xmlns:converter="clr-namespace:StockTradingSystem.Client.Model.UI.Converter"
+             xmlns:ui="clr-namespace:StockTradingSystem.Client.Model.UI"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
+             mc:Ignorable="d" 
+             d:DesignHeight="580" d:DesignWidth="256" Background="#BFFFFFFF" DataContext="{Binding Trade,Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Themes/MainSkin.xaml" />
+                <ResourceDictionary Source="../../Themes/TradeSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.Resources>
+            <converter:LoginVisibilityConverter x:Key="LoginVisibilityConverter"/>
+            <converter:CurrentStockInfoVisibilityConverter x:Key="CurrentStockInfoVisibilityConverter"/>
+            <converter:StockBalanceConverter x:Key="StockBalanceConverter"/>
+        </Grid.Resources>
+        <Grid  Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter},ConverterParameter={ui:SystemType Bools=True}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="0 0 0 5" Background="White">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" TextBlock.FontSize="17" DataContext="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator}}">
+                    <TextBlock Text="{Binding StockId}"/>
+                    <TextBlock Text="{Binding Name}" Margin="5 0 0 0"/>
+                    <TextBlock Text="{Binding Price,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Margin="0 5 0 5" Padding="10" Background="White">
+                <StackPanel VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14">
+                        <TextBlock Text="股票余额："/>
+                        <TextBlock Margin="5 0 0 0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0:D}" Mode="OneWay" Converter="{StaticResource StockBalanceConverter}">
+                                    <Binding Path="StockInfoViewModel.CurrentStockInfo" Source="{StaticResource Locator}"/>
+                                    <Binding Path="UserStockInfoViewModel.UserStockInfoList" Source="{StaticResource Locator}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14" DataContext="{Binding UserMoneyInfo,Source={StaticResource Locator}}">
+                        <TextBlock Text="可用资金："/>
+                        <TextBlock Text="{Binding CnyFree,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
+                    </StackPanel>
+                    <ComboBox Name="BuyCbb" FontSize="17" ui:UieHelper.IsFocused="{Binding BuyCbbFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding BuyCbbSelectedIndex}" ItemsSource="{Binding TradeType}" Margin="0 20" HorizontalContentAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <cmd:EventToCommand Command="{Binding BuyCbbCommand}" CommandParameter="{Binding SelectedValue,ElementName=BuyCbb}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <Grid Margin="0 0 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="单价："/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="数量："/>
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="总价："/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="×"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="＝"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding BuySingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuySingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding BuySingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput">
+                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding BuySinglePreviewTextInputCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding BuyAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuyAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput">
+                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding AmountPreviewTextInputCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding BuyTotalText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Style="{StaticResource ThemeBrushTb}"/>
+                    </Grid>
+                    <Button Content="买入" Padding="0 5" FontSize="17" Command="{Binding BuyCommand}" Style="{StaticResource BuyBtn}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="2" Margin="0 5 0 0" Padding="10" Background="White">
+                <StackPanel VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14" DataContext="{Binding UserMoneyInfo,Source={StaticResource Locator}}">
+                        <TextBlock Text="资金余额："/>
+                        <TextBlock Text="{Binding CnyFree,StringFormat={}{0:F2}}" Margin="5 0 0 0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14">
+                        <TextBlock Text="可用股票："/>
+                        <TextBlock Margin="5 0 0 0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0:D}" Mode="OneWay" Converter="{StaticResource StockBalanceConverter}">
+                                    <Binding Path="StockInfoViewModel.CurrentStockInfo" Source="{StaticResource Locator}"/>
+                                    <Binding Path="UserStockInfoViewModel.UserStockInfoList" Source="{StaticResource Locator}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <ComboBox Name="SellCbb" FontSize="17" ui:UieHelper.IsFocused="{Binding SellCbbFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SellCbbSelectedIndex}" ItemsSource="{Binding TradeType}" Margin="0 20" HorizontalContentAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <cmd:EventToCommand Command="{Binding SellCbbCommand}" CommandParameter="{Binding SelectedValue,ElementName=SellCbb}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <Grid Margin="0 0 0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="单价："/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="数量："/>
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="总价："/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="×"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="＝"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding SellSingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellSingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding SellSingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput">
+                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding SellSinglePreviewTextInputCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding SellAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput">
+                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding AmountPreviewTextInputCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding SellTotalText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Style="{StaticResource ThemeBrushTb}"/>
+                    </Grid>
+                    <Button Content="卖出" Padding="0 5" FontSize="17" Command="{Binding SellCommand}" Style="{StaticResource SellBtn}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Border Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Visibility="{Binding StockInfoViewModel.CurrentStockInfo,Source={StaticResource Locator},Converter={StaticResource CurrentStockInfoVisibilityConverter},ConverterParameter={ui:SystemType Bools=False}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock FontSize="24" Text="请选择一只股票"/>
+                <Button Content="股票" Height="32" FontSize="20" Margin="0 10 0 0" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="StockView" Style="{StaticResource ThemeBrushBtn}"/>
+            </StackPanel> 
+        </Border>
+        <Border Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Visibility="{Binding StockAgent.User.IsLogin,Mode=OneWay,Source={StaticResource Locator},Converter={StaticResource LoginVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock FontSize="24" Text="登录后即可交易"/>
+                <Button Content="登录" Height="32" FontSize="20" Margin="0 10 0 0" Command="{Binding Main.NavigateCommand,Source={StaticResource Locator}}" CommandParameter="LoginView" Style="{StaticResource ThemeBrushBtn}"/>
+            </StackPanel> 
+        </Border>
+    </Grid>
+</UserControl>

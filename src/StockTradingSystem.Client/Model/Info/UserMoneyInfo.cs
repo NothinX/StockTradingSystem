@@ -1,19 +1,9 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
-using StockTradingSystem.Client.ViewModel.Control;
-using StockTradingSystem.Core.Model;
+﻿using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.Model.Info
 {
-    public class UserMoneyInfo : Info<UserCnyResult>
+    public class UserMoneyInfo : Info<UserCnyResult> 
     {
-        private readonly StockAgent _stockAgent;
-
-        public UserMoneyInfo(StockAgent stockAgent)
-        {
-            _stockAgent = stockAgent;
-        }
-
         /// <summary>
         /// The <see cref="CnyFree" /> property's name.
         /// </summary>
@@ -65,6 +55,23 @@ namespace StockTradingSystem.Client.Model.Info
             set => Set(GpMoneyPropertyName, ref _gpMoney, value);
         }
 
+        /// <summary>
+        /// The <see cref="TotalMoney" /> property's name.
+        /// </summary>
+        public const string TotalMoneyPropertyName = nameof(TotalMoney);
+
+        private decimal _totalMoney;
+
+        /// <summary>
+        /// Sets and gets the <see cref="TotalMoney"/> property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public decimal TotalMoney
+        {
+            get => _totalMoney;
+            set => Set(TotalMoneyPropertyName, ref _totalMoney, value);
+        }
+
         public override void Create(UserCnyResult obj)
         {
             throw new System.NotImplementedException();
@@ -75,6 +82,7 @@ namespace StockTradingSystem.Client.Model.Info
             CnyFree = obj.CnyFree;
             CnyFreezed = obj.CnyFreezed;
             GpMoney = obj.GpMoney;
+            TotalMoney = CnyFree + CnyFreezed + GpMoney;
         }
     }
 }

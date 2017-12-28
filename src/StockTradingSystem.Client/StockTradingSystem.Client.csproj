@@ -9,12 +9,27 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StockTradingSystem.Client</RootNamespace>
     <AssemblyName>Client</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,8 +71,10 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -85,6 +102,7 @@
     <Compile Include="Design\Model\Business\DesignGpBusiness.cs" />
     <Compile Include="Design\Model\DesignGpUser.cs" />
     <Compile Include="Design\Model\DesignGpStockAgent.cs" />
+    <Compile Include="Design\Model\Info\DesignUserMoneyInfo.cs" />
     <Compile Include="Design\Model\UI\Dialog\DesignDialogService.cs" />
     <Compile Include="Model\GPModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -103,8 +121,12 @@
     </Compile>
     <Compile Include="Model\GpUser.cs" />
     <Compile Include="Model\Info\Info.cs" />
+    <Compile Include="Model\Info\StockDepthInfo.cs" />
     <Compile Include="Model\Info\StockInfo.cs" />
+    <Compile Include="Model\Info\TransactionRecentInfo.cs" />
     <Compile Include="Model\Info\UserMoneyInfo.cs" />
+    <Compile Include="Model\Info\UserOrderInfo.cs" />
+    <Compile Include="Model\Info\UserStockInfo.cs" />
     <Compile Include="Model\orders.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
@@ -117,12 +139,19 @@
     <Compile Include="Model\transactions.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\UI\Control\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\CurrentStockInfoVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\OrderTypeBrushConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockBalanceConverter.cs" />
+    <Compile Include="Model\UI\Converter\UndealedVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\IsCheckedStockInfoConverter.cs" />
+    <Compile Include="Model\UI\Converter\ListViewColumnWidthConverter.cs" />
+    <Compile Include="Model\UI\Converter\LoginVisibilityConverter.cs" />
+    <Compile Include="Model\UI\Converter\OrderTypeTextConverter.cs" />
     <Compile Include="Model\UI\Control\PasswordBoxHelper.cs" />
     <Compile Include="Model\UI\Control\HintTextBox.cs" />
     <Compile Include="Model\GpStockAgent.cs" />
-    <Compile Include="Model\UI\Control\StockPriceChangeBrushConverter.cs" />
-    <Compile Include="Model\UI\Control\StockPriceChangeTextConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockPriceChangeBrushConverter.cs" />
+    <Compile Include="Model\UI\Converter\StockPriceChangeTextConverter.cs" />
     <Compile Include="Model\UI\Navigation\NavBarItemIsCheckedConverter.cs" />
     <Compile Include="Model\UI\SystemTypeExtension.cs" />
     <Compile Include="Model\users.cs">
@@ -138,11 +167,20 @@
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Control\AccountButtonViewModel.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
+    <Compile Include="ViewModel\Control\TradeGridViewModel.cs" />
+    <Compile Include="ViewModel\Control\TransactionRecentInfoViewModel.cs" />
+    <Compile Include="ViewModel\Control\StockDepthInfoViewModel.cs" />
     <Compile Include="ViewModel\Control\StockInfoViewModel.cs" />
+    <Compile Include="ViewModel\Control\UserOrderInfoViewModel.cs" />
+    <Compile Include="ViewModel\Control\UserStockInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
+    <Compile Include="View\Control\TradeGrid.xaml.cs">
+      <DependentUpon>TradeGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -177,9 +215,13 @@
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TradeView.xaml.cs">
-      <DependentUpon>TradeView.xaml</DependentUpon>
+    <Compile Include="View\SpotView.xaml.cs">
+      <DependentUpon>SpotView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\TradeSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\SettingsSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -195,6 +237,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Control\TradeGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -248,9 +294,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\TradeView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\SpotView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +335,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
+      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
+      <Name>StockTradingSystem.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Model\GPModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GPModel.edmx</DependentUpon>
@@ -301,13 +356,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StockTradingSystem.Core\StockTradingSystem.Core.csproj">
-      <Project>{101a204c-9747-4892-97b1-fdf18567e444}</Project>
-      <Name>StockTradingSystem.Core</Name>
-    </ProjectReference>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

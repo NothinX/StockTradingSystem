@@ -77,7 +77,6 @@ namespace StockTradingSystem.Core.Model
 
         public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
-            CheckUserLogin();
             return _business.Stock_depth(stockId, type);
         }
 
@@ -107,6 +106,11 @@ namespace StockTradingSystem.Core.Model
         public StockResult GetStock(int stockId, DateTime dateTime)
         {
             return _business.GetStock(stockId, dateTime);
+        }
+
+        public List<TransactionResult> GetRecentTrans(int stockId, int num)
+        {
+            return _business.GetRecentTrans(stockId, num);
         }
 
         /// <summary>

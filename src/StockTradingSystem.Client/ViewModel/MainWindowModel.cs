@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -22,7 +23,7 @@ namespace StockTradingSystem.Client.ViewModel
         public static readonly string ShowDialog = "DialogServiceShowDialog";
         public static readonly string FirstView = "NavigateToFirstView";
 
-        private const string TitleBtnViews = "StockView#TradeView#AccountView";
+        private const string TitleBtnViews = "StockView#SpotView#AccountView";
 
         private readonly IFrameNavigationService _navigationService;
         private readonly IDialogService _dialogService;
@@ -31,6 +32,22 @@ namespace StockTradingSystem.Client.ViewModel
 
         public MainWindowModel(IFrameNavigationService navigationService, IDialogService dialogService)
         {
+            if (IsInDesignModeStatic)
+            {
+                ThemeBrush = new SolidColorBrush(Color.FromArgb(255, 0, 99, 177));
+            }
+            else
+            {
+                try
+                {
+                    var themeColors = Array.ConvertAll(ConfigurationManager.AppSettings["ThemeColorRGB"].Split('#'), Convert.ToByte);
+                    ThemeBrush = new SolidColorBrush(Color.FromArgb(255, themeColors[0], themeColors[1], themeColors[2]));
+                }
+                catch
+                {
+                    ThemeBrush = new SolidColorBrush(Color.FromArgb(255, 0, 99, 177));
+                }
+            }
             _navigationService = navigationService;
             _dialogService = dialogService;
             Messenger.Default.Register<GenericMessage<bool>>(this, ShowDialog, b =>
@@ -145,7 +162,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public const string ThemeBrushPropertyName = nameof(ThemeBrush);
 
-        private SolidColorBrush _themeBrush = new SolidColorBrush(Color.FromArgb(255, 0, 99, 177));
+        private SolidColorBrush _themeBrush;
 
         /// <summary>
         /// Sets and gets the <see cref="ThemeBrush"/> property.

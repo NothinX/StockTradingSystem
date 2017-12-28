@@ -21,6 +21,7 @@ namespace StockTradingSystem.Client.Model
         public int dealed { get; set; }
         public int stock_id { get; set; }
         public decimal deal_price { get; set; }
+        public int type { get; set; }
     
         public virtual orders orders { get; set; }
         public virtual orders orders1 { get; set; }
