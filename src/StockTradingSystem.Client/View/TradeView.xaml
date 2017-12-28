@@ -10,6 +10,14 @@
       d:DesignHeight="612" d:DesignWidth="1190"
       Title="TradeView" Background="#BFFFFFFF">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/SettingsSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <ScrollViewer Name="TradeScroll" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
         <Grid Margin="10 10">
             <Grid.RowDefinitions>
@@ -49,7 +57,24 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White">
-                    <TextBlock FontSize="50" Text="市场行情" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Grid.Column="0" Style="{StaticResource SettingsGroupBox}">
+                            <GroupBox.Header>
+                                <TextBlock Margin="20 10" FontSize="20" Text="买入"/>
+                            </GroupBox.Header>
+
+                        </GroupBox>
+                        <GroupBox Grid.Column="1" Style="{StaticResource SettingsGroupBox}">
+                            <GroupBox.Header>
+                                <TextBlock Margin="20 10" FontSize="20" Text="卖出"/>
+                            </GroupBox.Header>
+
+                        </GroupBox>
+                    </Grid>
                 </Border>
                 <Border Grid.Column="1" Padding="1" BorderThickness="1" BorderBrush="LightGray" Background="White" Margin="10 0 0 0">
                     <TextBlock FontSize="50" Text="市场图表" HorizontalAlignment="Center" VerticalAlignment="Center"/>

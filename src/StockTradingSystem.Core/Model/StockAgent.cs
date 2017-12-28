@@ -77,7 +77,6 @@ namespace StockTradingSystem.Core.Model
 
         public List<StockDepthResult> Stock_depth(int stockId, int type)
         {
-            CheckUserLogin();
             return _business.Stock_depth(stockId, type);
         }
 

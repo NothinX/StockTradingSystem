@@ -23,7 +23,7 @@ namespace StockTradingSystem.Client.ViewModel
         public static readonly string ShowDialog = "DialogServiceShowDialog";
         public static readonly string FirstView = "NavigateToFirstView";
 
-        private const string TitleBtnViews = "StockView#TradeView#AccountView";
+        private const string TitleBtnViews = "StockView#SpotView#AccountView";
 
         private readonly IFrameNavigationService _navigationService;
         private readonly IDialogService _dialogService;

@@ -75,6 +75,7 @@ namespace StockTradingSystem.Client.ViewModel
             SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
             SimpleIoc.Default.Register<StockInfoViewModel>();
+            SimpleIoc.Default.Register<StockDepthInfoViewModel>(true);
             SimpleIoc.Default.Register<UserStockInfoViewModel>(true);
             SimpleIoc.Default.Register<UserOrderInfoViewModel>(true);
         }
@@ -110,6 +111,14 @@ namespace StockTradingSystem.Client.ViewModel
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public StockInfoViewModel StockInfoViewModel => ServiceLocator.Current.GetInstance<StockInfoViewModel>();
+
+        /// <summary>
+        /// Gets the <see cref="StockDepthInfoViewModel"/> property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public StockDepthInfoViewModel StockDepthInfoViewModel => ServiceLocator.Current.GetInstance<StockDepthInfoViewModel>();
 
         /// <summary>
         /// Gets the <see cref="UserStockInfoViewModel"/> property.
@@ -190,7 +199,7 @@ namespace StockTradingSystem.Client.ViewModel
             navigationService.Configure("LoginView", new Uri("../View/LoginView.xaml", UriKind.Relative));
             navigationService.Configure("RegisterView", new Uri("../View/RegisterView.xaml", UriKind.Relative));
             navigationService.Configure("StockView", new Uri("../View/StockView.xaml", UriKind.Relative));
-            navigationService.Configure("TradeView", new Uri("../View/TradeView.xaml", UriKind.Relative));
+            navigationService.Configure("SpotView", new Uri("../View/SpotView.xaml", UriKind.Relative));
             navigationService.Configure("AccountView", new Uri("../View/AccountView.xaml", UriKind.Relative));
             navigationService.Configure("SettingsView", new Uri("../View/SettingsView.xaml", UriKind.Relative));
 

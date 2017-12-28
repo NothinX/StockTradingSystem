@@ -10,14 +10,14 @@ using StockTradingSystem.Core.Model;
 
 namespace StockTradingSystem.Client.ViewModel.Control
 {
-    public class StockInfoViewModel : ViewModelBase
+    public class StockInfoViewModel : ViewModelBase, IDisposable
     {
         public static readonly string UpdateCurrentStockInfoToken = "UpdateCurrentStockInfoToken";
 
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
 
-        private Task _updateStockInfo;
+        private readonly Task _updateStockInfo;
 
         public StockInfoViewModel(StockAgent stockAgent, IDialogService dialogService)
         {
@@ -37,7 +37,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update()
         {
-            var t = new TimeSpan(0, 0, 5);
+            var t = new TimeSpan(0, 0, 3);
             try
             {
                 while (true)
@@ -108,6 +108,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                 Set(CurrentStockInfoPropertyName, ref _currentStockInfo, value, true);
                 SortStockInfoList();
                 Messenger.Default.Send(new GenericMessage<int>(CurrentStockInfo.StockId), AccountViewModel.UpdateCurrentUserStockInfoToken);
+                Messenger.Default.Send(new GenericMessage<bool>(CurrentStockInfo != null), StockDepthInfoViewModel.UpdateStockDepthInfo);
             }
         }
 
@@ -137,5 +138,9 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         #endregion
 
+        public void Dispose()
+        {
+            _updateStockInfo?.Dispose();
+        }
     }
 }
