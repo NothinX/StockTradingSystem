@@ -19,7 +19,7 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
         private Grid DialogsGrid => _dialogsGrid ?? (_dialogsGrid =
                                         Application.Current.MainWindow.GetDescendantFromName("DialogsGrid") as Grid);
 
-        private (Guid, UIElement) ShowDialog(Func<Guid, UIElement> getGrid)
+        private Tuple<Guid, UIElement> ShowDialog(Func<Guid, UIElement> getGrid)
         {
             Messenger.Default.Send(new GenericMessage<bool>(true), MainWindowModel.ShowDialog);
             var guid = Guid.NewGuid();
@@ -32,7 +32,7 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
             {
                 DialogsGrid.Children.Add(grid);
             }
-            return (guid, grid);
+            return Tuple.Create(guid, grid);
         }
 
         private void CloseDialog(Guid guid, UIElement grid)
@@ -68,32 +68,32 @@ namespace StockTradingSystem.Client.Model.UI.Dialog
 
         private async Task WaitDialog(string message, string title, string buttonText = "确定", Action afterHideCallback = null)
         {
-            (Guid g, UIElement mg) = ShowDialog(guid => MessageGrid.Show(ChangeDialogResult, guid, message, title, buttonText));
+            var gmg = ShowDialog(guid => MessageGrid.Show(ChangeDialogResult, guid, message, title, buttonText));
             while (true)
             {
                 lock (_dialogResult)
                 {
-                    if (_dialogResult[g] != null) break;
+                    if (_dialogResult[gmg.Item1] != null) break;
                 }
                 await Task.Delay(1);
             }
-            CloseDialog(g, mg);
+            CloseDialog(gmg.Item1, gmg.Item2);
             afterHideCallback?.Invoke();
         }
 
         private async Task<bool> WaitDialog(string message, string title, string buttonConfirmText = "确定", string buttonCancelText = "取消", Action<bool> afterHideCallback = null)
         {
-            (Guid g, UIElement mg) = ShowDialog(guid => MessageGrid.Show(ChangeDialogResult, guid, message, title, buttonConfirmText, buttonCancelText));
+            var gmg = ShowDialog(guid => MessageGrid.Show(ChangeDialogResult, guid, message, title, buttonConfirmText, buttonCancelText));
             while (true)
             {
                 lock (_dialogResult)
                 {
-                    if (_dialogResult[g] != null) break;
+                    if (_dialogResult[gmg.Item1] != null) break;
                 }
                 await Task.Delay(1);
             }
-            var result = GetDialogResult(g) ?? false;
-            CloseDialog(g, mg);
+            var result = GetDialogResult(gmg.Item1) ?? false;
+            CloseDialog(gmg.Item1, gmg.Item2);
             afterHideCallback?.Invoke(result);
             return result;
         }
