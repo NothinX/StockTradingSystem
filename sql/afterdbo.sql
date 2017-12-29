@@ -1,3 +1,13 @@
+INSERT INTO users VALUES('', '', '', 0, 0, 0)
+
 INSERT INTO stocks VALUES('河南大学', 10)
 INSERT INTO stocks VALUES('宇宙工行', 100)
 INSERT INTO stocks VALUES('巨硬有限', 1000)
+
+INSERT INTO user_positions VALUES(10000000, 100000, 1000, 0)
+INSERT INTO user_positions VALUES(10000000, 100001, 100, 0)
+INSERT INTO user_positions VALUES(10000000, 100002, 10, 0)
+
+EXEC dbo.exec_order 10000000, 100000, 1, 10, 1000
+EXEC dbo.exec_order 10000000, 100001, 1, 100, 100
+EXEC dbo.exec_order 10000000, 100002, 1, 1000, 10

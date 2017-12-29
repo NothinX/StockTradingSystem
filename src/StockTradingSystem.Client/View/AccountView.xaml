@@ -117,7 +117,7 @@
                                         <GridViewColumn Header="创建时间" Width="{Binding ElementName=UserOrderInfoListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=7}">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate DataType="{x:Type info:UserOrderInfo}">
-                                                    <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Center"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

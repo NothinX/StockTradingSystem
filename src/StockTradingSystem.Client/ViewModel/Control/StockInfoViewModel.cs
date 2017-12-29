@@ -38,7 +38,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async Task Update()
         {
-            var t = new TimeSpan(0, 0, 100);
+            var t = RefreshTimeSpan;
             try
             {
                 while (true)

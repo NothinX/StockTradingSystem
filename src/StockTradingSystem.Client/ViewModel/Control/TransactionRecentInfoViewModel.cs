@@ -76,7 +76,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
                         });
                         addlist.ForEach(x => TransactionRecentInfoList.Add(x));
                         deletelist.ForEach(x => TransactionRecentInfoList.Remove(x));
-                        TransactionRecentInfoList = TransactionRecentInfoList.OrderBy(x => x.CreateDateTime).ToList();
+                        TransactionRecentInfoList = TransactionRecentInfoList.OrderByDescending(x => x.CreateDateTime).ToList();
                     }
                     await Task.Delay(t, ct);
                 }

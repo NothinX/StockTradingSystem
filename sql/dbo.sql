@@ -12,7 +12,7 @@
  Target Server Version : 13004001
  File Encoding         : 65001
 
- Date: 28/12/2017 22:27:53
+ Date: 29/12/2017 17:34:39
 */
 
 
@@ -696,7 +696,7 @@ BEGIN
             UPDATE users SET cny_free = cny_free + @temp_deal * @price
                 WHERE user_id = @temp_user_id
             UPDATE user_positions SET num_freezed = num_freezed - @temp_deal
-                WHERE user_id = @temp_user_id
+                WHERE user_id = @temp_user_id AND stock_id = @stock_id
 		END
 		ELSE
 		BEGIN
@@ -716,7 +716,7 @@ BEGIN
             UPDATE users SET cny_free = cny_free + @temp_deal * @price
                 WHERE user_id = @user_id
             UPDATE user_positions SET num_freezed = num_freezed - @temp_deal
-                WHERE user_id = @user_id
+                WHERE user_id = @user_id AND stock_id = @stock_id
 		END
 	END
 
