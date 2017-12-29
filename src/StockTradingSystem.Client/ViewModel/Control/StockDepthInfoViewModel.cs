@@ -133,9 +133,9 @@ namespace StockTradingSystem.Client.ViewModel.Control
             }
         }
 
-        private static List<StockDepthInfo> SortStockDepthInfoList(List<StockDepthInfo> sdil)
+        private static List<StockDepthInfo> SortStockDepthInfoList(IEnumerable<StockDepthInfo> sdil)
         {
-            return sdil.OrderBy(s => s.Price).ToList();
+            return sdil.OrderByDescending(s => s.Price).ToList();
         }
 
         /// <summary>
