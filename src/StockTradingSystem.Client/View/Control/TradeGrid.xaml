@@ -81,20 +81,8 @@
                         <TextBlock Grid.Row="0" Grid.Column="4" Text="总价："/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="×"/>
                         <TextBlock Grid.Row="1" Grid.Column="3" Text="＝"/>
-                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding BuySingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuySingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding BuySingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewTextInput">
-                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding BuySinglePreviewTextInputCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding BuyAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuyAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewTextInput">
-                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding AmountPreviewTextInputCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding BuySingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuySingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding BuySingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding BuyAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding BuyAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False"/>
                         <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding BuyTotalText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Style="{StaticResource ThemeBrushTb}"/>
                     </Grid>
                     <Button Content="买入" Padding="0 5" FontSize="17" Command="{Binding BuyCommand}" Style="{StaticResource BuyBtn}"/>
@@ -141,20 +129,8 @@
                         <TextBlock Grid.Row="0" Grid.Column="4" Text="总价："/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="×"/>
                         <TextBlock Grid.Row="1" Grid.Column="3" Text="＝"/>
-                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding SellSingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellSingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding SellSingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewTextInput">
-                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding SellSinglePreviewTextInputCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding SellAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewTextInput">
-                                    <cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding AmountPreviewTextInputCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="0" ui:UieHelper.IsFocused="{Binding SellSingleFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellSingleText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding SellSingleIsReadOnly}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" ui:UieHelper.IsFocused="{Binding SellAmountFocus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Text="{Binding SellAmountText,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ThemeBrushTb}" input:InputMethod.IsInputMethodEnabled="False"/>
                         <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding SellTotalText,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Style="{StaticResource ThemeBrushTb}"/>
                     </Grid>
                     <Button Content="卖出" Padding="0 5" FontSize="17" Command="{Binding SellCommand}" Style="{StaticResource SellBtn}"/>
