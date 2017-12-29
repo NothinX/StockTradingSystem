@@ -140,7 +140,7 @@
                                             <GridViewColumn Header="时间" Width="{Binding ElementName=TranListView,Path=ActualWidth,Converter={StaticResource ListViewColumnWidthConverter},ConverterParameter=4}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate DataType="{x:Type info:TransactionRecentInfo}">
-                                                        <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}" HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding CreateDateTime,StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" HorizontalAlignment="Center"/>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>

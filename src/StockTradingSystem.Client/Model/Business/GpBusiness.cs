@@ -109,10 +109,12 @@ namespace StockTradingSystem.Client.Model.Business
             {
                 var s = gpEntities.stocks.FirstOrDefault(x => x.stock_id == stockId);
                 Debug.Assert(s != null, nameof(s) + " != null");
-                var q = gpEntities.transactions.Where(x => x.stock_id == stockId && x.create_datetime < dateTime)
+                var q = gpEntities.transactions.Where(x => x.stock_id == stockId && dateTime > x.create_datetime)
                     .OrderBy(x => x.create_datetime).ToList();
-                var ql = q.LastOrDefault();
-                return ql != null ? new StockResult { StockId = stockId, Name = s.name, Price = ql.deal_price } : new StockResult { StockId = stockId, Name = s.name, Price = s.price };
+                var qday = q.Where(x => dateTime - x.create_datetime >= TimeSpan.FromDays(1)).ToList();
+                var qremain = q.Except(qday);
+                var qf = qday.LastOrDefault() ?? qremain.FirstOrDefault();
+                return qf != null ? new StockResult { StockId = stockId, Name = s.name, Price = qf.deal_price } : new StockResult { StockId = stockId, Name = s.name, Price = s.price };
             }
         }
 

@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using StockTradingSystem.Client.Model.UI.Navigation;
 using StockTradingSystem.Client.ViewModel.Control;
 using StockTradingSystem.Core.Access;
 using StockTradingSystem.Core.Model;
@@ -14,12 +15,14 @@ namespace StockTradingSystem.Client.ViewModel
         private readonly MainWindowModel _mainWindowModel;
         private readonly StockAgent _stockAgent;
         private readonly IDialogService _dialogService;
+        private readonly IFrameNavigationService _frameNavigationService;
 
-        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService)
+        public LoginViewModel(MainWindowModel mainWindowModel, StockAgent stockAgent, IDialogService dialogService, IFrameNavigationService frameNavigationService)
         {
             _mainWindowModel = mainWindowModel;
             _stockAgent = stockAgent;
             _dialogService = dialogService;
+            _frameNavigationService = frameNavigationService;
         }
 
         #region Property
@@ -150,6 +153,7 @@ namespace StockTradingSystem.Client.ViewModel
                         Messenger.Default.Send(new GenericMessage<bool>(true), UserStockInfoViewModel.UpdateUserStockInfo);
                         Messenger.Default.Send(new GenericMessage<bool>(true), UserOrderInfoViewModel.UpdateUserOrderInfo);
                         _mainWindowModel.GoBackCommand.Execute(null);
+                        if (_frameNavigationService.CurrentPageKey == "RegisterView") _mainWindowModel.GoBackCommand.Execute(null);
                     }
                     else
                     {
