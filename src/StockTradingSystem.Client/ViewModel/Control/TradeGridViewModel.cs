@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
@@ -57,6 +56,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
             SellTotalText = (a * b).ToString("F2");
         }
 
+        private void ModifyNumText(string propertyName, ref string property, string value, Func<string, bool> doFunc, Action afterCallBackAction)
+        {
+            var oldvalue = property;
+            Set(propertyName, ref property, value, true);
+            if (doFunc(property)) Set(propertyName, ref property, oldvalue, true);
+            afterCallBackAction();
+        }
+
         #region Property
 
         /// <summary>
@@ -92,11 +99,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public string BuySingleText
         {
             get => _buySingleText;
-            set
-            {
-                Set(BuySingleTextPropertyName, ref _buySingleText, value, true);
-                CalBuyTotal();
-            }
+            set => ModifyNumText(nameof(BuySingleText), ref _buySingleText, value, x => x != "" && (!double.TryParse(x, out var res) || res <= 0), CalBuyTotal);
         }
 
         /// <summary>
@@ -114,11 +117,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public string SellSingleText
         {
             get => _sellSingleText;
-            set
-            {
-                Set(SellSingleTextPropertyName, ref _sellSingleText, value, true);
-                CalSellTotal();
-            }
+            set => ModifyNumText(nameof(SellSingleText), ref _sellSingleText, value, x => x != "" && (!double.TryParse(x, out var res) || res <= 0), CalSellTotal);
         }
 
         /// <summary>
@@ -136,11 +135,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public string BuyAmountText
         {
             get => _buyAmountText;
-            set
-            {
-                Set(BuyAmountTextPropertyName, ref _buyAmountText, value, true);
-                CalBuyTotal();
-            }
+            set => ModifyNumText(nameof(BuyAmountText), ref _buyAmountText, value, x => x != "" && (!int.TryParse(x, out var res) || res <= 0), CalBuyTotal);
         }
 
         /// <summary>
@@ -158,11 +153,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         public string SellAmountText
         {
             get => _sellAmountText;
-            set
-            {
-                Set(SellAmountTextPropertyName, ref _sellAmountText, value, true);
-                CalSellTotal();
-            }
+            set => ModifyNumText(nameof(SellAmountText), ref _sellAmountText, value, x => x != "" && (!int.TryParse(x, out var res) || res <= 0), CalSellTotal);
         }
 
         /// <summary>
@@ -413,45 +404,6 @@ namespace StockTradingSystem.Client.ViewModel.Control
             if (tradeType == "市价单") SellSingleText = _stockInfoViewModel.CurrentStockInfo.Price.ToString("F2");
         }
 
-        private RelayCommand<TextCompositionEventArgs> _buySinglePreviewTextInputCommand;
-
-        /// <summary>
-        /// Gets the <see cref="BuySinglePreviewTextInputCommand"/>.
-        /// </summary>
-        public RelayCommand<TextCompositionEventArgs> BuySinglePreviewTextInputCommand => _buySinglePreviewTextInputCommand
-                                                                                 ?? (_buySinglePreviewTextInputCommand = new RelayCommand<TextCompositionEventArgs>(ExecuteBuySinglePreviewTextInputCommand));
-
-        private void ExecuteBuySinglePreviewTextInputCommand(TextCompositionEventArgs e)
-        {
-            e.Handled = !double.TryParse(BuySingleText + e.Text, out var res);
-        }
-
-        private RelayCommand<TextCompositionEventArgs> _sellSinglePreviewTextInputCommand;
-
-        /// <summary>
-        /// Gets the SellSinglePreviewTextInputCommand.
-        /// </summary>
-        public RelayCommand<TextCompositionEventArgs> SellSinglePreviewTextInputCommand => _sellSinglePreviewTextInputCommand
-                                                                                           ?? (_sellSinglePreviewTextInputCommand = new RelayCommand<TextCompositionEventArgs>(ExecuteSellSinglePreviewTextInputCommand));
-
-        private void ExecuteSellSinglePreviewTextInputCommand(TextCompositionEventArgs e)
-        {
-            e.Handled = !double.TryParse(SellSingleText + e.Text, out var res);
-        }
-
-        private RelayCommand<TextCompositionEventArgs> _amountPreviewTextInputCommand;
-
-        /// <summary>
-        /// Gets the AmountPreviewTextInputCommand.
-        /// </summary>
-        public RelayCommand<TextCompositionEventArgs> AmountPreviewTextInputCommand => _amountPreviewTextInputCommand
-                                                                                       ?? (_amountPreviewTextInputCommand = new RelayCommand<TextCompositionEventArgs>(ExecuteAmountPreviewTextInputCommand));
-
-        private static void ExecuteAmountPreviewTextInputCommand(TextCompositionEventArgs e)
-        {
-            e.Handled = !int.TryParse(e.Text, out var res);
-        }
-
         private RelayCommand _buyCommand;
 
         /// <summary>
@@ -462,11 +414,10 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async void ExecuteBuyCommand()
         {
-            if (BuySingleText == "") BuySingleFocus = true;
-            else if (BuyAmountText == "")
-                BuyAmountFocus = true;
-            else if (BuyCbbSelectedIndex < 0)
+            if (BuyCbbSelectedIndex < 0)
                 await _dialogService.ShowMessage("请选择委托单类型", "错误", "确定", () => BuyCbbFocus = true);
+            else if (BuySingleText == "") BuySingleFocus = true;
+            else if (BuyAmountText == "") BuyAmountFocus = true;
             else
             {
                 var a = decimal.Parse(BuySingleText);
@@ -518,11 +469,10 @@ namespace StockTradingSystem.Client.ViewModel.Control
 
         private async void ExecuteSellCommand()
         {
-            if (SellSingleText == "") SellSingleFocus = true;
-            else if (SellAmountText == "")
-                SellAmountFocus = true;
-            else if (SellCbbSelectedIndex < 0)
+            if (SellCbbSelectedIndex < 0)
                 await _dialogService.ShowMessage("请选择委托单类型", "错误", "确定", () => SellCbbFocus = true);
+            else if (SellSingleText == "") SellSingleFocus = true;
+            else if (SellAmountText == "") SellAmountFocus = true;
             else
             {
                 var a = decimal.Parse(SellSingleText);
