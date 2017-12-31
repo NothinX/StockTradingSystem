@@ -89,8 +89,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string TotalMoneyText
         {
-            get => _totalMoneyText;
-            set => Set(TotalMoneyTextPropertyName, ref _totalMoneyText, value, true);
+            get { return _totalMoneyText; }
+            set { Set(TotalMoneyTextPropertyName, ref _totalMoneyText, value, true); }
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string AvailableMoneyText
         {
-            get => _availableMoneyText;
-            set => Set(AvailableMoneyTextPropertyName, ref _availableMoneyText, value, true);
+            get { return _availableMoneyText; }
+            set { Set(AvailableMoneyTextPropertyName, ref _availableMoneyText, value, true); }
         }
 
         #endregion

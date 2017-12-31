@@ -80,8 +80,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string[] TradeType
         {
-            get => _tradeType;
-            set => Set(TradeTypePropertyName, ref _tradeType, value, true);
+            get { return _tradeType; }
+            set { Set(TradeTypePropertyName, ref _tradeType, value, true); }
         }
 
         /// <summary>
@@ -98,8 +98,16 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string BuySingleText
         {
-            get => _buySingleText;
-            set => ModifyNumText(nameof(BuySingleText), ref _buySingleText, value, x => x != "" && (!double.TryParse(x, out var res) || res <= 0), CalBuyTotal);
+            get { return _buySingleText; }
+            set
+            {
+                ModifyNumText(nameof(BuySingleText), ref _buySingleText, value,
+                    x =>
+                    {
+                        double res;
+                        return x != "" && (!double.TryParse(x, out res) || res <= 0);
+                    }, CalBuyTotal);
+            }
         }
 
         /// <summary>
@@ -116,8 +124,16 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string SellSingleText
         {
-            get => _sellSingleText;
-            set => ModifyNumText(nameof(SellSingleText), ref _sellSingleText, value, x => x != "" && (!double.TryParse(x, out var res) || res <= 0), CalSellTotal);
+            get { return _sellSingleText; }
+            set
+            {
+                ModifyNumText(nameof(SellSingleText), ref _sellSingleText, value,
+                    x =>
+                    {
+                        double res;
+                        return x != "" && (!double.TryParse(x, out res) || res <= 0);
+                    }, CalSellTotal);
+            }
         }
 
         /// <summary>
@@ -134,8 +150,16 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string BuyAmountText
         {
-            get => _buyAmountText;
-            set => ModifyNumText(nameof(BuyAmountText), ref _buyAmountText, value, x => x != "" && (!int.TryParse(x, out var res) || res <= 0), CalBuyTotal);
+            get { return _buyAmountText; }
+            set
+            {
+                ModifyNumText(nameof(BuyAmountText), ref _buyAmountText, value,
+                    x =>
+                    {
+                        int res;
+                        return x != "" && (!int.TryParse(x, out res) || res <= 0);
+                    }, CalBuyTotal);
+            }
         }
 
         /// <summary>
@@ -152,8 +176,16 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string SellAmountText
         {
-            get => _sellAmountText;
-            set => ModifyNumText(nameof(SellAmountText), ref _sellAmountText, value, x => x != "" && (!int.TryParse(x, out var res) || res <= 0), CalSellTotal);
+            get { return _sellAmountText; }
+            set
+            {
+                ModifyNumText(nameof(SellAmountText), ref _sellAmountText, value,
+                    x =>
+                    {
+                        int res;
+                        return x != "" && (!int.TryParse(x, out res) || res <= 0);
+                    }, CalSellTotal);
+            }
         }
 
         /// <summary>
@@ -170,8 +202,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string BuyTotalText
         {
-            get => _buyTotalText;
-            set => Set(BuyTotalTextPropertyName, ref _buyTotalText, value, true);
+            get { return _buyTotalText; }
+            set { Set(BuyTotalTextPropertyName, ref _buyTotalText, value, true); }
         }
 
         /// <summary>
@@ -188,8 +220,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string SellTotalText
         {
-            get => _sellTotalText;
-            set => Set(SellTotalTextPropertyName, ref _sellTotalText, value, true);
+            get { return _sellTotalText; }
+            set { Set(SellTotalTextPropertyName, ref _sellTotalText, value, true); }
         }
 
         /// <summary>
@@ -206,8 +238,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool BuySingleIsReadOnly
         {
-            get => _buySingleIsReadOnly;
-            set => Set(BuySingleIsReadOnlyPropertyName, ref _buySingleIsReadOnly, value, true);
+            get { return _buySingleIsReadOnly; }
+            set { Set(BuySingleIsReadOnlyPropertyName, ref _buySingleIsReadOnly, value, true); }
         }
 
         /// <summary>
@@ -224,8 +256,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool SellSingleIsReadOnly
         {
-            get => _sellSingleIsReadOnly;
-            set => Set(SellSingleIsReadOnlyPropertyName, ref _sellSingleIsReadOnly, value, true);
+            get { return _sellSingleIsReadOnly; }
+            set { Set(SellSingleIsReadOnlyPropertyName, ref _sellSingleIsReadOnly, value, true); }
         }
 
         /// <summary>
@@ -242,8 +274,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? BuySingleFocus
         {
-            get => _buySingleFocus;
-            set => Set(BuySingleFocusPropertyName, ref _buySingleFocus, value, true);
+            get { return _buySingleFocus; }
+            set { Set(BuySingleFocusPropertyName, ref _buySingleFocus, value, true); }
         }
 
         /// <summary>
@@ -260,8 +292,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? SellSingleFocus
         {
-            get => _sellSingleFocus;
-            set => Set(SellSingleFocusPropertyName, ref _sellSingleFocus, value, true);
+            get { return _sellSingleFocus; }
+            set { Set(SellSingleFocusPropertyName, ref _sellSingleFocus, value, true); }
         }
 
         /// <summary>
@@ -278,8 +310,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? BuyAmountFocus
         {
-            get => _buyAmountFocus;
-            set => Set(BuyAmountFocusPropertyName, ref _buyAmountFocus, value, true);
+            get { return _buyAmountFocus; }
+            set { Set(BuyAmountFocusPropertyName, ref _buyAmountFocus, value, true); }
         }
 
         /// <summary>
@@ -296,8 +328,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? SellAmountFocus
         {
-            get => _sellAmountFocus;
-            set => Set(SellAmountFocusPropertyName, ref _sellAmountFocus, value, true);
+            get { return _sellAmountFocus; }
+            set { Set(SellAmountFocusPropertyName, ref _sellAmountFocus, value, true); }
         }
 
         /// <summary>
@@ -314,8 +346,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public int BuyCbbSelectedIndex
         {
-            get => _buyCbbSelectedIndex;
-            set => Set(BuyCbbSelectedIndexPropertyName, ref _buyCbbSelectedIndex, value, true);
+            get { return _buyCbbSelectedIndex; }
+            set { Set(BuyCbbSelectedIndexPropertyName, ref _buyCbbSelectedIndex, value, true); }
         }
 
         /// <summary>
@@ -332,8 +364,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public int SellCbbSelectedIndex
         {
-            get => _sellCbbSelectedIndex;
-            set => Set(SellCbbSelectedIndexPropertyName, ref _sellCbbSelectedIndex, value, true);
+            get { return _sellCbbSelectedIndex; }
+            set { Set(SellCbbSelectedIndexPropertyName, ref _sellCbbSelectedIndex, value, true); }
         }
 
         /// <summary>
@@ -350,8 +382,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? BuyCbbFocus
         {
-            get => _buyCbbFocus;
-            set => Set(BuyCbbFoucsPropertyName, ref _buyCbbFocus, value, true);
+            get { return _buyCbbFocus; }
+            set { Set(BuyCbbFoucsPropertyName, ref _buyCbbFocus, value, true); }
         }
 
         /// <summary>
@@ -368,8 +400,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public bool? SellCbbFocus
         {
-            get => _sellCbbFocus;
-            set => Set(SellCbbFocusPropertyName, ref _sellCbbFocus, value, true);
+            get { return _sellCbbFocus; }
+            set { Set(SellCbbFocusPropertyName, ref _sellCbbFocus, value, true); }
         }
 
         #endregion
@@ -381,8 +413,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the <see cref="BuyCbbCommand"/>.
         /// </summary>
-        public RelayCommand<string> BuyCbbCommand => _buyCbbCommand
-                                                     ?? (_buyCbbCommand = new RelayCommand<string>(ExecuteBuyCbbCommand));
+        public RelayCommand<string> BuyCbbCommand
+        {
+            get
+            {
+                return _buyCbbCommand
+                       ?? (_buyCbbCommand = new RelayCommand<string>(ExecuteBuyCbbCommand));
+            }
+        }
 
         private void ExecuteBuyCbbCommand(string tradeType)
         {
@@ -395,8 +433,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the SellCbbCommand.
         /// </summary>
-        public RelayCommand<string> SellCbbCommand => _sellCbbCommand
-                                                      ?? (_sellCbbCommand = new RelayCommand<string>(ExecuteSellCbbCommand));
+        public RelayCommand<string> SellCbbCommand
+        {
+            get
+            {
+                return _sellCbbCommand
+                       ?? (_sellCbbCommand = new RelayCommand<string>(ExecuteSellCbbCommand));
+            }
+        }
 
         private void ExecuteSellCbbCommand(string tradeType)
         {
@@ -409,8 +453,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the <see cref="BuyCommand"/>.
         /// </summary>
-        public RelayCommand BuyCommand => _buyCommand
-                                          ?? (_buyCommand = new RelayCommand(ExecuteBuyCommand));
+        public RelayCommand BuyCommand
+        {
+            get
+            {
+                return _buyCommand
+                       ?? (_buyCommand = new RelayCommand(ExecuteBuyCommand));
+            }
+        }
 
         private async void ExecuteBuyCommand()
         {
@@ -422,7 +472,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
             {
                 var a = decimal.Parse(BuySingleText);
                 var b = int.Parse(BuyAmountText);
-                if (double.TryParse(BuyTotalText, out var total) && total <= Convert.ToDouble(_userMoneyInfo.CnyFree))
+                double total;
+                if (double.TryParse(BuyTotalText, out total) && total <= Convert.ToDouble(_userMoneyInfo.CnyFree))
                 {
                     var res = _stockAgent.Exec_Order(_stockInfoViewModel.CurrentStockInfo.StockId, 0, a, b);
                     switch (res)
@@ -464,8 +515,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the <see cref="SellCommand"/>.
         /// </summary>
-        public RelayCommand SellCommand => _sellCommand
-                                           ?? (_sellCommand = new RelayCommand(ExecuteSellCommand));
+        public RelayCommand SellCommand
+        {
+            get
+            {
+                return _sellCommand
+                       ?? (_sellCommand = new RelayCommand(ExecuteSellCommand));
+            }
+        }
 
         private async void ExecuteSellCommand()
         {

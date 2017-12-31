@@ -15,7 +15,9 @@ namespace StockTradingSystem.Client.Model.UI.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(values[0] is StockInfo csi) || !(values[1] is List<UserStockInfo> usil)) return 0;
+            var csi = values[0] as StockInfo;
+            var usil = values[1] as List<UserStockInfo>;
+            if (csi == null || usil == null) return 0;
             var s = usil.FirstOrDefault(x => x.StockId == csi.StockId);
             return s?.AvailableStock ?? 0;
         }

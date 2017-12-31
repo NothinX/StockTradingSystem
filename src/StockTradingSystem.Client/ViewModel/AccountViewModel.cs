@@ -52,7 +52,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public UserStockInfo CurrentUserStockInfo
         {
-            get => _currentUserStockInfo;
+            get { return _currentUserStockInfo; }
             set
             {
                 Set(CurrentUserStockInfoPropertyName, ref _currentUserStockInfo, value, true);
@@ -74,8 +74,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public UserOrderInfo CurrentUserOrderInfo
         {
-            get => _currentUserOrderInfo;
-            set => Set(CurrentUserOrderInfoPropertyName, ref _currentUserOrderInfo, value, true);
+            get { return _currentUserOrderInfo; }
+            set { Set(CurrentUserOrderInfoPropertyName, ref _currentUserOrderInfo, value, true); }
         }
 
         #endregion

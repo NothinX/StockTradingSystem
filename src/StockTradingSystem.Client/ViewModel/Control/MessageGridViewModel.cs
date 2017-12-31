@@ -60,8 +60,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public Brush BorderBrush
         {
-            get => _borderBrush;
-            set => Set(BorderBrushPropertyName, ref _borderBrush, value, true);
+            get { return _borderBrush; }
+            set { Set(BorderBrushPropertyName, ref _borderBrush, value, true); }
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string TitleText
         {
-            get => _titleText;
-            set => Set(TitleTextPropertyName, ref _titleText, value, true);
+            get { return _titleText; }
+            set { Set(TitleTextPropertyName, ref _titleText, value, true); }
         }
 
         /// <summary>
@@ -96,8 +96,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string MessageText
         {
-            get => _messageText;
-            set => Set(MessageTextPropertyName, ref _messageText, value, true);
+            get { return _messageText; }
+            set { Set(MessageTextPropertyName, ref _messageText, value, true); }
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string OkBtnText
         {
-            get => _okBtnText;
-            set => Set(OkBtnTextPropertyName, ref _okBtnText, value, true);
+            get { return _okBtnText; }
+            set { Set(OkBtnTextPropertyName, ref _okBtnText, value, true); }
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public string CancelBtnText
         {
-            get => _cancelBtnText;
-            set => Set(CancelBtnTextPropertyName, ref _cancelBtnText, value, true);
+            get { return _cancelBtnText; }
+            set { Set(CancelBtnTextPropertyName, ref _cancelBtnText, value, true); }
         }
 
         /// <summary>
@@ -150,8 +150,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public Visibility CancelBtnVisibility
         {
-            get => _cancelBtnVisibility;
-            set => Set(CancelBtnVisibilityPropertyName, ref _cancelBtnVisibility, value, true);
+            get { return _cancelBtnVisibility; }
+            set { Set(CancelBtnVisibilityPropertyName, ref _cancelBtnVisibility, value, true); }
         }
 
         #endregion
@@ -163,8 +163,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the <see cref="OkCommand"/>.
         /// </summary>
-        public RelayCommand OkCommand => _okCommand
-                                         ?? (_okCommand = new RelayCommand(ExecuteOkCommand));
+        public RelayCommand OkCommand
+        {
+            get
+            {
+                return _okCommand
+                       ?? (_okCommand = new RelayCommand(ExecuteOkCommand));
+            }
+        }
 
         private void ExecuteOkCommand()
         {
@@ -176,8 +182,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the <see cref="CancelCommand"/>.
         /// </summary>
-        public RelayCommand CancelCommand => _canceCommand
-                    ?? (_canceCommand = new RelayCommand(ExecuteCancelCommand));
+        public RelayCommand CancelCommand
+        {
+            get
+            {
+                return _canceCommand
+                       ?? (_canceCommand = new RelayCommand(ExecuteCancelCommand));
+            }
+        }
 
         private void ExecuteCancelCommand()
         {
@@ -189,8 +201,14 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// <summary>
         /// Gets the CopyCommand.
         /// </summary>
-        public RelayCommand CopyCommand => _copyCommand
-                                           ?? (_copyCommand = new RelayCommand(ExecuteCopyCommand));
+        public RelayCommand CopyCommand
+        {
+            get
+            {
+                return _copyCommand
+                       ?? (_copyCommand = new RelayCommand(ExecuteCopyCommand));
+            }
+        }
 
         private void ExecuteCopyCommand()
         {

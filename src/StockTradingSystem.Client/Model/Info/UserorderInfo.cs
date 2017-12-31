@@ -20,8 +20,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public long OrderId
         {
-            get => _orderId;
-            set => Set(OrderIdPropertyName, ref _orderId, value);
+            get
+            {
+                return _orderId;
+            }
+            set
+            {
+                Set(OrderIdPropertyName, ref _orderId, value);
+            }
         }
 
         /// <summary>
@@ -37,8 +43,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public DateTime CreateDateTime
         {
-            get => _createDateTime;
-            set => Set(CreateDateTimePropertyName, ref _createDateTime, value);
+            get
+            {
+                return _createDateTime;
+            }
+            set
+            {
+                Set(CreateDateTimePropertyName, ref _createDateTime, value);
+            }
         }
 
         /// <summary>
@@ -54,8 +66,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int OrderType
         {
-            get => _orderType;
-            set => Set(OrderTypePropertyName, ref _orderType, value);
+            get
+            {
+                return _orderType;
+            }
+            set
+            {
+                Set(OrderTypePropertyName, ref _orderType, value);
+            }
         }
 
         /// <summary>
@@ -71,8 +89,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal Price
         {
-            get => _price;
-            set => Set(PricePropertyName, ref _price, value);
+            get
+            {
+                return _price;
+            }
+            set
+            {
+                Set(PricePropertyName, ref _price, value);
+            }
         }
 
         /// <summary>
@@ -88,8 +112,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int Undealed
         {
-            get => _undealed;
-            set => Set(UndealedPropertyName, ref _undealed, value);
+            get
+            {
+                return _undealed;
+            }
+            set
+            {
+                Set(UndealedPropertyName, ref _undealed, value);
+            }
         }
 
         /// <summary>
@@ -105,8 +135,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int Dealed
         {
-            get => _dealed;
-            set => Set(DealedPropertyName, ref _dealed, value);
+            get
+            {
+                return _dealed;
+            }
+            set
+            {
+                Set(DealedPropertyName, ref _dealed, value);
+            }
         }
 
         /// <summary>
@@ -122,8 +158,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int Canceled
         {
-            get => _canceled;
-            set => Set(CanceledPropertyName, ref _canceled, value);
+            get
+            {
+                return _canceled;
+            }
+            set
+            {
+                Set(CanceledPropertyName, ref _canceled, value);
+            }
         }
 
         public override void Create(UserOrderResult obj)

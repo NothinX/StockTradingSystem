@@ -14,10 +14,12 @@ namespace StockTradingSystem.Client.Model.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            var d = double.Parse(parameter as string ?? throw new InvalidOperationException());
+            var s = parameter as string;
+            Debug.Assert(s != null, nameof(s) + " != null");
+            var d = double.Parse(s);
             Debug.Assert(value != null, nameof(value) + " != null");
-            return (double) value / d;
+            var v = System.Convert.ToDouble(value);
+            return v / d;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

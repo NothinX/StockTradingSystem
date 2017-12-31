@@ -17,8 +17,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal CnyFree
         {
-            get => _cnyFree;
-            set => Set(CnyFreePropertyName, ref _cnyFree, value);
+            get
+            {
+                return _cnyFree;
+            }
+            set
+            {
+                Set(CnyFreePropertyName, ref _cnyFree, value);
+            }
         }
 
         /// <summary>
@@ -34,8 +40,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal CnyFreezed
         {
-            get => _cnyFreezed;
-            set => Set(CnyFreezedPropertyName, ref _cnyFreezed, value);
+            get
+            {
+                return _cnyFreezed;
+            }
+            set
+            {
+                Set(CnyFreezedPropertyName, ref _cnyFreezed, value);
+            }
         }
 
         /// <summary>
@@ -51,8 +63,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal GpMoney
         {
-            get => _gpMoney;
-            set => Set(GpMoneyPropertyName, ref _gpMoney, value);
+            get
+            {
+                return _gpMoney;
+            }
+            set
+            {
+                Set(GpMoneyPropertyName, ref _gpMoney, value);
+            }
         }
 
         /// <summary>
@@ -68,8 +86,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal TotalMoney
         {
-            get => _totalMoney;
-            set => Set(TotalMoneyPropertyName, ref _totalMoney, value);
+            get
+            {
+                return _totalMoney;
+            }
+            set
+            {
+                Set(TotalMoneyPropertyName, ref _totalMoney, value);
+            }
         }
 
         public override void Create(UserCnyResult obj)

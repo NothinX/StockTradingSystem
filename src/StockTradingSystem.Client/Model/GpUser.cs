@@ -18,8 +18,14 @@ namespace StockTradingSystem.Client.Model
         /// </summary>
         public long UserId
         {
-            get => _userId;
-            set => Set(UserIdPropertyName, ref _userId, value);
+            get
+            {
+                return _userId;
+            }
+            set
+            {
+                Set(UserIdPropertyName, ref _userId, value);
+            }
         }
 
         /// <summary>
@@ -35,8 +41,14 @@ namespace StockTradingSystem.Client.Model
         /// </summary>
         public string LoginName
         {
-            get => _loginName;
-            set => Set(LoginNamePropertyName, ref _loginName, value);
+            get
+            {
+                return _loginName;
+            }
+            set
+            {
+                Set(LoginNamePropertyName, ref _loginName, value);
+            }
         }
 
         /// <summary>
@@ -52,8 +64,14 @@ namespace StockTradingSystem.Client.Model
         /// </summary>
         public string Name
         {
-            get => _name;
-            set => Set(NamePropertyName, ref _name, value);
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                Set(NamePropertyName, ref _name, value);
+            }
         }
 
         /// <summary>
@@ -69,8 +87,14 @@ namespace StockTradingSystem.Client.Model
         /// </summary>
         public int Type
         {
-            get => _type;
-            set => Set(TypePropertyName, ref _type, value);
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                Set(TypePropertyName, ref _type, value);
+            }
         }
 
         /// <summary>
@@ -86,8 +110,14 @@ namespace StockTradingSystem.Client.Model
         /// </summary>
         public bool IsLogin
         {
-            get => _isLogin;
-            set => Set(IsLoginPropertyName, ref _isLogin, value);
+            get
+            {
+                return _isLogin;
+            }
+            set
+            {
+                Set(IsLoginPropertyName, ref _isLogin, value);
+            }
         }
     }
 }

@@ -7,11 +7,26 @@ namespace StockTradingSystem.Client.Model.UI
     {
         private object _parameter;
 
-        public int Int { set => _parameter = value; }
-        public double Double { set => _parameter = value; }
-        public float Float { set => _parameter = value; }
-        public bool Bool { set => _parameter = value; }
-        public bool? Bools { set => _parameter = value; }
+        public int Int
+        {
+            set { _parameter = value; }
+        }
+        public double Double
+        {
+            set { _parameter = value; }
+        }
+        public float Float
+        {
+            set { _parameter = value; }
+        }
+        public bool Bool
+        {
+            set { _parameter = value; }
+        }
+        public bool? Bools
+        {
+            set { _parameter = value; }
+        }
         // add more as needed here
 
         public override object ProvideValue(IServiceProvider serviceProvider)

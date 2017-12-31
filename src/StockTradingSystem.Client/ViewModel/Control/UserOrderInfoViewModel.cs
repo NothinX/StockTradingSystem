@@ -104,8 +104,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public List<UserOrderInfo> UserOrderInfoList
         {
-            get => _userStockOrderList;
-            set => Set(UserOrderInfoListPropertyName, ref _userStockOrderList, value, true);
+            get { return _userStockOrderList; }
+            set { Set(UserOrderInfoListPropertyName, ref _userStockOrderList, value, true); }
         }
 
         public void Dispose()

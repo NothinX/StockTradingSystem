@@ -18,8 +18,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public long TranId
         {
-            get => _tranId;
-            set => Set(TranIdPropertyName, ref _tranId, value);
+            get
+            {
+                return _tranId;
+            }
+            set
+            {
+                Set(TranIdPropertyName, ref _tranId, value);
+            }
         }
 
         /// <summary>
@@ -35,8 +41,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public DateTime CreateDateTime
         {
-            get => _createDateTime;
-            set => Set(CreateDateTimePropertyName, ref _createDateTime, value);
+            get
+            {
+                return _createDateTime;
+            }
+            set
+            {
+                Set(CreateDateTimePropertyName, ref _createDateTime, value);
+            }
         }
 
         /// <summary>
@@ -52,8 +64,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int Dealed
         {
-            get => _dealed;
-            set => Set(DealedPropertyName, ref _dealed, value);
+            get
+            {
+                return _dealed;
+            }
+            set
+            {
+                Set(DealedPropertyName, ref _dealed, value);
+            }
         }
 
         /// <summary>
@@ -69,8 +87,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal Price
         {
-            get => _price;
-            set => Set(PricePropertyName, ref _price, value);
+            get
+            {
+                return _price;
+            }
+            set
+            {
+                Set(PricePropertyName, ref _price, value);
+            }
         }
 
         /// <summary>
@@ -86,8 +110,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int TranType
         {
-            get => _tranType;
-            set => Set(TranTypePropertyName, ref _tranType, value);
+            get
+            {
+                return _tranType;
+            }
+            set
+            {
+                Set(TranTypePropertyName, ref _tranType, value);
+            }
         }
 
         public override void Create(TransactionResult obj)

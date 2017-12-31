@@ -19,8 +19,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int StockId
         {
-            get => _stockId;
-            set => Set(StockIdPropertyName, ref _stockId, value);
+            get
+            {
+                return _stockId;
+            }
+            set
+            {
+                Set(StockIdPropertyName, ref _stockId, value);
+            }
         }
 
         /// <summary>
@@ -36,8 +42,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public string Name
         {
-            get => _name;
-            set => Set(NamePropertyName, ref _name, value);
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                Set(NamePropertyName, ref _name, value);
+            }
         }
 
         /// <summary>
@@ -53,8 +65,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal Price
         {
-            get => _price;
-            set => Set(PricePropertyName, ref _price, value);
+            get
+            {
+                return _price;
+            }
+            set
+            {
+                Set(PricePropertyName, ref _price, value);
+            }
         }
 
         /// <summary>
@@ -71,8 +89,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal PriceChange
         {
-            get => _priceChange;
-            set => Set(PriceChangePropertyName, ref _priceChange, value);
+            get
+            {
+                return _priceChange;
+            }
+            set
+            {
+                Set(PriceChangePropertyName, ref _priceChange, value);
+            }
         }
 
         /// <summary>
@@ -89,8 +113,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal PricePercent
         {
-            get => _pricePercent;
-            set => Set(PricePercentPropertyName, ref _pricePercent, value);
+            get
+            {
+                return _pricePercent;
+            }
+            set
+            {
+                Set(PricePercentPropertyName, ref _pricePercent, value);
+            }
         }
 
         /// <summary>
@@ -106,8 +136,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public bool? Change
         {
-            get => _change;
-            set => Set(ChangePropertyName, ref _change, value);
+            get
+            {
+                return _change;
+            }
+            set
+            {
+                Set(ChangePropertyName, ref _change, value);
+            }
         }
 
         public override void Create(StockResult obj)

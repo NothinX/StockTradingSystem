@@ -103,7 +103,7 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public StockInfo CurrentStockInfo
         {
-            get => _currentStockInfo;
+            get { return _currentStockInfo; }
             set
             {
                 Set(CurrentStockInfoPropertyName, ref _currentStockInfo, value, true);
@@ -129,8 +129,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public List<StockInfo> StockInfoList
         {
-            get => _stockInfoList;
-            set => Set(StockInfoListPropertyName, ref _stockInfoList, value, true);
+            get { return _stockInfoList; }
+            set { Set(StockInfoListPropertyName, ref _stockInfoList, value, true); }
         }
 
         #endregion

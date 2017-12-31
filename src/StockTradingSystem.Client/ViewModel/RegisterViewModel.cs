@@ -37,8 +37,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string LoginNameText
         {
-            get => _loginNameText;
-            set => Set(LoginNameTextPropertyName, ref _loginNameText, value, true);
+            get { return _loginNameText; }
+            set { Set(LoginNameTextPropertyName, ref _loginNameText, value, true); }
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string UserNameText
         {
-            get => _userNameText;
-            set => Set(UserNameTextPropertyName, ref _userNameText, value, true);
+            get { return _userNameText; }
+            set { Set(UserNameTextPropertyName, ref _userNameText, value, true); }
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string LoginPasswordText
         {
-            get => _loginPasswordText;
-            set => Set(PasswordTextPropertyName, ref _loginPasswordText, value, true);
+            get { return _loginPasswordText; }
+            set { Set(PasswordTextPropertyName, ref _loginPasswordText, value, true); }
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string SurePasswordText
         {
-            get => _surePasswordText;
-            set => Set(SurePasswordTextPropertyName, ref _surePasswordText, value, true);
+            get { return _surePasswordText; }
+            set { Set(SurePasswordTextPropertyName, ref _surePasswordText, value, true); }
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? LoginNameFocus
         {
-            get => _loginNameFocus;
-            set => Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true);
+            get { return _loginNameFocus; }
+            set { Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true); }
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? UserNameFocus
         {
-            get => _userNameFocus;
-            set => Set(UserNameFocusPropertyName, ref _userNameFocus, value, true);
+            get { return _userNameFocus; }
+            set { Set(UserNameFocusPropertyName, ref _userNameFocus, value, true); }
         }
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? LoginPasswordFocus
         {
-            get => _loginPasswordFocus;
-            set => Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true);
+            get { return _loginPasswordFocus; }
+            set { Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true); }
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? SurePasswordFocus
         {
-            get => _surePasswordFocus;
-            set => Set(SurePasswordFocusPropertyName, ref _surePasswordFocus, value, true);
+            get { return _surePasswordFocus; }
+            set { Set(SurePasswordFocusPropertyName, ref _surePasswordFocus, value, true); }
         }
 
         #endregion
@@ -176,8 +176,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="RegisterCommand"/>.
         /// </summary>
-        public RelayCommand RegisterCommand => _registerCommand ?? (_registerCommand = new RelayCommand(
-                                                ExecuteRegisterCommand));
+        public RelayCommand RegisterCommand
+        {
+            get
+            {
+                return _registerCommand ?? (_registerCommand = new RelayCommand(
+                           ExecuteRegisterCommand));
+            }
+        }
 
         private async void ExecuteRegisterCommand()
         {

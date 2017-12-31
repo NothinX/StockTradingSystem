@@ -19,8 +19,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int StockId
         {
-            get => _stockId;
-            set => Set(StockIdPropertyName, ref _stockId, value);
+            get
+            {
+                return _stockId;
+            }
+            set
+            {
+                Set(StockIdPropertyName, ref _stockId, value);
+            }
         }
 
         /// <summary>
@@ -36,8 +42,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int TotalStock
         {
-            get => _totalStock;
-            set => Set(TotalStockPropertyName, ref _totalStock, value);
+            get
+            {
+                return _totalStock;
+            }
+            set
+            {
+                Set(TotalStockPropertyName, ref _totalStock, value);
+            }
         }
 
         /// <summary>
@@ -53,8 +65,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int AvailableStock
         {
-            get => _availableStock;
-            set => Set(AvailableStockPropertyName, ref _availableStock, value);
+            get
+            {
+                return _availableStock;
+            }
+            set
+            {
+                Set(AvailableStockPropertyName, ref _availableStock, value);
+            }
         }
 
         /// <summary>
@@ -70,8 +88,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int FreezedStock
         {
-            get => _freezedStock;
-            set => Set(FreezedStockPropertyName, ref _freezedStock, value);
+            get
+            {
+                return _freezedStock;
+            }
+            set
+            {
+                Set(FreezedStockPropertyName, ref _freezedStock, value);
+            }
         }
 
         public override void Create(UserStockResult obj)

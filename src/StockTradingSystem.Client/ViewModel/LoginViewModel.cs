@@ -41,8 +41,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string LoginNameText
         {
-            get => _loginNameText;
-            set => Set(UserNameTextPropertyName, ref _loginNameText, value, true);
+            get { return _loginNameText; }
+            set { Set(UserNameTextPropertyName, ref _loginNameText, value, true); }
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string LoginPasswordText
         {
-            get => _loginPasswordText;
-            set => Set(LoginPasswordTextPropertyName, ref _loginPasswordText, value, true);
+            get { return _loginPasswordText; }
+            set { Set(LoginPasswordTextPropertyName, ref _loginPasswordText, value, true); }
         }
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? LoginNameFocus
         {
-            get => _loginNameFocus;
-            set => Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true);
+            get { return _loginNameFocus; }
+            set { Set(LoginNameFocusPropertyName, ref _loginNameFocus, value, true); }
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? LoginPasswordFocus
         {
-            get => _loginPasswordFocus;
-            set => Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true);
+            get { return _loginPasswordFocus; }
+            set { Set(LoginPasswordFocusPropertyName, ref _loginPasswordFocus, value, true); }
         }
 
         #endregion
@@ -108,8 +108,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="LoginCommand"/>.
         /// </summary>
-        public RelayCommand LoginCommand => _loginCommand ?? (_loginCommand = new RelayCommand(
-                                                ExecuteLoginCommand));
+        public RelayCommand LoginCommand
+        {
+            get
+            {
+                return _loginCommand ?? (_loginCommand = new RelayCommand(
+                           ExecuteLoginCommand));
+            }
+        }
 
         private async void ExecuteLoginCommand()
         {

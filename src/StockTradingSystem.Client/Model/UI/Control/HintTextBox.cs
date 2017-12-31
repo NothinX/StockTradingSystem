@@ -21,8 +21,14 @@ namespace StockTradingSystem.Client.Model.UI.Control
         /// </summary>
         public string HintText
         {
-            get => (string)GetValue(HintTextProperty);
-            set => SetValue(HintTextProperty, value);
+            get
+            {
+                return (string)GetValue(HintTextProperty);
+            }
+            set
+            {
+                SetValue(HintTextProperty, value);
+            }
         }
 
         /// <summary>

@@ -152,8 +152,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public List<StockDepthInfo> BuyStockDepthInfoList
         {
-            get => _buyStockDepthInfoList;
-            set => Set(BuyStockDepthInfoListPropertyName, ref _buyStockDepthInfoList, value, true);
+            get { return _buyStockDepthInfoList; }
+            set { Set(BuyStockDepthInfoListPropertyName, ref _buyStockDepthInfoList, value, true); }
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public List<StockDepthInfo> SellStockDepthInfoList
         {
-            get => _sellStockDepthInfoList;
-            set => Set(SellStockDepthInfoListPropertyName, ref _sellStockDepthInfoList, value, true);
+            get { return _sellStockDepthInfoList; }
+            set { Set(SellStockDepthInfoListPropertyName, ref _sellStockDepthInfoList, value, true); }
         }
 
         public void Dispose()

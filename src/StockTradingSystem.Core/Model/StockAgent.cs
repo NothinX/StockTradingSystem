@@ -13,8 +13,10 @@ namespace StockTradingSystem.Core.Model
 
         public StockAgent(IUserAccess userAccess, IBusiness business, IUser user)
         {
-            _userAccess = userAccess ?? throw new ArgumentNullException(nameof(userAccess));
-            _business = business ?? throw new ArgumentNullException(nameof(business));
+            if (userAccess == null) throw new ArgumentNullException(nameof(userAccess));
+            if (business == null) throw new ArgumentNullException(nameof(business));
+            _userAccess = userAccess;
+            _business = business;
             User = user;
         }
 
@@ -39,7 +41,10 @@ namespace StockTradingSystem.Core.Model
                 throw new ArgumentException("密码不能为null、空或全是空格", nameof(passwd));
             }
 
-            var res = _userAccess.User_login(User.LoginName, passwd, out var userId, out var name, out var type);
+            long? userId;
+            string name;
+            int? type;
+            var res = _userAccess.User_login(User.LoginName, passwd, out userId, out name, out type);
             User.IsLogin = res == UserLoginResult.Ok;
             User.UserId = userId ?? 0;
             User.Name = name ?? "";

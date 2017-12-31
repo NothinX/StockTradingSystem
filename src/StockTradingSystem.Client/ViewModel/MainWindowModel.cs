@@ -85,7 +85,7 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public WindowState WindowState
         {
-            get => _windowState;
+            get { return _windowState; }
             set
             {
                 switch (value)
@@ -119,8 +119,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public Thickness WindowBorderMargin
         {
-            get => _windowBorderMargin;
-            set => Set(WindowBorderMarginPropertyName, ref _windowBorderMargin, value);
+            get { return _windowBorderMargin; }
+            set { Set(WindowBorderMarginPropertyName, ref _windowBorderMargin, value); }
         }
 
         /// <summary>
@@ -136,8 +136,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string WindowTitle
         {
-            get => _windowTitle;
-            set => Set(WindowTitlePropertyName, ref _windowTitle, value);
+            get { return _windowTitle; }
+            set { Set(WindowTitlePropertyName, ref _windowTitle, value); }
         }
 
         /// <summary>
@@ -153,8 +153,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public Visibility BackBtnVisibility
         {
-            get => _backBtnVisibility;
-            set => Set(BackBtnVisibilityPropertyName, ref _backBtnVisibility, value);
+            get { return _backBtnVisibility; }
+            set { Set(BackBtnVisibilityPropertyName, ref _backBtnVisibility, value); }
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public SolidColorBrush ThemeBrush
         {
-            get => _themeBrush;
-            set => Set(ThemeBrushPropertyName, ref _themeBrush, value);
+            get { return _themeBrush; }
+            set { Set(ThemeBrushPropertyName, ref _themeBrush, value); }
         }
 
         /// <summary>
@@ -188,8 +188,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool IsEnabledWithDialog
         {
-            get => _isEnabledWithDialog;
-            set => Set(BackBtnEnabledPropertyName, ref _isEnabledWithDialog, value, true);
+            get { return _isEnabledWithDialog; }
+            set { Set(BackBtnEnabledPropertyName, ref _isEnabledWithDialog, value, true); }
         }
 
         /// <summary>
@@ -206,8 +206,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public Effect MainGridEffect
         {
-            get => _mainGridEffect;
-            set => Set(MainFrameEffectPropertyName, ref _mainGridEffect, value, true);
+            get { return _mainGridEffect; }
+            set { Set(MainFrameEffectPropertyName, ref _mainGridEffect, value, true); }
         }
 
         /// <summary>
@@ -224,8 +224,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool TitleBtnIsEnabled
         {
-            get => _titleBtnIsEnabled;
-            set => Set(TitleBtnIsEnabledPropertyName, ref _titleBtnIsEnabled, value, true);
+            get { return _titleBtnIsEnabled; }
+            set { Set(TitleBtnIsEnabledPropertyName, ref _titleBtnIsEnabled, value, true); }
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool TitleBtnIsChecked
         {
-            get => _titleBtnIsChecked;
-            set => Set(TitleBtnIsCheckedPropertyName, ref _titleBtnIsChecked, value, true);
+            get { return _titleBtnIsChecked; }
+            set { Set(TitleBtnIsCheckedPropertyName, ref _titleBtnIsChecked, value, true); }
         }
 
         #endregion
@@ -255,7 +255,10 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="MinimizeCommand"/>.
         /// </summary>
-        public RelayCommand MinimizeCommand => _minimizeCommand ?? (_minimizeCommand = new RelayCommand(ExecuteMinimize));
+        public RelayCommand MinimizeCommand
+        {
+            get { return _minimizeCommand ?? (_minimizeCommand = new RelayCommand(ExecuteMinimize)); }
+        }
 
         private void ExecuteMinimize()
         {
@@ -267,7 +270,10 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="CloseCommand"/>.
         /// </summary>
-        public RelayCommand CloseCommand => _closeCommand ?? (_closeCommand = new RelayCommand(ExecuteClose));
+        public RelayCommand CloseCommand
+        {
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(ExecuteClose)); }
+        }
 
         private async void ExecuteClose()
         {
@@ -282,7 +288,10 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="MaximizeCommand"/>.
         /// </summary>
-        public RelayCommand MaximizeCommand => _maximizeCommand ?? (_maximizeCommand = new RelayCommand(ExecuteMaximize));
+        public RelayCommand MaximizeCommand
+        {
+            get { return _maximizeCommand ?? (_maximizeCommand = new RelayCommand(ExecuteMaximize)); }
+        }
 
         private void ExecuteMaximize()
         {
@@ -294,8 +303,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="NavigateCommand"/>.
         /// </summary>
-        public RelayCommand<string> NavigateCommand => _navigateCommand
-                                                       ?? (_navigateCommand = new RelayCommand<string>(ExecuteNavigateCommand));
+        public RelayCommand<string> NavigateCommand
+        {
+            get
+            {
+                return _navigateCommand
+                       ?? (_navigateCommand = new RelayCommand<string>(ExecuteNavigateCommand));
+            }
+        }
 
         private void ExecuteNavigateCommand(string pageKey)
         {
@@ -309,8 +324,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="GoBackCommand"/>.
         /// </summary>
-        public RelayCommand GoBackCommand => _goBackCommand
-                                             ?? (_goBackCommand = new RelayCommand(ExecuteGoBackCommand));
+        public RelayCommand GoBackCommand
+        {
+            get
+            {
+                return _goBackCommand
+                       ?? (_goBackCommand = new RelayCommand(ExecuteGoBackCommand));
+            }
+        }
 
         private void ExecuteGoBackCommand()
         {
@@ -324,8 +345,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="TitleBtnCommand"/>.
         /// </summary>
-        public RelayCommand TitleBtnCommand => _titleBtnCommand
-                                               ?? (_titleBtnCommand = new RelayCommand(ExecuteTitleBtnCommand));
+        public RelayCommand TitleBtnCommand
+        {
+            get
+            {
+                return _titleBtnCommand
+                       ?? (_titleBtnCommand = new RelayCommand(ExecuteTitleBtnCommand));
+            }
+        }
 
         private void ExecuteTitleBtnCommand()
         {

@@ -48,8 +48,14 @@ namespace StockTradingSystem.Client.Model.UI.Navigation
         /// </value>
         public string CurrentPageKey
         {
-            get => _currentPageKey;
-            private set => Set(CurrentPageKeyPropertyName, ref _currentPageKey, value);
+            get
+            {
+                return _currentPageKey;
+            }
+            private set
+            {
+                Set(CurrentPageKeyPropertyName, ref _currentPageKey, value);
+            }
         }
 
         /// <summary>

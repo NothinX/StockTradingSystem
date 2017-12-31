@@ -158,7 +158,8 @@ namespace StockTradingSystem.Client.Model.UI.Control
 
         private static void OnPasswordPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(obj is PasswordBox pb)) return;
+            var pb = obj as PasswordBox;
+            if (pb == null) return;
             pb.PasswordChanged -= PasswordChanged;
 
             if (!GetIsUpdating(pb))
@@ -171,7 +172,8 @@ namespace StockTradingSystem.Client.Model.UI.Control
 
         private static void IsAttachedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(obj is PasswordBox pb)) return;
+            var pb = obj as PasswordBox;
+            if (obj == null) return;
 
             if ((bool)e.OldValue)
             {
@@ -186,7 +188,8 @@ namespace StockTradingSystem.Client.Model.UI.Control
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (!(sender is PasswordBox pb)) return;
+            var pb = sender as PasswordBox;
+            if (pb == null) return;
             SetIsUpdating(pb, true);
             SetPassword(pb, pb.Password);
             SetIsUpdating(pb, false);

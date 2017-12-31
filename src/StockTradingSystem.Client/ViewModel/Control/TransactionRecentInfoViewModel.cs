@@ -101,8 +101,8 @@ namespace StockTradingSystem.Client.ViewModel.Control
         /// </summary>
         public List<TransactionRecentInfo> TransactionRecentInfoList
         {
-            get => _transactionRecentInfoList;
-            set => Set(BuyStockDepthInfoListPropertyName, ref _transactionRecentInfoList, value, true);
+            get { return _transactionRecentInfoList; }
+            set { Set(BuyStockDepthInfoListPropertyName, ref _transactionRecentInfoList, value, true); }
         }
 
         public void Dispose()

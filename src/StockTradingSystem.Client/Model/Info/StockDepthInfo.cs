@@ -19,8 +19,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public decimal Price
         {
-            get => _price;
-            set => Set(PricePropertyName, ref _price, value);
+            get
+            {
+                return _price;
+            }
+            set
+            {
+                Set(PricePropertyName, ref _price, value);
+            }
         }
 
         /// <summary>
@@ -36,8 +42,14 @@ namespace StockTradingSystem.Client.Model.Info
         /// </summary>
         public int Num
         {
-            get => _num;
-            set => Set(NumPropertyName, ref _num, value);
+            get
+            {
+                return _num;
+            }
+            set
+            {
+                Set(NumPropertyName, ref _num, value);
+            }
         }
 
         public override void Create(StockDepthResult obj)

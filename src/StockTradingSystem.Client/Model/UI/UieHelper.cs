@@ -46,7 +46,8 @@ namespace StockTradingSystem.Client.Model.UI
 
         private static void OnIsFocusedChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (!(obj is UIElement uie)) return;
+            var uie = obj as UIElement;
+            if (uie == null) return;
             if (e.OldValue == null)
             {
                 uie.GotFocus += UieOnGotFocus;
@@ -55,22 +56,22 @@ namespace StockTradingSystem.Client.Model.UI
             if ((bool?)e.NewValue == true)
             {
                 uie.Focus();
-                if (obj is TextBoxBase tb)
-                {
-                    tb.SelectAll();
-                }
+                var tb = obj as TextBoxBase;
+                tb?.SelectAll();
             }
         }
 
         private static void UieOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!(sender is UIElement uie)) return;
+            var uie = sender as UIElement;
+            if (uie == null) return;
             SetIsFocused(uie, false);
         }
 
         private static void UieOnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (!(sender is UIElement uie)) return;
+            var uie = sender as UIElement;
+            if (uie == null) return;
             SetIsFocused(uie, true);
         }
 
@@ -91,7 +92,8 @@ namespace StockTradingSystem.Client.Model.UI
 
             for (var i = 0; i < count; i++)
             {
-                if (!(VisualTreeHelper.GetChild(parent, i) is FrameworkElement frameworkElement)) continue;
+                var frameworkElement = VisualTreeHelper.GetChild(parent, i) as FrameworkElement;
+                if (frameworkElement == null) continue;
                 if (frameworkElement.Name == name)
                 {
                     return frameworkElement;

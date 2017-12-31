@@ -33,8 +33,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string SearchText
         {
-            get => _searchText;
-            set => Set(SearchTextPropertyName, ref _searchText, value, true);
+            get { return _searchText; }
+            set { Set(SearchTextPropertyName, ref _searchText, value, true); }
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool SearchTextFocus
         {
-            get => _searchTextFocus;
-            set => Set(SearchTextFocusPropertyName, ref _searchTextFocus, value, true);
+            get { return _searchTextFocus; }
+            set { Set(SearchTextFocusPropertyName, ref _searchTextFocus, value, true); }
         }
 
         #endregion
@@ -64,8 +64,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="CheckStockBtnCommand"/>.
         /// </summary>
-        public RelayCommand<int> CheckStockBtnCommand => _checkStockBtnCommand
-                                                               ?? (_checkStockBtnCommand = new RelayCommand<int>(ExecuteCheckStockBtnCommand));
+        public RelayCommand<int> CheckStockBtnCommand
+        {
+            get
+            {
+                return _checkStockBtnCommand
+                       ?? (_checkStockBtnCommand = new RelayCommand<int>(ExecuteCheckStockBtnCommand));
+            }
+        }
 
         private void ExecuteCheckStockBtnCommand(int sid)
         {
@@ -77,8 +83,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the SearchCommand.
         /// </summary>
-        public RelayCommand SearchCommand => _searchCommand
-                                             ?? (_searchCommand = new RelayCommand(ExecuteSearchCommand));
+        public RelayCommand SearchCommand
+        {
+            get
+            {
+                return _searchCommand
+                       ?? (_searchCommand = new RelayCommand(ExecuteSearchCommand));
+            }
+        }
 
         private async void ExecuteSearchCommand()
         {

@@ -43,8 +43,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string OldPasswordText
         {
-            get => _oldPasswordText;
-            set => Set(OldPasswordTextPropertyName, ref _oldPasswordText, value, true);
+            get { return _oldPasswordText; }
+            set { Set(OldPasswordTextPropertyName, ref _oldPasswordText, value, true); }
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string NewPasswordText
         {
-            get => _newPasswordText;
-            set => Set(NewPasswordTextPropertyName, ref _newPasswordText, value, true);
+            get { return _newPasswordText; }
+            set { Set(NewPasswordTextPropertyName, ref _newPasswordText, value, true); }
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public string SurePasswordText
         {
-            get => _surePasswordText;
-            set => Set(SurePasswordTextPropertyName, ref _surePasswordText, value, true);
+            get { return _surePasswordText; }
+            set { Set(SurePasswordTextPropertyName, ref _surePasswordText, value, true); }
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? OldPasswordFocus
         {
-            get => _oldPasswordFocus;
-            set => Set(OldPasswordFocusPropertyName, ref _oldPasswordFocus, value, true);
+            get { return _oldPasswordFocus; }
+            set { Set(OldPasswordFocusPropertyName, ref _oldPasswordFocus, value, true); }
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? NewPasswordFocus
         {
-            get => _newPasswordFocus;
-            set => Set(NewPasswordFocusPropertyName, ref _newPasswordFocus, value, true);
+            get { return _newPasswordFocus; }
+            set { Set(NewPasswordFocusPropertyName, ref _newPasswordFocus, value, true); }
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public bool? SurePasswordFocus
         {
-            get => _surePasswordFocus;
-            set => Set(SurePasswordFocusPropertyName, ref _surePasswordFocus, value, true);
+            get { return _surePasswordFocus; }
+            set { Set(SurePasswordFocusPropertyName, ref _surePasswordFocus, value, true); }
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public double RValue
         {
-            get => _rValue;
-            set => Set(RValuePropertyName, ref _rValue, value, true);
+            get { return _rValue; }
+            set { Set(RValuePropertyName, ref _rValue, value, true); }
         }
 
         /// <summary>
@@ -169,8 +169,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public double GValue
         {
-            get => _gValue;
-            set => Set(GValuePropertyName, ref _gValue, value, true);
+            get { return _gValue; }
+            set { Set(GValuePropertyName, ref _gValue, value, true); }
         }
 
         /// <summary>
@@ -187,8 +187,8 @@ namespace StockTradingSystem.Client.ViewModel
         /// </summary>
         public double BValue
         {
-            get => _bValue;
-            set => Set(BValuePropertyName, ref _bValue, value, true);
+            get { return _bValue; }
+            set { Set(BValuePropertyName, ref _bValue, value, true); }
         }
 
         #endregion
@@ -200,8 +200,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="ModifyCommand"/>.
         /// </summary>
-        public RelayCommand ModifyCommand => _modifyCommand ?? (_modifyCommand = new RelayCommand(
-                                                 ExecuteModifyCommand));
+        public RelayCommand ModifyCommand
+        {
+            get
+            {
+                return _modifyCommand ?? (_modifyCommand = new RelayCommand(
+                           ExecuteModifyCommand));
+            }
+        }
 
         private async void ExecuteModifyCommand()
         {
@@ -260,8 +266,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the ValueChangedCommand.
         /// </summary>
-        public RelayCommand ValueChangedCommand => _valueChangedCommand
-                                                   ?? (_valueChangedCommand = new RelayCommand(ExecuteValueChangedCommand));
+        public RelayCommand ValueChangedCommand
+        {
+            get
+            {
+                return _valueChangedCommand
+                       ?? (_valueChangedCommand = new RelayCommand(ExecuteValueChangedCommand));
+            }
+        }
 
         private void ExecuteValueChangedCommand()
         {
@@ -279,8 +291,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="SaveThemeColorCommand"/>.
         /// </summary>
-        public RelayCommand SaveThemeColorCommand => _saveThemeColorCommand
-                                                     ?? (_saveThemeColorCommand = new RelayCommand(ExecuteSaveThemeColorCommand));
+        public RelayCommand SaveThemeColorCommand
+        {
+            get
+            {
+                return _saveThemeColorCommand
+                       ?? (_saveThemeColorCommand = new RelayCommand(ExecuteSaveThemeColorCommand));
+            }
+        }
 
         private async void ExecuteSaveThemeColorCommand()
         {
@@ -304,8 +322,14 @@ namespace StockTradingSystem.Client.ViewModel
         /// <summary>
         /// Gets the <see cref="DefaultThemeColorCommand"/>.
         /// </summary>
-        public RelayCommand DefaultThemeColorCommand => _defaultThemeColorCommand
-                                                        ?? (_defaultThemeColorCommand = new RelayCommand(ExecuteDefaultThemeColorCommand));
+        public RelayCommand DefaultThemeColorCommand
+        {
+            get
+            {
+                return _defaultThemeColorCommand
+                       ?? (_defaultThemeColorCommand = new RelayCommand(ExecuteDefaultThemeColorCommand));
+            }
+        }
 
         private void ExecuteDefaultThemeColorCommand()
         {
