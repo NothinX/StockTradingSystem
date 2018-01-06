@@ -91,13 +91,13 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Fill" TargetName="background" Value="#33000000"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Maximized">
-                            <Setter Property="ToolTip" Value="向下还原"/>
+                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Normal">
+                            <Setter Property="ToolTip" Value="最大化"/>
                             <Setter Property="Visibility" TargetName="NormalGrid" Value="Visible"/>
                             <Setter Property="Visibility" TargetName="MaxGrid" Value="Collapsed"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Normal">
-                            <Setter Property="ToolTip" Value="最大化"/>
+                        <DataTrigger Binding="{Binding Main.WindowState, Source={StaticResource Locator}}" Value="Maximized">
+                            <Setter Property="ToolTip" Value="向下还原"/>
                             <Setter Property="Visibility" TargetName="NormalGrid" Value="Collapsed"/>
                             <Setter Property="Visibility" TargetName="MaxGrid" Value="Visible"/>
                         </DataTrigger>
